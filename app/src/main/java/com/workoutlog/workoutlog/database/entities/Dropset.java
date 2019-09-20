@@ -4,17 +4,21 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity (foreignKeys = {@ForeignKey(entity = Exercise.class,
+@Entity (indices = {@Index(value = {"E_ID"}, unique = true),
+                    @Index(value = {"R_ID"}, unique = true)},
+        foreignKeys = {@ForeignKey(entity = Exercise.class,
         parentColumns = "E_ID",
         childColumns = "E_ID",
         onDelete = CASCADE),
         @ForeignKey(entity = Routine.class,
                 parentColumns = "R_ID",
                 childColumns = "R_ID",
-                onDelete = CASCADE)})
+                onDelete = CASCADE)},
+        primaryKeys = {"R_ID", "Pos_In_Routine"})
 
 public class Dropset {
     @ColumnInfo(name = "E_ID")
@@ -38,7 +42,8 @@ public class Dropset {
     @ColumnInfo(name = "R_ID")
     public int rID;
 
-    public Dropset(@NonNull Integer eId, @NonNull Integer sets, @NonNull Integer reps, int _break, @NonNull Integer drops, @NonNull Integer posInRoutine, @NonNull Integer rId) {
+    /*
+    public Dropset(int eId, int sets, int reps, int _break, int drops, int posInRoutine, int rId) {
         this.eId = eId;
         this.sets = sets;
         this.reps = reps;
@@ -47,4 +52,5 @@ public class Dropset {
         this.posInRoutine = posInRoutine;
         this.rID = rId;
     }
+    */
 }

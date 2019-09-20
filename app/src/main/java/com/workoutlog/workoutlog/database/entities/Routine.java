@@ -1,14 +1,12 @@
 package com.workoutlog.workoutlog.database.entities;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.PrimaryKey;
+import androidx.room.*;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity (foreignKeys = @ForeignKey(entity = Trainingplan.class,
+@Entity (indices = {@Index(value = {"TP_ID"}, unique = true)},
+        foreignKeys = @ForeignKey(entity = Trainingplan.class,
                                     parentColumns = "TP_ID",
                                     childColumns = "TP_ID",
                                     onDelete = CASCADE))
@@ -18,7 +16,6 @@ public class Routine {
     public int rID;
 
     @ColumnInfo (name = "R_Name")
-    @NonNull
     public String rName;
 
     @ColumnInfo (name = "TP_ID")
@@ -27,9 +24,11 @@ public class Routine {
     @ColumnInfo (name = "Pos_In_TP")
     public int posInTp;
 
-    public Routine(@NonNull String name, @NonNull Integer tpId, @NonNull Integer posInTp) {
+    /*
+    public Routine(String name, int tpId, int posInTp) {
         rName = name;
         this.tpId = tpId;
         this.posInTp = posInTp;
     }
+    */
 }

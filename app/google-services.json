@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1023900381417",
+    "firebase_url": "https://workout-log-70212.firebaseio.com",
+    "project_id": "workout-log-70212",
+    "storage_bucket": "workout-log-70212.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023900381417:android:2d12505592a58b2b6dc078",
+        "android_client_info": {
+          "package_name": "com.workoutlog.workoutlog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1023900381417-fi1jj2qv1cchr6a3tmdvv7rbsilopg1l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRGPdrTJvJ7LzdyG73PAhlSXf7beTh5gY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1023900381417-fi1jj2qv1cchr6a3tmdvv7rbsilopg1l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

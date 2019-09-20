@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Workout Log</string>
+    <string name="Login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="continue_as_guest">Continue as guest</string>
+    <string name="no_account_yet_register_now">No account yet? Register now</string>
+    <string name="or">OR</string>
+    <string name="log_in">Log in</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="register">Register</string>
+    <string name="create_an_account">Create an Account</string>
+    <string name="error_message_field_empty">This textfield has to be filled</string>
+    <string name="error_message_wrong_email">This email address is not signed up</string>
+    <string name="error_message_wrong_password">This password is wrong</string>
+    <string name="error_message_email_already_used">This email address is already used</string>
+    <string name="error_message_email_not_exists">This email address does not exist</string>
+    <string name="error_message_confirm_password_wrong">The passwords have to match</string>
+    <string name="error_message_passw0rd_requirements_not_met">This password does not meet the requirements</string>
 </resources>

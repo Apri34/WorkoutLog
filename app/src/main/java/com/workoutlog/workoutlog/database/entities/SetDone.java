@@ -1,14 +1,12 @@
 package com.workoutlog.workoutlog.database.entities;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.PrimaryKey;
+import androidx.room.*;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity (foreignKeys = @ForeignKey(entity = ExerciseDone.class,
+@Entity (indices = {@Index(value = {"ED_ID"}, unique = true)},
+        foreignKeys = @ForeignKey(entity = ExerciseDone.class,
                                     parentColumns = "ED_ID",
                                     childColumns = "ED_ID",
                                     onDelete = CASCADE))

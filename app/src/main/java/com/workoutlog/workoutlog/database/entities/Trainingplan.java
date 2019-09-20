@@ -15,7 +15,7 @@ public class Trainingplan {
     @ColumnInfo (name = "TP_Name")
     public String tpName;
 
-    public Trainingplan(@NonNull String name) {
+    /*public Trainingplan(String name) {
         tpName = name;
-    }
+    }*/
 }

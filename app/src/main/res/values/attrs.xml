@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomEditText">
+        <attr name="hintSize" format="dimension"/>
+        <attr name="hintSizeFocused" format="dimension"/>
+        <attr name="hint" format="string"/>
+        <attr name="hintColorFocused" format="color"/>
+        <attr name="hintColor" format="color"/>
+        <attr name="customBackground" format="integer"/>
+        <attr name="isPassword" format="boolean"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="hintColorError" format="color"/>
+    </declare-styleable>
+</resources>

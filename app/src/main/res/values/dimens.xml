@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size_app_name_login_register_screen">40sp</dimen>
+    <dimen name="padding_login_register_screen_left_right">15dp</dimen>
+    <dimen name="margin_between_fields_login_register_section">20dp</dimen>
+    <dimen name="margin_between_register_and_continue_as_guest">8dp</dimen>
+    <dimen name="button_height">55dp</dimen>
+    <dimen name="custom_edittext_def_hint_margin">5dp</dimen>
+    <dimen name="textfield_height_login_register">70dp</dimen>
+    <dimen name="text_size_login_register_login_register">20sp</dimen>
+    <dimen name="hint_size_login_register">6sp</dimen>
+    <dimen name="margin_button_return_register_fragment">8dp</dimen>
+    <dimen name="textview_height_fragment_login_bottom_section">24dp</dimen>
+    <dimen name="padding_textview_fragment_login_bottom_section">4dp</dimen>
+    <dimen name="custom_edit_text_error_message_height">16dp</dimen>
+    <dimen name="margin_between_fields_login_register_section_custom_edit_text">8dp</dimen>
+    <dimen name="custom_edit_text_margin_error_message_textfield">2dp</dimen>
+    <dimen name="custom_edit_text_error_drawable_padding">4dp</dimen>
+</resources>

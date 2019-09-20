@@ -1,13 +1,16 @@
 package com.workoutlog.workoutlog.database.entities;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity (foreignKeys = {@ForeignKey(entity = Exercise.class,
+@Entity (indices = {@Index(value = {"E_ID1"}, unique = true),
+                    @Index(value = {"E_ID2"}, unique = true),
+                    @Index(value = {"R_ID"}, unique = true)},
+        foreignKeys = {@ForeignKey(entity = Exercise.class,
         parentColumns = "E_ID",
         childColumns = "E_ID1",
         onDelete = CASCADE),
@@ -18,7 +21,8 @@ import static androidx.room.ForeignKey.CASCADE;
         @ForeignKey(entity = Routine.class,
                 parentColumns = "R_ID",
                 childColumns = "R_ID",
-                onDelete = CASCADE)})
+                onDelete = CASCADE)},
+        primaryKeys = {"R_ID", "Pos_In_Routine"})
 public class Superset {
     @ColumnInfo(name = "E_ID1")
     public int eId1;
@@ -50,7 +54,8 @@ public class Superset {
     @ColumnInfo(name = "R_ID")
     public int rID;
 
-    public Superset(@NonNull Integer eId1, @NonNull Integer eId2, @NonNull Integer sets, @NonNull Integer reps1, @NonNull Integer reps2, int _break, int rpe1, int rpe2, @NonNull Integer posInRoutine, @NonNull Integer rId) {
+    /*
+    public Superset(int eId1, int eId2, int sets, int reps1, int reps2, int _break, int rpe1, int rpe2, int posInRoutine, int rId) {
         this.eId1 = eId1;
         this.eId2 = eId2;
         this.sets = sets;
@@ -62,4 +67,5 @@ public class Superset {
         this.posInRoutine = posInRoutine;
         this.rID = rId;
     }
+    */
 }

@@ -14,7 +14,9 @@ public class Exercise {
     @ColumnInfo(name = "E_Name")
     public String eName;
 
-    public Exercise(@NonNull String name) {
+    /*
+    public Exercise(String name) {
         eName = name;
     }
+    */
 }

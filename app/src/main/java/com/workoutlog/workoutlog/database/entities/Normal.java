@@ -2,20 +2,20 @@ package com.workoutlog.workoutlog.database.entities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
+import androidx.room.*;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity (foreignKeys = {@ForeignKey(entity = Exercise.class,
+@Entity (indices = {@Index(value = {"E_ID"}, unique = true)},
+        foreignKeys = {@ForeignKey(entity = Exercise.class,
                                     parentColumns = "E_ID",
                                     childColumns = "E_ID",
                                     onDelete = CASCADE),
                         @ForeignKey(entity = Routine.class,
                                     parentColumns = "R_ID",
                                     childColumns = "R_ID",
-                                    onDelete = CASCADE)})
+                                    onDelete = CASCADE)},
+        primaryKeys = {"R_ID", "Pos_In_Routine"})
 public class Normal {
     @ColumnInfo(name = "E_ID")
     public int eId;
@@ -38,7 +38,8 @@ public class Normal {
     @ColumnInfo(name = "R_ID")
     public int rID;
 
-    public Normal(@NonNull Integer eId, @NonNull Integer sets, @NonNull Integer reps, int _break, int rpe, @NonNull Integer posInRoutine, @NonNull Integer rId) {
+    /*
+    public Normal(int eId, int sets, int reps, int _break, int rpe, int posInRoutine, int rId) {
         this.eId = eId;
         this.sets = sets;
         this.reps = reps;
@@ -47,4 +48,5 @@ public class Normal {
         this.posInRoutine = posInRoutine;
         this.rID = rId;
     }
+    */
 }

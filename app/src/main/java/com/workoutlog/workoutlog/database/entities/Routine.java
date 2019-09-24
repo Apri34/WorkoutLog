@@ -16,19 +16,17 @@ public class Routine {
     public int rID;
 
     @ColumnInfo (name = "R_Name")
-    public String rName;
+    public final String rName;
 
     @ColumnInfo (name = "TP_ID")
-    public int tpId;
+    public final int tpId;
 
     @ColumnInfo (name = "Pos_In_TP")
-    public int posInTp;
+    public final int posInTp;
 
-    /*
-    public Routine(String name, int tpId, int posInTp) {
-        rName = name;
+    public Routine(String rName, int tpId, int posInTp) {
+        this.rName = rName;
         this.tpId = tpId;
         this.posInTp = posInTp;
     }
-    */
 }

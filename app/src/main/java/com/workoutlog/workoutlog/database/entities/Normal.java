@@ -6,7 +6,8 @@ import androidx.room.*;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity (indices = {@Index(value = {"E_ID"}, unique = true)},
+@Entity (indices = {@Index(value = {"E_ID"}),
+                    @Index(value = {"R_ID"})},
         foreignKeys = {@ForeignKey(entity = Exercise.class,
                                     parentColumns = "E_ID",
                                     childColumns = "E_ID",
@@ -14,39 +15,40 @@ import static androidx.room.ForeignKey.CASCADE;
                         @ForeignKey(entity = Routine.class,
                                     parentColumns = "R_ID",
                                     childColumns = "R_ID",
-                                    onDelete = CASCADE)},
-        primaryKeys = {"R_ID", "Pos_In_Routine"})
+                                    onDelete = CASCADE)})
 public class Normal {
+    @ColumnInfo(name = "N_ID")
+    @PrimaryKey(autoGenerate = true)
+    public int nId;
+
     @ColumnInfo(name = "E_ID")
-    public int eId;
+    public final int eId;
 
     @ColumnInfo(name = "Sets")
-    public int sets;
+    public final int sets;
 
     @ColumnInfo(name = "Reps")
-    public int reps;
+    public final int reps;
 
     @ColumnInfo(name = "Break")
-    public int breakInSeconds;
+    public final int breakInSeconds;
 
     @ColumnInfo(name = "RPE")
-    public int rpe;
+    public final int rpe;
 
     @ColumnInfo(name = "Pos_In_Routine")
-    public int posInRoutine;
+    public final int posInRoutine;
 
     @ColumnInfo(name = "R_ID")
-    public int rID;
+    public final int rId;
 
-    /*
-    public Normal(int eId, int sets, int reps, int _break, int rpe, int posInRoutine, int rId) {
+    public Normal(int eId, int sets, int reps, int breakInSeconds, int rpe, int posInRoutine, int rId) {
         this.eId = eId;
         this.sets = sets;
         this.reps = reps;
-        this.breakInSeconds = _break;
+        this.breakInSeconds = breakInSeconds;
         this.rpe = rpe;
         this.posInRoutine = posInRoutine;
-        this.rID = rId;
+        this.rId = rId;
     }
-    */
 }

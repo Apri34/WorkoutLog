@@ -2,10 +2,14 @@
   <dictionary name="Andii">
     <words>
       <w>colorprimary</w>
+      <w>dropsets</w>
       <w>edittext</w>
       <w>inputlayout</w>
+      <w>synchronizer</w>
       <w>textfield</w>
       <w>textview</w>
+      <w>trainingplan</w>
+      <w>trainingplans</w>
       <w>unfocus</w>
     </words>
   </dictionary>

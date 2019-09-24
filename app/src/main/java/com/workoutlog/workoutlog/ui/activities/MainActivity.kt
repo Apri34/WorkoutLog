@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.workoutlog.workoutlog.R
+import com.workoutlog.workoutlog.database.DatabaseSynchronizer
 import com.workoutlog.workoutlog.ui.fragments.LoginFragment
 import com.workoutlog.workoutlog.ui.fragments.RegisterFragment
 import com.workoutlog.workoutlog.views.CustomEditText
@@ -20,6 +21,10 @@ class MainActivity : FragmentActivity(), LoginFragment.ILogin, RegisterFragment.
     override fun register(email: String, password: String) {
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener(this) {
+
+                val user = mAuth.currentUser!!
+                DatabaseSynchronizer.getInstance(this).registerUser(user)
+
                 getDefaultSharedPreferences(this).edit().putBoolean(getString(R.string.continue_guest), false).apply()
                 startActivity(Intent(this, NavigationActivity::class.java))
                 finish()

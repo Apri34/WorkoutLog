@@ -13,9 +13,9 @@ public class Trainingplan {
     public int tpId;
 
     @ColumnInfo (name = "TP_Name")
-    public String tpName;
+    public final String tpName;
 
-    /*public Trainingplan(String name) {
-        tpName = name;
-    }*/
+    public Trainingplan(String tpName) {
+        this.tpName = tpName;
+    }
 }

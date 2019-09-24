@@ -19,19 +19,17 @@ public class ExerciseDone {
     public int edId;
 
     @ColumnInfo (name = "Date")
-    public Date date;
+    public final Date date;
 
     @ColumnInfo (name = "E_ID")
-    public int eId;
+    public final int eId;
 
     @ColumnInfo (name = "Pos_On_Date")
-    public int posOnDate;
+    public final int posOnDate;
 
-    /*
     public ExerciseDone(Date date, int eId, int posOnDate) {
         this.date = date;
         this.eId = eId;
         this.posOnDate = posOnDate;
     }
-    */
 }

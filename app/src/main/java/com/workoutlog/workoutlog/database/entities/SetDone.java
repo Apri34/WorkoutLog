@@ -16,21 +16,21 @@ public class SetDone {
     public int sdId;
 
     @ColumnInfo (name = "Reps")
-    public int reps;
+    public final int reps;
 
     @ColumnInfo (name = "weight")
-    public int weightInKg ;
+    public final int weightInKg ;
 
     @ColumnInfo (name = "RPE")
-    public int rpe;
+    public final int rpe;
 
     @ColumnInfo (name = "Pos_In_Exc_Done")
-    public int posInExcDone;
+    public final int posInExcDone;
 
     @ColumnInfo (name = "ED_ID")
-    public int edId;
+    public final int edId;
 
-    public SetDone(@NonNull Integer reps, @NonNull Integer weightInKg, int rpe, @NonNull Integer posInExcDone, @NonNull Integer edId) {
+    public SetDone(int reps, int weightInKg, int rpe, int posInExcDone, int edId) {
         this.reps = reps;
         this.weightInKg = weightInKg;
         this.rpe = rpe;

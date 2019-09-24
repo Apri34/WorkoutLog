@@ -12,11 +12,9 @@ public class Exercise {
     public int eID;
 
     @ColumnInfo(name = "E_Name")
-    public String eName;
+    public final String eName;
 
-    /*
-    public Exercise(String name) {
-        eName = name;
+    public Exercise(String eName) {
+        this.eName = eName;
     }
-    */
 }

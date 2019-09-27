@@ -15,7 +15,7 @@ import com.workoutlog.workoutlog.database.entities.*;
         Routine.class,
         SetDone.class,
         Superset.class,
-        Trainingplan.class}, version = 1)
+        Trainingplan.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 
 public abstract class AppDatabase extends RoomDatabase {

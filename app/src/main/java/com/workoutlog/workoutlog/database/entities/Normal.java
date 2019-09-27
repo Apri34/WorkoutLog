@@ -1,7 +1,5 @@
 package com.workoutlog.workoutlog.database.entities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.room.*;
 
 import static androidx.room.ForeignKey.CASCADE;
@@ -19,30 +17,63 @@ import static androidx.room.ForeignKey.CASCADE;
 public class Normal {
     @ColumnInfo(name = "N_ID")
     @PrimaryKey(autoGenerate = true)
-    public int nId;
+    private final int nId;
 
     @ColumnInfo(name = "E_ID")
-    public final int eId;
+    private final int eId;
 
     @ColumnInfo(name = "Sets")
-    public final int sets;
+    private final int sets;
 
     @ColumnInfo(name = "Reps")
-    public final int reps;
+    private final int reps;
 
     @ColumnInfo(name = "Break")
-    public final int breakInSeconds;
+    private final int breakInSeconds;
 
     @ColumnInfo(name = "RPE")
-    public final int rpe;
+    private final int rpe;
 
     @ColumnInfo(name = "Pos_In_Routine")
-    public final int posInRoutine;
+    private final int posInRoutine;
 
     @ColumnInfo(name = "R_ID")
-    public final int rId;
+    private final int rId;
 
-    public Normal(int eId, int sets, int reps, int breakInSeconds, int rpe, int posInRoutine, int rId) {
+    public int getNId() {
+        return nId;
+    }
+
+    public int getEId() {
+        return eId;
+    }
+
+    public int getSets() {
+        return sets;
+    }
+
+    public int getReps() {
+        return reps;
+    }
+
+    public int getBreakInSeconds() {
+        return breakInSeconds;
+    }
+
+    public int getRpe() {
+        return rpe;
+    }
+
+    public int getPosInRoutine() {
+        return posInRoutine;
+    }
+
+    public int getRId() {
+        return rId;
+    }
+
+    public Normal(int nId, int eId, int sets, int reps, int breakInSeconds, int rpe, int posInRoutine, int rId) {
+        this.nId = nId;
         this.eId = eId;
         this.sets = sets;
         this.reps = reps;

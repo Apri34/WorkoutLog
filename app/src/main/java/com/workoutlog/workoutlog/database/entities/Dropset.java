@@ -1,6 +1,5 @@
 package com.workoutlog.workoutlog.database.entities;
 
-import androidx.annotation.NonNull;
 import androidx.room.*;
 
 import static androidx.room.ForeignKey.CASCADE;
@@ -20,30 +19,63 @@ public class Dropset {
 
     @ColumnInfo(name = "D_ID")
     @PrimaryKey(autoGenerate = true)
-    public int dId;
+    private final int dId;
 
     @ColumnInfo(name = "E_ID")
-    public final int eId;
+    private final int eId;
 
     @ColumnInfo(name = "Sets")
-    public final int sets;
+    private final int sets;
 
     @ColumnInfo(name = "Reps")
-    public final int reps;
+    private final int reps;
 
     @ColumnInfo(name = "Break")
-    public final int breakInSeconds;
+    private final int breakInSeconds;
 
     @ColumnInfo(name = "Drops")
-    public final int drops;
+    private final int drops;
 
     @ColumnInfo(name = "Pos_In_Routine")
-    public final int posInRoutine;
+    private final int posInRoutine;
+
+    public int getDId() {
+        return dId;
+    }
+
+    public int getEId() {
+        return eId;
+    }
+
+    public int getSets() {
+        return sets;
+    }
+
+    public int getReps() {
+        return reps;
+    }
+
+    public int getBreakInSeconds() {
+        return breakInSeconds;
+    }
+
+    public int getDrops() {
+        return drops;
+    }
+
+    public int getPosInRoutine() {
+        return posInRoutine;
+    }
+
+    public int getRId() {
+        return rId;
+    }
 
     @ColumnInfo(name = "R_ID")
-    public final int rId;
+    private final int rId;
 
-    public Dropset(int eId, int sets, int reps, int breakInSeconds, int drops, int posInRoutine, int rId) {
+    public Dropset(int dId, int eId, int sets, int reps, int breakInSeconds, int drops, int posInRoutine, int rId) {
+        this.dId = dId;
         this.eId = eId;
         this.sets = sets;
         this.reps = reps;

@@ -23,39 +23,84 @@ public class Superset {
 
     @ColumnInfo(name = "S_ID")
     @PrimaryKey(autoGenerate = true)
-    public int sId;
+    private final int sId;
 
     @ColumnInfo(name = "E_ID1")
-    public final int eId1;
+    private final int eId1;
 
     @ColumnInfo(name = "E_ID2")
-    public final int eId2;
+    private final int eId2;
 
     @ColumnInfo(name = "Sets")
-    public final int sets;
+    private final int sets;
 
     @ColumnInfo(name = "Reps1")
-    public final int reps1;
+    private final int reps1;
 
     @ColumnInfo(name = "Reps2")
-    public final int reps2;
+    private final int reps2;
 
     @ColumnInfo(name = "Break")
-    public final int breakInSeconds;
+    private final int breakInSeconds;
 
     @ColumnInfo(name = "RPE1")
-    public final int rpe1;
+    private final int rpe1;
 
     @ColumnInfo(name = "RPE2")
-    public final int rpe2;
+    private final int rpe2;
 
     @ColumnInfo(name = "Pos_In_Routine")
-    public final int posInRoutine;
+    private final int posInRoutine;
 
     @ColumnInfo(name = "R_ID")
-    public final int rId;
+    private final int rId;
 
-    public Superset(int eId1, int eId2, int sets, int reps1, int reps2, int breakInSeconds, int rpe1, int rpe2, int posInRoutine, int rId) {
+    public int getSId() {
+        return sId;
+    }
+
+    public int getEId1() {
+        return eId1;
+    }
+
+    public int getEId2() {
+        return eId2;
+    }
+
+    public int getSets() {
+        return sets;
+    }
+
+    public int getReps1() {
+        return reps1;
+    }
+
+    public int getReps2() {
+        return reps2;
+    }
+
+    public int getBreakInSeconds() {
+        return breakInSeconds;
+    }
+
+    public int getRpe1() {
+        return rpe1;
+    }
+
+    public int getRpe2() {
+        return rpe2;
+    }
+
+    public int getPosInRoutine() {
+        return posInRoutine;
+    }
+
+    public int getRId() {
+        return rId;
+    }
+
+    public Superset(int sId, int eId1, int eId2, int sets, int reps1, int reps2, int breakInSeconds, int rpe1, int rpe2, int posInRoutine, int rId) {
+        this.sId = sId;
         this.eId1 = eId1;
         this.eId2 = eId2;
         this.sets = sets;

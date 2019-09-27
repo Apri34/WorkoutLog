@@ -1,6 +1,5 @@
 package com.workoutlog.workoutlog.database.entities;
 
-import androidx.annotation.NonNull;
 import androidx.room.*;
 
 import static androidx.room.ForeignKey.CASCADE;
@@ -11,20 +10,37 @@ import static androidx.room.ForeignKey.CASCADE;
                                     childColumns = "TP_ID",
                                     onDelete = CASCADE))
 public class Routine {
+    public int getRId() {
+        return rId;
+    }
+
+    public String getRName() {
+        return rName;
+    }
+
+    public int getTpId() {
+        return tpId;
+    }
+
+    public int getPosInTp() {
+        return posInTp;
+    }
+
     @PrimaryKey (autoGenerate = true)
     @ColumnInfo (name = "R_ID")
-    public int rID;
+    private final int rId;
 
     @ColumnInfo (name = "R_Name")
-    public final String rName;
+    private final String rName;
 
     @ColumnInfo (name = "TP_ID")
-    public final int tpId;
+    private final int tpId;
 
     @ColumnInfo (name = "Pos_In_TP")
-    public final int posInTp;
+    private final int posInTp;
 
-    public Routine(String rName, int tpId, int posInTp) {
+    public Routine(int rId, String rName, int tpId, int posInTp) {
+        this.rId = rId;
         this.rName = rName;
         this.tpId = tpId;
         this.posInTp = posInTp;

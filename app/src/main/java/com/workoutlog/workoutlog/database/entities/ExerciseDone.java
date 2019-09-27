@@ -1,6 +1,5 @@
 package com.workoutlog.workoutlog.database.entities;
 
-import androidx.annotation.NonNull;
 import androidx.room.*;
 
 import java.sql.Date;
@@ -16,18 +15,35 @@ public class ExerciseDone {
 
     @PrimaryKey (autoGenerate = true)
     @ColumnInfo (name="ED_ID")
-    public int edId;
+    private final int edId;
 
     @ColumnInfo (name = "Date")
-    public final Date date;
+    private final Date date;
 
     @ColumnInfo (name = "E_ID")
-    public final int eId;
+    private final int eId;
 
     @ColumnInfo (name = "Pos_On_Date")
-    public final int posOnDate;
+    private final int posOnDate;
 
-    public ExerciseDone(Date date, int eId, int posOnDate) {
+    public int getEdId() {
+        return edId;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public int getEId() {
+        return eId;
+    }
+
+    public int getPosOnDate() {
+        return posOnDate;
+    }
+
+    public ExerciseDone(int edId, Date date, int eId, int posOnDate) {
+        this.edId = edId;
         this.date = date;
         this.eId = eId;
         this.posOnDate = posOnDate;

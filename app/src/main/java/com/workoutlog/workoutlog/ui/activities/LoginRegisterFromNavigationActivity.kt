@@ -1,5 +1,6 @@
 package com.workoutlog.workoutlog.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +22,7 @@ class LoginRegisterFromNavigationActivity : AppCompatActivity(), LoginFragment.I
             .addOnSuccessListener {
                 PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(getString(R.string.continue_guest), false).apply()
                 PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(getString(R.string.stay_logged_in), stayLoggedIn).apply()
+                startActivity(Intent(this, NavigationActivity::class.java))
                 finish()
             }
             .addOnFailureListener {
@@ -47,6 +49,9 @@ class LoginRegisterFromNavigationActivity : AppCompatActivity(), LoginFragment.I
     }
 
     override fun continueAsGuest() {
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(getString(R.string.continue_guest), true).apply()
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(getString(R.string.stay_logged_in), false).apply()
+        startActivity(Intent(this, NavigationActivity::class.java))
         finish()
     }
 
@@ -54,6 +59,7 @@ class LoginRegisterFromNavigationActivity : AppCompatActivity(), LoginFragment.I
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(getString(R.string.continue_guest), false).apply()
+                startActivity(Intent(this, NavigationActivity::class.java))
                 finish()
             }
             .addOnFailureListener {
@@ -83,5 +89,10 @@ class LoginRegisterFromNavigationActivity : AppCompatActivity(), LoginFragment.I
 
         mAuth = FirebaseAuth.getInstance()
         supportFragmentManager.beginTransaction().add(R.id.frame_layout_login_register_from_navigation_activity, fragmentLogin).commit()
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, NavigationActivity::class.java))
+        finish()
     }
 }

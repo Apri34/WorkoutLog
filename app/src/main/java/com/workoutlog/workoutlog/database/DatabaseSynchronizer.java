@@ -57,9 +57,9 @@ public class DatabaseSynchronizer {
     }
 
     private static DatabaseSynchronizer INSTANCE = null;
-    private DatabaseInitializer databaseInitializer;
-    private FirebaseFirestore firebaseFirestore;
-    private AppDatabase appDatabase;
+    private final DatabaseInitializer databaseInitializer;
+    private final FirebaseFirestore firebaseFirestore;
+    private final AppDatabase appDatabase;
 
     private DatabaseSynchronizer(Context context){
         databaseInitializer = DatabaseInitializer.getInstance();
@@ -91,7 +91,7 @@ public class DatabaseSynchronizer {
             firebaseFirestore.collection(References.USERS)
                     .document(uid)
                     .collection(References.EXERCISES)
-                    .document(String.valueOf(exc.eID))
+                    .document(String.valueOf(exc.getEId()))
                     .set(exc);
         }
 
@@ -100,7 +100,7 @@ public class DatabaseSynchronizer {
             firebaseFirestore.collection(References.USERS)
                     .document(uid)
                     .collection(References.ROUTINES)
-                    .document(String.valueOf(rou.rID))
+                    .document(String.valueOf(rou.getRId()))
                     .set(rou);
         }
 
@@ -109,7 +109,7 @@ public class DatabaseSynchronizer {
             firebaseFirestore.collection(References.USERS)
                     .document(uid)
                     .collection(References.TRAINING_PLANS)
-                    .document(String.valueOf(trp.tpId))
+                    .document(String.valueOf(trp.getTpId()))
                     .set(trp);
         }
 
@@ -118,7 +118,7 @@ public class DatabaseSynchronizer {
             firebaseFirestore.collection(References.USERS)
                     .document(uid)
                     .collection(References.NORMAL_EXERCISES)
-                    .document(String.valueOf(nor.nId))
+                    .document(String.valueOf(nor.getNId()))
                     .set(nor);
         }
 
@@ -127,7 +127,7 @@ public class DatabaseSynchronizer {
             firebaseFirestore.collection(References.USERS)
                     .document(uid)
                     .collection(References.SUPERSET)
-                    .document(String.valueOf(sup.sId))
+                    .document(String.valueOf(sup.getSId()))
                     .set(sup);
         }
 
@@ -136,7 +136,7 @@ public class DatabaseSynchronizer {
             firebaseFirestore.collection(References.USERS)
                     .document(uid)
                     .collection(References.DROPSET)
-                    .document(String.valueOf(drp.dId))
+                    .document(String.valueOf(drp.getDId()))
                     .set(drp);
         }
 
@@ -145,7 +145,7 @@ public class DatabaseSynchronizer {
             firebaseFirestore.collection(References.USERS)
                     .document(uid)
                     .collection(References.EXERCISE_DONE)
-                    .document(String.valueOf(exd.edId))
+                    .document(String.valueOf(exd.getEdId()))
                     .set(exd);
         }
 
@@ -154,7 +154,7 @@ public class DatabaseSynchronizer {
             firebaseFirestore.collection(References.USERS)
                     .document(uid)
                     .collection(References.SET_DONE)
-                    .document(String.valueOf(sed.sdId))
+                    .document(String.valueOf(sed.getSdId()))
                     .set(sed);
         }
     }

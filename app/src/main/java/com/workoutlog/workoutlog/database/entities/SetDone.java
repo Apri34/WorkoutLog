@@ -1,6 +1,5 @@
 package com.workoutlog.workoutlog.database.entities;
 
-import androidx.annotation.NonNull;
 import androidx.room.*;
 
 import static androidx.room.ForeignKey.CASCADE;
@@ -13,24 +12,49 @@ import static androidx.room.ForeignKey.CASCADE;
 public class SetDone {
     @PrimaryKey (autoGenerate = true)
     @ColumnInfo (name = "SD_ID")
-    public int sdId;
+    private final int sdId;
 
     @ColumnInfo (name = "Reps")
-    public final int reps;
+    private final int reps;
 
     @ColumnInfo (name = "weight")
-    public final int weightInKg ;
+    private final int weightInKg ;
 
     @ColumnInfo (name = "RPE")
-    public final int rpe;
+    private final int rpe;
 
     @ColumnInfo (name = "Pos_In_Exc_Done")
-    public final int posInExcDone;
+    private final int posInExcDone;
 
     @ColumnInfo (name = "ED_ID")
-    public final int edId;
+    private final int edId;
 
-    public SetDone(int reps, int weightInKg, int rpe, int posInExcDone, int edId) {
+    public int getSdId() {
+        return sdId;
+    }
+
+    public int getReps() {
+        return reps;
+    }
+
+    public int getWeightInKg() {
+        return weightInKg;
+    }
+
+    public int getRpe() {
+        return rpe;
+    }
+
+    public int getPosInExcDone() {
+        return posInExcDone;
+    }
+
+    public int getEdId() {
+        return edId;
+    }
+
+    public SetDone(int sdId, int reps, int weightInKg, int rpe, int posInExcDone, int edId) {
+        this.sdId = sdId;
         this.reps = reps;
         this.weightInKg = weightInKg;
         this.rpe = rpe;

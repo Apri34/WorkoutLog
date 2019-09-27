@@ -77,6 +77,8 @@ class MainActivity : FragmentActivity(), LoginFragment.ILogin, RegisterFragment.
 
     override fun continueAsGuest() {
         startActivity(Intent(this, NavigationActivity::class.java))
+        getDefaultSharedPreferences(this).edit().putBoolean(getString(R.string.continue_guest), true).apply()
+        getDefaultSharedPreferences(this).edit().putBoolean(getString(R.string.stay_logged_in), false).apply()
         finish()
     }
 

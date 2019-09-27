@@ -1,16 +1,23 @@
 <component name="ProjectDictionaryState">
   <dictionary name="Andii">
     <words>
+      <w>appspot</w>
+      <w>autofill</w>
       <w>colorprimary</w>
+      <w>dones</w>
+      <w>dropset</w>
       <w>dropsets</w>
       <w>edittext</w>
+      <w>firebase</w>
       <w>inputlayout</w>
       <w>synchronizer</w>
       <w>textfield</w>
       <w>textview</w>
+      <w>textviewbutton</w>
       <w>trainingplan</w>
       <w>trainingplans</w>
       <w>unfocus</w>
+      <w>workoutlog</w>
     </words>
   </dictionary>
 </component>

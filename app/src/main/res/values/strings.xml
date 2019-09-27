@@ -17,5 +17,13 @@
     <string name="error_message_email_already_used">This email address is already used</string>
     <string name="error_message_email_not_exists">This email address does not exist</string>
     <string name="error_message_confirm_password_wrong">The passwords have to match</string>
-    <string name="error_message_passw0rd_requirements_not_met">This password does not meet the requirements</string>
+    <string name="error_message_password_requirements_not_met">This password does not meet the requirements</string>
+    <string name="home">Home</string>
+    <string name="exercises">Exercises</string>
+    <string name="trainingplans">Trainingplans</string>
+    <string name="current_trainingplan">Current Trainingplan</string>
+    <string name="start_workout">Start Workout</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Log out</string>
+    <string name="history">History</string>
 </resources>

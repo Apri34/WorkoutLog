@@ -31,22 +31,18 @@ public class CustomEditText extends ConstraintLayout {
     private static final int DEF_TEXT_SIZE = 6;
     private static final int ANIMATION_DURATION = 150;
 
-    private EditText textField;
-    private TextView hint;
-    private ConstraintLayout layout;
-    private TextView errorMessage;
-    private float hintSize;
-    private float hintSizeFocused;
-    private int hintColorFocused;
-    private int hintColor;
-    private int hintColorError;
+    private final EditText textField;
+    private final TextView hint;
+    private final ConstraintLayout layout;
+    private final TextView errorMessage;
+    private final float hintSize;
+    private final float hintSizeFocused;
+    private final int hintColorFocused;
+    private final int hintColor;
+    private final int hintColorError;
 
     public EditText getTextField() {
         return textField;
-    }
-
-    public TextView getHint() {
-        return hint;
     }
 
     public void showErrorMessage(Error error) {
@@ -77,7 +73,7 @@ public class CustomEditText extends ConstraintLayout {
                 break;
             }
             case ERROR_PASSWORD_REQUIREMENTS_NOT_MET: {
-                errorMessage.setText(getContext().getString(R.string.error_message_passw0rd_requirements_not_met));
+                errorMessage.setText(getContext().getString(R.string.error_message_password_requirements_not_met));
                 break;
             }
             case NO_ERROR_MESSAGE: {

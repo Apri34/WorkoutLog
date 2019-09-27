@@ -1,72 +1,239 @@
 package com.workoutlog.workoutlog.ui.activities
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.preference.PreferenceManager.getDefaultSharedPreferences
+import android.view.MenuItem
 import android.view.View
-import android.widget.Button
+import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.workoutlog.workoutlog.R
-import com.workoutlog.workoutlog.database.AppDatabase
-import com.workoutlog.workoutlog.database.DatabaseInitializer
-import com.workoutlog.workoutlog.database.entities.Exercise
-import com.workoutlog.workoutlog.database.entities.ExerciseDone
-import com.workoutlog.workoutlog.database.entities.Trainingplan
-import java.sql.Date
+import com.workoutlog.workoutlog.ui.fragments.*
 
 class NavigationActivity : AppCompatActivity() {
 
-    private lateinit var tv: TextView
-    private lateinit var buttonLogin: Button
-    private lateinit var buttonLogout: Button
+    companion object {
+        private const val HOME_FRAGMENT_KEY = "homeFragment"
+        private const val EXERCISES_FRAGMENT_KEY = "exercisesFragment"
+        private const val TRAININGPLANS_FRAGMENT_KEY = "trainingplansFragment"
+        private const val CURRENT_TRAININGPLAN_FRAGMENT_KEY = "currentTrainingplanFragment"
+        private const val HISTORY_FRAGMENT_KEY = "historyFragment"
+    }
+
     private lateinit var mAuth: FirebaseAuth
-    private lateinit var button: Button
+    private lateinit var navView: NavigationView
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var homeFragment: HomeFragment
+    private lateinit var exercisesFragment: ExercisesFragment
+    private lateinit var trainingplansFragment: TrainingplansFragment
+    private lateinit var currentTrainingplanFragment: CurrentTrainingplanFragment
+    private lateinit var historyFragment: HistoryFragment
+    private lateinit var textViewNavHeaderUser: TextView
+    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+            window.statusBarColor = ContextCompat.getColor(this, R.color.colorSecondaryDark)
+        }
         setContentView(R.layout.activity_navigation)
 
         mAuth = FirebaseAuth.getInstance()
+        navView = findViewById(R.id.nav_view_navigation_activity)
+        drawerLayout = findViewById(R.id.drawer_layout_navigation_activity)
+        textViewNavHeaderUser = navView.getHeaderView(0).findViewById(R.id.text_view_nav_header_user)
+        toolbar = findViewById(R.id.toolbar_navigation_activity)
 
-        tv = findViewById(R.id.textview_activity_navigation_email)
-        buttonLogin = findViewById(R.id.button_activity_navigation_login_register)
-        buttonLogin.setOnClickListener {
-            login()
+        if(mAuth.currentUser != null) {
+            navView.inflateMenu(R.menu.drawer_view_logged_in)
+            textViewNavHeaderUser.text = mAuth.currentUser!!.email!!
+        } else {
+            navView.inflateMenu(R.menu.drawer_view_logged_out)
+            textViewNavHeaderUser.visibility = View.GONE
         }
-        buttonLogout = findViewById(R.id.button_activity_navigation_logout)
-        buttonLogout.setOnClickListener {
-            logout()
+
+        if(savedInstanceState == null) {
+            homeFragment = HomeFragment()
+            exercisesFragment = ExercisesFragment()
+            trainingplansFragment = TrainingplansFragment()
+            currentTrainingplanFragment = CurrentTrainingplanFragment()
+            historyFragment = HistoryFragment()
+
+            supportFragmentManager.beginTransaction()
+                .add(R.id.content_frame_navigation_activity, homeFragment)
+                .commit()
+            navView.setCheckedItem(R.id.nav_home)
+        } else {
+            homeFragment =
+                if(supportFragmentManager.getFragment(savedInstanceState, HOME_FRAGMENT_KEY) != null)
+                    supportFragmentManager.getFragment(savedInstanceState, HOME_FRAGMENT_KEY) as HomeFragment
+                else
+                    HomeFragment()
+            exercisesFragment =
+                if(supportFragmentManager.getFragment(savedInstanceState, EXERCISES_FRAGMENT_KEY) != null)
+                    supportFragmentManager.getFragment(savedInstanceState, EXERCISES_FRAGMENT_KEY) as ExercisesFragment
+                else
+                    ExercisesFragment()
+            trainingplansFragment =
+                if(supportFragmentManager.getFragment(savedInstanceState, TRAININGPLANS_FRAGMENT_KEY) != null)
+                    supportFragmentManager.getFragment(savedInstanceState, TRAININGPLANS_FRAGMENT_KEY) as TrainingplansFragment
+                else
+                    TrainingplansFragment()
+            currentTrainingplanFragment =
+                if(supportFragmentManager.getFragment(savedInstanceState, CURRENT_TRAININGPLAN_FRAGMENT_KEY) != null)
+                    supportFragmentManager.getFragment(savedInstanceState, CURRENT_TRAININGPLAN_FRAGMENT_KEY) as CurrentTrainingplanFragment
+                else
+                    CurrentTrainingplanFragment()
+            historyFragment =
+                if(supportFragmentManager.getFragment(savedInstanceState, HISTORY_FRAGMENT_KEY) != null)
+                    supportFragmentManager.getFragment(savedInstanceState, HISTORY_FRAGMENT_KEY) as HistoryFragment
+                else
+                    HistoryFragment()
         }
-        button = findViewById(R.id.button)
-        button.setOnClickListener {
-            fireBaseTest()
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            if(supportFragmentManager.backStackEntryCount == 0) {
+                navView.setCheckedItem(R.id.nav_home)
+            }
+        }
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
+        }
+
+        navView.setNavigationItemSelectedListener {menuItem ->
+
+            when(menuItem.itemId) {
+                R.id.nav_home -> {
+                    if(!menuItem.isChecked) {
+                        supportFragmentManager.popBackStack()
+                        menuItem.isChecked = true
+                    }
+                }
+                R.id.nav_exercises -> {
+                    if(navView.checkedItem?.itemId == R.id.nav_home) {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.content_frame_navigation_activity, exercisesFragment)
+                            .addToBackStack(null)
+                            .commit()
+                    } else {
+                        supportFragmentManager.popBackStack()
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.content_frame_navigation_activity, exercisesFragment)
+                            .addToBackStack(null)
+                            .commit()
+                    }
+                    menuItem.isChecked = true
+                }
+                R.id.nav_trainingplans -> {
+                    if(navView.checkedItem?.itemId == R.id.nav_home) {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.content_frame_navigation_activity, trainingplansFragment)
+                            .addToBackStack(null)
+                            .commit()
+                    } else {
+                        supportFragmentManager.popBackStack()
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.content_frame_navigation_activity, trainingplansFragment)
+                            .addToBackStack(null)
+                            .commit()
+                    }
+                    menuItem.isChecked = true
+                }
+                R.id.nav_current_trainingplan -> {
+                    if(navView.checkedItem?.itemId == R.id.nav_home) {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.content_frame_navigation_activity, currentTrainingplanFragment)
+                            .addToBackStack(null)
+                            .commit()
+                    } else {
+                        supportFragmentManager.popBackStack()
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.content_frame_navigation_activity, currentTrainingplanFragment)
+                            .addToBackStack(null)
+                            .commit()
+                    }
+                    menuItem.isChecked = true
+                }
+                R.id.nav_history -> {
+                    if(navView.checkedItem?.itemId == R.id.nav_home) {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.content_frame_navigation_activity, historyFragment)
+                            .addToBackStack(null)
+                            .commit()
+                    } else {
+                        supportFragmentManager.popBackStack()
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.content_frame_navigation_activity, historyFragment)
+                            .addToBackStack(null)
+                            .commit()
+                    }
+                    menuItem.isChecked = true
+                }
+                R.id.nav_settings -> {
+
+                }
+                R.id.nav_login -> {
+                    login()
+                }
+                R.id.nav_logout -> {
+                    logout()
+                }
+                R.id.nav_start_workout -> {
+
+                }
+            }
+            drawerLayout.closeDrawers()
+            true
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        getDefaultSharedPreferences(this).edit().putBoolean(getString(R.string.continue_guest), mAuth.currentUser == null).apply()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
 
-        if(mAuth.currentUser != null) {
-            buttonLogin.visibility = View.GONE
-            buttonLogout.visibility = View.VISIBLE
-        } else {
-            buttonLogout.visibility = View.GONE
-            buttonLogin.visibility = View.VISIBLE
+        if(homeFragment.isAdded)
+            supportFragmentManager.putFragment(outState, HOME_FRAGMENT_KEY, homeFragment)
+        if(exercisesFragment.isAdded)
+            supportFragmentManager.putFragment(outState, EXERCISES_FRAGMENT_KEY, exercisesFragment)
+        if(trainingplansFragment.isAdded)
+            supportFragmentManager.putFragment(outState, TRAININGPLANS_FRAGMENT_KEY, trainingplansFragment)
+        if(currentTrainingplanFragment.isAdded)
+            supportFragmentManager.putFragment(outState, CURRENT_TRAININGPLAN_FRAGMENT_KEY, currentTrainingplanFragment)
+        if(historyFragment.isAdded)
+            supportFragmentManager.putFragment(outState, HISTORY_FRAGMENT_KEY, historyFragment)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                drawerLayout.openDrawer(GravityCompat.START)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
+    }
 
-        val user = mAuth.currentUser
-        if(user != null) {
-            tv.text = user.email!!
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+             drawerLayout.closeDrawers()
         } else {
-            tv.text = "no user"
+            super.onBackPressed()
         }
     }
 
     private fun login() {
         startActivity(Intent(this, LoginRegisterFromNavigationActivity::class.java))
+        finish()
     }
 
     private fun logout() {
@@ -75,36 +242,5 @@ class NavigationActivity : AppCompatActivity() {
         }
         startActivity(Intent(this, MainActivity::class.java))
         finish()
-    }
-
-    private fun fireBaseTest() {
-
-        val ex1 = Exercise("BBGGDS")
-        val ex2 = Exercise("felrkgm")
-        val ex3 = Exercise("BBrfqaer")
-        val ex4 = Exercise("BBfearfGGDS")
-        val ex5 = Exercise("BBw4rGGDS")
-        val ex6 = Exercise("BBGGDrrrrrrrrS")
-        val ex7 = Exercise("BBGGBebebebeDS")
-        val tp1 = Trainingplan("PPL")
-        val tp2 = Trainingplan("OKUK")
-        val tp3 = Trainingplan("PumperPlan")
-        val tp4 = Trainingplan("GK")
-
-        val initializer = DatabaseInitializer.getInstance()
-        val db = AppDatabase.getInstance(this)
-
-        initializer.insertExercise(db.exerciseDao(), ex1)
-        initializer.insertExercise(db.exerciseDao(), ex2)
-        initializer.insertExercise(db.exerciseDao(), ex3)
-        initializer.insertExercise(db.exerciseDao(), ex4)
-        initializer.insertExercise(db.exerciseDao(), ex5)
-        initializer.insertExercise(db.exerciseDao(), ex6)
-        initializer.insertExercise(db.exerciseDao(), ex7)
-
-        initializer.insertTrainingplan(db.trainingplanDao(), tp1)
-        initializer.insertTrainingplan(db.trainingplanDao(), tp2)
-        initializer.insertTrainingplan(db.trainingplanDao(), tp3)
-        initializer.insertTrainingplan(db.trainingplanDao(), tp4)
     }
 }

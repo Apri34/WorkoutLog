@@ -114,8 +114,7 @@
                 app:layout_constraintTop_toBottomOf="@id/textview_login_fragment_or"
                 android:layout_marginTop="@dimen/margin_between_register_and_continue_as_guest"
                 android:text="@string/continue_as_guest"
-                android:textColor="@color/colorPrimary"
-                android:background="@drawable/background_indirect_button_fragment_register"
+                android:textColor="@color/color_textviewbutton_login_fragment"
                 android:paddingLeft="@dimen/padding_textview_fragment_login_bottom_section"
                 android:paddingRight="@dimen/padding_textview_fragment_login_bottom_section"
         />
@@ -170,8 +169,7 @@
                 app:layout_constraintBottom_toTopOf="@id/textview_login_fragment_or"
                 android:layout_marginBottom="@dimen/margin_between_register_and_continue_as_guest"
                 android:text="@string/no_account_yet_register_now"
-                android:textColor="@color/colorPrimary"
-                android:background="@drawable/background_indirect_button_fragment_register"
+                android:textColor="@color/color_textviewbutton_login_fragment"
                 android:paddingLeft="@dimen/padding_textview_fragment_login_bottom_section"
                 android:paddingRight="@dimen/padding_textview_fragment_login_bottom_section"
         />

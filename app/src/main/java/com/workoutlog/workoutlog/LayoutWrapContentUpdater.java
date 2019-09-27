@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class LayoutWrapContentUpdater {
-    public static final String TAG = LayoutWrapContentUpdater.class.getName();
+    private static final String TAG = LayoutWrapContentUpdater.class.getName();
 
 
     /**
@@ -16,35 +16,21 @@ public class LayoutWrapContentUpdater {
      *
      * @param subTreeRoot  root of the sub tree you want to recompute
      */
-    public static final void wrapContentAgain( ViewGroup subTreeRoot )
+
+    public static void wrapContentAgain(ViewGroup subTreeRoot)
     {
-        wrapContentAgain( subTreeRoot, false, View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED );
-    }
-    /** Same but allows re-layout of all views, not only those with "wrap_content". Necessary for "center", "right", "bottom",... */
-    public static final void wrapContentAgain( ViewGroup subTreeRoot, boolean relayoutAllNodes )
-    {
-        wrapContentAgain( subTreeRoot, relayoutAllNodes, View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED );
-    }
-    /**
-     * Same as previous, but with given size in case subTreeRoot itself has layout_width or layout_height = "wrap_content"
-     */
-    public static void wrapContentAgain( ViewGroup subTreeRoot, boolean relayoutAllNodes,
-                                         int subTreeRootWidthMeasureSpec, int subTreeRootHeightMeasureSpec  )
-    {
-        Log.d(TAG, "+++ LayoutWrapContentUpdater wrapContentAgain on subTreeRoot=["+ subTreeRoot +"], with w="
-                + subTreeRootWidthMeasureSpec +" and h="+ subTreeRootHeightMeasureSpec );
-        assert( "main".equals( Thread.currentThread().getName() ) );
+        if( !"main".equals( Thread.currentThread().getName() ) ) return;
 
         if (subTreeRoot == null)
             return;
         ViewGroup.LayoutParams layoutParams = subTreeRoot.getLayoutParams();
 
         // --- First, we force measure on the subTree
-        int widthMeasureSpec 	= subTreeRootWidthMeasureSpec;
+        int widthMeasureSpec 	= View.MeasureSpec.UNSPECIFIED;
         // When LayoutParams.MATCH_PARENT and Width > 0, we apply measured width to avoid getting dimensions too big
         if ( layoutParams.width  != ViewGroup.LayoutParams.WRAP_CONTENT && subTreeRoot.getWidth() > 0 )
             widthMeasureSpec 	=  View.MeasureSpec.makeMeasureSpec( subTreeRoot.getWidth(), View.MeasureSpec.EXACTLY );
-        int heightMeasureSpec 	= subTreeRootHeightMeasureSpec;
+        int heightMeasureSpec 	= View.MeasureSpec.UNSPECIFIED;
         // When LayoutParams.MATCH_PARENT and Height > 0, we apply measured height to avoid getting dimensions too big
         if ( layoutParams.height != ViewGroup.LayoutParams.WRAP_CONTENT && subTreeRoot.getHeight() > 0 )
             heightMeasureSpec 	=  View.MeasureSpec.makeMeasureSpec( subTreeRoot.getHeight(), View.MeasureSpec.EXACTLY );
@@ -52,7 +38,7 @@ public class LayoutWrapContentUpdater {
         subTreeRoot.measure( widthMeasureSpec, heightMeasureSpec );
 
         // --- Then recurse on all children to correct the sizes
-        recurseWrapContent( subTreeRoot, relayoutAllNodes );
+        recurseWrapContent( subTreeRoot, false);
 
         // --- RequestLayout to finish properly
         subTreeRoot.requestLayout();

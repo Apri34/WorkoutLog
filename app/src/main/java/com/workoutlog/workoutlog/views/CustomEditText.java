@@ -6,7 +6,9 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -41,43 +43,56 @@ public class CustomEditText extends ConstraintLayout {
     private final int hintColor;
     private final int hintColorError;
 
+    private Error error = Error.NULL;
+
     public EditText getTextField() {
         return textField;
     }
 
     public void showErrorMessage(Error error) {
+        if(error == Error.NULL) {
+            hideErrorMessage();
+            return;
+        }
+
         textField.setActivated(true);
+        this.error = error;
         switch (error) {
             case ERROR_FIELD_EMPTY: {
-                errorMessage.setText(getContext().getString(R.string.error_message_field_empty));
+                errorMessage.setText(R.string.error_message_field_empty);
                 break;
             }
             case ERROR_WRONG_EMAIL: {
-                errorMessage.setText(getContext().getString(R.string.error_message_wrong_email));
+                errorMessage.setText(R.string.error_message_wrong_email);
                 break;
             }
             case ERROR_WRONG_PASSWORD: {
-                errorMessage.setText(getContext().getString(R.string.error_message_wrong_password));
+                errorMessage.setText(R.string.error_message_wrong_password);
                 break;
             }
             case ERROR_EMAIL_ALREADY_USED: {
-                errorMessage.setText(getContext().getString(R.string.error_message_email_already_used));
+                errorMessage.setText(R.string.error_message_email_already_used);
                 break;
             }
             case ERROR_EMAIL_NOT_EXISTS: {
-                errorMessage.setText(getContext().getString(R.string.error_message_email_not_exists));
+                errorMessage.setText(R.string.error_message_email_not_exists);
                 break;
             }
             case ERROR_CONFIRM_PASSWORD_WRONG: {
-                errorMessage.setText(getContext().getString(R.string.error_message_confirm_password_wrong));
+                errorMessage.setText(R.string.error_message_confirm_password_wrong);
                 break;
             }
             case ERROR_PASSWORD_REQUIREMENTS_NOT_MET: {
-                errorMessage.setText(getContext().getString(R.string.error_message_password_requirements_not_met));
+                errorMessage.setText(R.string.error_message_password_requirements_not_met);
+                break;
+            }
+            case EXERCISE_ALREADY_EXISTS: {
+                errorMessage.setText(R.string.this_exercise_already_exists);
                 break;
             }
             case NO_ERROR_MESSAGE: {
                 errorMessage.setText("");
+                break;
             }
         }
         hint.setTextColor(hintColorError);
@@ -86,11 +101,26 @@ public class CustomEditText extends ConstraintLayout {
     public void hideErrorMessage() {
         textField.setActivated(false);
         errorMessage.setText("");
+        error = Error.NULL;
         if(textField.hasFocus()) {
             hint.setTextColor(hintColorFocused);
         } else {
             hint.setTextColor(hintColor);
         }
+    }
+
+    public Error getError() {
+        return error;
+    }
+
+    public void setText(String text) {
+        textField.setText(text);
+        ConstraintSet set = new ConstraintSet();
+        set.clone(layout);
+        set.clear(R.id.custom_edit_text_hint, ConstraintSet.LEFT);
+        set.connect(R.id.custom_edit_text_hint, ConstraintSet.RIGHT, R.id.custom_edit_text_constraint_layout, ConstraintSet.RIGHT, dpToPx(HINT_MARGIN_SIDE));
+        set.applyTo(layout);
+        hint.setTextSize(hintSizeFocused);
     }
 
     public CustomEditText(Context context) {
@@ -132,7 +162,13 @@ public class CustomEditText extends ConstraintLayout {
         }
         hintColorFocused = a.getColor(R.styleable.CustomEditText_hintColorFocused, getResources().getColor(R.color.colorPrimary));
         hintColor = a.getColor(R.styleable.CustomEditText_hintColor, getResources().getColor(R.color.def_hint_color));
+        if(hint.hasFocus()) {
+            hint.setTextColor(hintColorFocused);
+        } else {
+            hint.setTextColor(hintColor);
+        }
         hintColorError = a.getColor(R.styleable.CustomEditText_hintColorError, getResources().getColor(R.color.hint_color_error));
+        textField.setTextColor(a.getColor(R.styleable.CustomEditText_textColor, getResources().getColor(android.R.color.black)));
         if (a.hasValue(R.styleable.CustomEditText_customBackground)) {
             Drawable background = a.getDrawable(R.styleable.CustomEditText_customBackground);
             textField.setBackground(background);
@@ -292,18 +328,31 @@ public class CustomEditText extends ConstraintLayout {
     public enum Error {
         //EditText is empty
         ERROR_FIELD_EMPTY,
+
         //Register form: Passwords don't match
         ERROR_CONFIRM_PASSWORD_WRONG,
+
         //Register form: Password requirements not met
         ERROR_PASSWORD_REQUIREMENTS_NOT_MET,
+
         //Register form: Email does not exist (absolutely not)
         ERROR_EMAIL_NOT_EXISTS,
+
         //Register form: Email is already signed up
         ERROR_EMAIL_ALREADY_USED,
+
         //Login form: Password is wrong
         ERROR_WRONG_PASSWORD,
+
         //Login form: Email is not signed up
         ERROR_WRONG_EMAIL,
-        NO_ERROR_MESSAGE
+
+        //Exercise Dialog
+        EXERCISE_ALREADY_EXISTS,
+
+        NO_ERROR_MESSAGE,
+
+        //Just as return value
+        NULL
     }
 }

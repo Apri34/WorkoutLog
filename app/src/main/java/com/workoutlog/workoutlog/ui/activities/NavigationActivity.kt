@@ -109,6 +109,7 @@ class NavigationActivity : AppCompatActivity() {
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
+            title = getString(R.string.home)
         }
 
         navView.setNavigationItemSelectedListener {menuItem ->
@@ -119,6 +120,7 @@ class NavigationActivity : AppCompatActivity() {
                         supportFragmentManager.popBackStack()
                         menuItem.isChecked = true
                     }
+                    supportActionBar!!.title = getString(R.string.home)
                 }
                 R.id.nav_exercises -> {
                     if(navView.checkedItem?.itemId == R.id.nav_home) {
@@ -134,6 +136,7 @@ class NavigationActivity : AppCompatActivity() {
                             .commit()
                     }
                     menuItem.isChecked = true
+                    supportActionBar!!.title = getString(R.string.exercises)
                 }
                 R.id.nav_trainingplans -> {
                     if(navView.checkedItem?.itemId == R.id.nav_home) {
@@ -149,6 +152,7 @@ class NavigationActivity : AppCompatActivity() {
                             .commit()
                     }
                     menuItem.isChecked = true
+                    supportActionBar!!.title = getString(R.string.trainingplans)
                 }
                 R.id.nav_current_trainingplan -> {
                     if(navView.checkedItem?.itemId == R.id.nav_home) {
@@ -164,6 +168,7 @@ class NavigationActivity : AppCompatActivity() {
                             .commit()
                     }
                     menuItem.isChecked = true
+                    supportActionBar!!.title = getString(R.string.current_trainingplan)
                 }
                 R.id.nav_history -> {
                     if(navView.checkedItem?.itemId == R.id.nav_home) {
@@ -179,6 +184,7 @@ class NavigationActivity : AppCompatActivity() {
                             .commit()
                     }
                     menuItem.isChecked = true
+                    supportActionBar!!.title = getString(R.string.history)
                 }
                 R.id.nav_settings -> {
 

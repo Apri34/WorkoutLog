@@ -17,4 +17,9 @@
     <dimen name="margin_between_fields_login_register_section_custom_edit_text">8dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="toolbar_elevation">4dp</dimen>
+    <dimen name="button_round_size">64dp</dimen>
+    <dimen name="button_round_margin">24dp</dimen>
+    <dimen name="button_round_elevation">4dp</dimen>
+    <dimen name="view_exercises_padding">4dp</dimen>
+    <dimen name="view_exercises_text_padding_left">10dp</dimen>
 </resources>

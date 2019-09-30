@@ -8,7 +8,9 @@
     <color name="colorSecondary">#54494B</color>
     <color name="colorSecondaryLight">#6B5F60</color>
     <color name="colorSecondaryDark">#494042</color>
-    <color name="white">#fff</color>
     <color name="def_hint_color">#9C9C9C</color>
     <color name="hint_color_error">#FF8585</color>
+    <color name="white_ripple_light">#E7E7E7</color>
+    <color name="white_ripple_dark">#C5C5C5</color>
+    <color name="white">#fff</color>
 </resources>

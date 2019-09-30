@@ -26,4 +26,8 @@
     <string name="settings">Settings</string>
     <string name="logout">Log out</string>
     <string name="history">History</string>
+    <string name="name">Name</string>
+    <string name="exercise">Exercise</string>
+    <string name="save">Save</string>
+    <string name="this_exercise_already_exists">This Exercise already exists</string>
 </resources>

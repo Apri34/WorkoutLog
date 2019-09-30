@@ -212,4 +212,39 @@ public class DatabaseInitializer {
             return null;
         }
     }
+
+    public void updateExercise(@NonNull final ExerciseDao dao, Exercise exercise) {
+        UpdateExercise task = new UpdateExercise(dao);
+        task.execute(exercise);
+    }
+
+    private static class UpdateExercise extends AsyncTask<Exercise, Void, Void> {
+
+        final ExerciseDao mDao;
+
+        UpdateExercise(ExerciseDao dao) { mDao = dao; }
+
+        @Override
+        protected Void doInBackground(Exercise... exercises) {
+            mDao.updateExercise(exercises[0].getEId(), exercises[0].getEName());
+            return null;
+        }
+    }
+
+    public List<String> getAllExerciseNames(@NonNull final ExerciseDao dao) throws ExecutionException, InterruptedException {
+        GetAllExerciseNames task = new GetAllExerciseNames(dao);
+        return task.execute().get();
+    }
+
+    private static class GetAllExerciseNames extends AsyncTask<Void, Void, List<String>> {
+
+        final ExerciseDao mDao;
+
+        GetAllExerciseNames(ExerciseDao dao) { mDao = dao; }
+
+        @Override
+        protected List<String> doInBackground(Void... voids) {
+            return mDao.getAllExerciseNames();
+        }
+    }
 }

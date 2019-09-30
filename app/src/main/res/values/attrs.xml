@@ -10,5 +10,6 @@
         <attr name="isPassword" format="boolean"/>
         <attr name="textSize" format="dimension"/>
         <attr name="hintColorError" format="color"/>
+        <attr name="textColor" format="color"/>
     </declare-styleable>
 </resources>

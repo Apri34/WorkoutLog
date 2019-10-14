@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/background_edit_text_exercise_in_routine_default" android:state_enabled="true" android:state_pressed="false" android:state_focused="false" android:state_activated="false"/>
+    <item android:drawable="@drawable/background_edit_text_exercise_in_routine_disabled" android:state_enabled="false" android:state_activated="false"/>
+    <item android:drawable="@drawable/background_edit_text_exercise_in_routine_focused" android:state_focused="true" android:state_enabled="true" android:state_activated="false"/>
+    <item android:drawable="@drawable/background_edit_text_exercise_in_routine_pressed" android:state_enabled="true" android:state_pressed="true" android:state_focused="false" android:state_activated="false"/>
+    <item android:drawable="@drawable/background_edit_text_exercise_in_routine_error_focussed" android:state_focused="true" android:state_activated="true"/>
+    <item android:drawable="@drawable/background_edit_text_exercise_in_routine_error_not_focussed" android:state_focused="false" android:state_activated="true"/>
+</selector>

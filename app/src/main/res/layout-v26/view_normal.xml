@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        android:id="@+id/card_view_normal"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:elevation="@dimen/recyclerview_card_elevation"
+>
+        <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+                                                           android:layout_height="wrap_content">
+
+                <TextView
+                        android:id="@+id/text_view_exercise_number_view_normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:background="@color/colorPrimary"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="@dimen/text_size_spinner_exercises"
+                        android:textAlignment="center"
+                        android:paddingBottom="@dimen/spinner_padding_top_bottom"
+                        android:paddingTop="@dimen/spinner_padding_top_bottom"
+                />
+
+                <TextView
+                        android:id="@+id/view_height_spinner_normal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/text_view_exercise_number_view_normal"
+                        android:textSize="@dimen/text_size_spinner_exercises"
+                        android:paddingBottom="@dimen/spinner_padding_top_bottom"
+                        android:paddingTop="@dimen/spinner_padding_top_bottom"
+                />
+
+                <Spinner
+                        android:id="@+id/spinner_exercises_view_normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintTop_toTopOf="@id/view_height_spinner_normal"
+                        app:layout_constraintBottom_toBottomOf="@id/view_height_spinner_normal"
+                        android:background="@drawable/spinner_background"
+                />
+
+                <TextView
+                        android:id="@+id/text_view_sets_view_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/spinner_exercises_view_normal"
+                        android:text="@string/sets"
+                        android:textSize="@dimen/text_size_card_exercises"
+                        android:textColor="@color/colorSecondary"
+                        android:layout_marginStart="@dimen/margin_side_card_exercises"
+                        android:layout_marginTop="@dimen/margin_between_widgets_card_exercises"
+                />
+
+                <TextView
+                        android:id="@+id/text_view_reps_view_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/text_view_sets_view_normal"
+                        android:text="@string/reps"
+                        android:textSize="@dimen/text_size_card_exercises"
+                        android:textColor="@color/colorSecondary"
+                        android:layout_marginStart="@dimen/margin_side_card_exercises"
+                        android:layout_marginTop="@dimen/margin_between_widgets_card_exercises"
+                />
+
+                <TextView
+                        android:id="@+id/text_view_rpe_view_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/text_view_reps_view_normal"
+                        android:text="@string/rpe"
+                        android:textSize="@dimen/text_size_card_exercises"
+                        android:textColor="@color/colorSecondary"
+                        android:layout_marginStart="@dimen/margin_side_card_exercises"
+                        android:layout_marginTop="@dimen/margin_between_widgets_card_exercises"
+
+                />
+
+                <TextView
+                        android:id="@+id/text_view_break_view_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/text_view_rpe_view_normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="@string/break_seconds"
+                        android:textSize="@dimen/text_size_card_exercises"
+                        android:textColor="@color/colorSecondary"
+                        android:layout_marginStart="@dimen/margin_side_card_exercises"
+                        android:layout_marginTop="@dimen/margin_between_widgets_card_exercises"
+                        android:layout_marginBottom="@dimen/margin_between_widgets_card_exercises"
+                />
+
+                <EditText
+                        android:id="@+id/edit_text_sets_view_normal"
+                        android:layout_width="@dimen/edit_text_width_exercise_in_routine"
+                        android:layout_height="@dimen/edit_text_height_exercise_in_routine"
+                        android:inputType="number"
+                        android:background="@drawable/background_edit_text_exercise_in_routine"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="@dimen/text_size_card_exercises"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/text_view_sets_view_normal"
+                        app:layout_constraintBottom_toBottomOf="@id/text_view_sets_view_normal"
+                        android:textCursorDrawable="@drawable/black_cursor"
+                        android:importantForAutofill="no"
+                        android:hint="@null"
+                        android:autofillHints="false"/>
+                <EditText
+                        android:id="@+id/edit_text_reps_view_normal"
+                        android:layout_width="@dimen/edit_text_width_exercise_in_routine"
+                        android:layout_height="@dimen/edit_text_height_exercise_in_routine"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/text_view_reps_view_normal"
+                        app:layout_constraintBottom_toBottomOf="@id/text_view_reps_view_normal"
+                        android:inputType="number"
+                        android:background="@drawable/background_edit_text_exercise_in_routine"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="@dimen/text_size_card_exercises"
+                        android:textCursorDrawable="@drawable/black_cursor"
+                        android:importantForAutofill="no"
+                        android:hint="@null"
+                        android:autofillHints="false"
+                />
+                <EditText
+                        android:id="@+id/edit_text_rpe_view_normal"
+                        android:layout_width="@dimen/edit_text_width_exercise_in_routine"
+                        android:layout_height="@dimen/edit_text_height_exercise_in_routine"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/text_view_rpe_view_normal"
+                        app:layout_constraintBottom_toBottomOf="@id/text_view_rpe_view_normal"
+                        android:inputType="number"
+                        android:background="@drawable/background_edit_text_exercise_in_routine"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="@dimen/text_size_card_exercises"
+                        android:textCursorDrawable="@drawable/black_cursor"
+                        android:importantForAutofill="no"
+                        android:hint="@null"
+                        android:autofillHints="false"
+                />
+                <EditText
+                        android:id="@+id/edit_text_break_view_normal"
+                        android:layout_width="@dimen/edit_text_width_exercise_in_routine"
+                        android:layout_height="@dimen/edit_text_height_exercise_in_routine"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/text_view_break_view_normal"
+                        app:layout_constraintBottom_toBottomOf="@id/text_view_break_view_normal"
+                        android:inputType="number"
+                        android:background="@drawable/background_edit_text_exercise_in_routine"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="@dimen/text_size_card_exercises"
+                        android:textCursorDrawable="@drawable/black_cursor"
+                        android:importantForAutofill="no"
+                        android:hint="@null"
+                        android:autofillHints="false"
+                />
+
+                <ImageButton
+                        android:id="@+id/button_finish_card_view_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_check_colorprimary_30dp"
+                        android:background="@android:color/transparent"
+                        app:layout_constraintRight_toLeftOf="@id/button_delete_card_view_normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:contentDescription="@null"
+                        android:layout_marginBottom="@dimen/margin_between_widgets_card_exercises"
+                />
+
+                <ImageButton
+                        android:id="@+id/button_delete_card_view_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_delete_colorprimary_30dp"
+                        android:background="@android:color/transparent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:contentDescription="@null"
+                        android:layout_marginBottom="@dimen/margin_between_widgets_card_exercises"
+                        android:layout_marginEnd="@dimen/margin_side_card_exercises"/>
+
+                <ImageButton
+                        android:id="@+id/button_edit_card_view_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_edit_colorprimary_30dp"
+                        android:background="@android:color/transparent"
+                        app:layout_constraintRight_toLeftOf="@id/button_delete_card_view_normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:contentDescription="@null"
+                        android:layout_marginBottom="@dimen/margin_between_widgets_card_exercises"
+                />
+
+                <ImageView
+                        android:id="@+id/image_view_drag_view_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_drag_handle_colorsecondary_24dp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:contentDescription="@null"
+                        android:layout_marginEnd="@dimen/margin_side_card_exercises"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.cardview.widget.CardView>

@@ -1,12 +1,15 @@
 package com.workoutlog.workoutlog.database.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import androidx.annotation.Nullable;
 import androidx.room.*;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity (indices = {@Index(value = {"E_ID1"}, unique = true),
-                    @Index(value = {"E_ID2"}, unique = true),
-                    @Index(value = {"R_ID"}, unique = true)},
+@Entity (indices = {@Index(value = {"E_ID1"}),
+                    @Index(value = {"E_ID2"}),
+                    @Index(value = {"R_ID"})},
         foreignKeys = {@ForeignKey(entity = Exercise.class,
         parentColumns = "E_ID",
         childColumns = "E_ID1",
@@ -19,7 +22,7 @@ import static androidx.room.ForeignKey.CASCADE;
                 parentColumns = "R_ID",
                 childColumns = "R_ID",
                 onDelete = CASCADE)})
-public class Superset {
+public class Superset extends ExerciseInRoutine implements Parcelable {
 
     @ColumnInfo(name = "S_ID")
     @PrimaryKey(autoGenerate = true)
@@ -41,19 +44,92 @@ public class Superset {
     private final int reps2;
 
     @ColumnInfo(name = "Break")
-    private final int breakInSeconds;
+    private final @Nullable Integer breakInSeconds;
 
     @ColumnInfo(name = "RPE1")
-    private final int rpe1;
+    private final @Nullable Integer rpe1;
 
     @ColumnInfo(name = "RPE2")
-    private final int rpe2;
+    private final @Nullable Integer rpe2;
 
     @ColumnInfo(name = "Pos_In_Routine")
-    private final int posInRoutine;
+    private int posInRoutine;
 
     @ColumnInfo(name = "R_ID")
     private final int rId;
+
+    protected Superset(Parcel in) {
+        sId = in.readInt();
+        eId1 = in.readInt();
+        eId2 = in.readInt();
+        sets = in.readInt();
+        reps1 = in.readInt();
+        reps2 = in.readInt();
+        if (in.readByte() == 0) {
+            breakInSeconds = null;
+        } else {
+            breakInSeconds = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            rpe1 = null;
+        } else {
+            rpe1 = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            rpe2 = null;
+        } else {
+            rpe2 = in.readInt();
+        }
+        posInRoutine = in.readInt();
+        rId = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(sId);
+        dest.writeInt(eId1);
+        dest.writeInt(eId2);
+        dest.writeInt(sets);
+        dest.writeInt(reps1);
+        dest.writeInt(reps2);
+        if (breakInSeconds == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(breakInSeconds);
+        }
+        if (rpe1 == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(rpe1);
+        }
+        if (rpe2 == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(rpe2);
+        }
+        dest.writeInt(posInRoutine);
+        dest.writeInt(rId);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Superset> CREATOR = new Creator<Superset>() {
+        @Override
+        public Superset createFromParcel(Parcel in) {
+            return new Superset(in);
+        }
+
+        @Override
+        public Superset[] newArray(int size) {
+            return new Superset[size];
+        }
+    };
 
     public int getSId() {
         return sId;
@@ -79,15 +155,15 @@ public class Superset {
         return reps2;
     }
 
-    public int getBreakInSeconds() {
+    public @Nullable Integer getBreakInSeconds() {
         return breakInSeconds;
     }
 
-    public int getRpe1() {
+    public @Nullable Integer getRpe1() {
         return rpe1;
     }
 
-    public int getRpe2() {
+    public @Nullable Integer getRpe2() {
         return rpe2;
     }
 
@@ -99,7 +175,15 @@ public class Superset {
         return rId;
     }
 
-    public Superset(int sId, int eId1, int eId2, int sets, int reps1, int reps2, int breakInSeconds, int rpe1, int rpe2, int posInRoutine, int rId) {
+    public void reducePosInRoutine() {
+        posInRoutine--;
+    }
+
+    public void increasePosInRoutine() { posInRoutine++; }
+
+    public void setPosInRoutine(int posInRoutine) { this.posInRoutine = posInRoutine; }
+
+    public Superset(int sId, int eId1, int eId2, int sets, int reps1, int reps2, @Nullable Integer breakInSeconds, @Nullable Integer rpe1, @Nullable Integer rpe2, int posInRoutine, int rId) {
         this.sId = sId;
         this.eId1 = eId1;
         this.eId2 = eId2;

@@ -6,9 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.Editable;
 import android.text.InputType;
-import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -42,6 +40,7 @@ public class CustomEditText extends ConstraintLayout {
     private final int hintColorFocused;
     private final int hintColor;
     private final int hintColorError;
+    private final boolean showHintWithText;
 
     private Error error = Error.NULL;
 
@@ -88,6 +87,14 @@ public class CustomEditText extends ConstraintLayout {
             }
             case EXERCISE_ALREADY_EXISTS: {
                 errorMessage.setText(R.string.this_exercise_already_exists);
+                break;
+            }
+            case TRAININGPLAN_ALREADY_EXISTS: {
+                errorMessage.setText(R.string.trainingplan_already_exists);
+                break;
+            }
+            case ROUTINE_ALREADY_EXISTS: {
+                errorMessage.setText(R.string.routine_already_exists);
                 break;
             }
             case NO_ERROR_MESSAGE: {
@@ -141,10 +148,12 @@ public class CustomEditText extends ConstraintLayout {
         textField.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    focusHint();
-                } else {
-                    unfocusHint();
+                if(showHintWithText) {
+                    if (hasFocus) {
+                        focusHint();
+                    } else {
+                        unfocusHint();
+                    }
                 }
             }
         });
@@ -154,6 +163,11 @@ public class CustomEditText extends ConstraintLayout {
         errorMessage = findViewById(R.id.custom_edit_text_error_message);
 
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CustomEditText, defStyleAttr, 0);
+        showHintWithText = a.getBoolean(R.styleable.CustomEditText_showHintWithText, true);
+        if(!showHintWithText) {
+            hint.setVisibility(View.GONE);
+            textField.setHint(hint.getText());
+        }
         hintSize = a.getDimension(R.styleable.CustomEditText_hintSize, dpToPx(DEF_HINT_SIZE));
         hint.setTextSize(hintSize);
         hintSizeFocused = a.getDimension(R.styleable.CustomEditText_hintSizeFocused, dpToPx(DEF_HINT_SIZE_FOCUSED));
@@ -349,6 +363,12 @@ public class CustomEditText extends ConstraintLayout {
 
         //Exercise Dialog
         EXERCISE_ALREADY_EXISTS,
+
+        //Trainingplan Dialog
+        TRAININGPLAN_ALREADY_EXISTS,
+
+        //Routine Dialog
+        ROUTINE_ALREADY_EXISTS,
 
         NO_ERROR_MESSAGE,
 

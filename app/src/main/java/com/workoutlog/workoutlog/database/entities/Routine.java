@@ -4,7 +4,7 @@ import androidx.room.*;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity (indices = {@Index(value = {"TP_ID"}, unique = true)},
+@Entity (indices = {@Index(value = {"TP_ID"})},
         foreignKeys = @ForeignKey(entity = Trainingplan.class,
                                     parentColumns = "TP_ID",
                                     childColumns = "TP_ID",

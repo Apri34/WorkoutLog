@@ -30,4 +30,38 @@
     <string name="exercise">Exercise</string>
     <string name="save">Save</string>
     <string name="this_exercise_already_exists">This Exercise already exists</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="delete_question">Delete?</string>
+    <string name="really_delete_trainingplan_question">Do you really want to delete this Trainingplan? This cannot be
+        returned
+    </string>
+    <string name="trainingplan">Trainingplan</string>
+    <string name="trainingplan_already_exists">This Trainingplan already exists</string>
+    <string name="finished">finished</string>
+    <string name="routines">Routines</string>
+    <string name="routine">Routine</string>
+    <string name="routine_already_exists">Routine already exists</string>
+    <string name="really_delete_routine_question">Do you really want to delete this Routine? This cannot be returned
+    </string>
+    <string name="sets">Sets</string>
+    <string name="reps">Reps</string>
+    <string name="rpe">RPE</string>
+    <string name="break_seconds">Break (Seconds)</string>
+    <string name="drops">Drops</string>
+    <string name="choose_exercise">Choose exercise</string>
+    <string name="error">Error</string>
+    <string name="which_type_of_exercise">Which Type of Exercise?</string>
+    <string name="discard">Discard</string>
+    <string name="exercise_number">Exercise %s</string>
+    <string name="exercise_number_superset">Exercise %s (Superset)</string>
+    <string name="exercise_number_dropset">Exercise %s (Dropset)</string>
+    <string name="confirm_delete_exercise">Are you sure you want to delete this exercise?</string>
+    <string name="add">add</string>
+
+    <string-array name="exercise_types">
+        <item>Normal Exercise</item>
+        <item>Supersets</item>
+        <item>Dropsets</item>
+    </string-array>
 </resources>

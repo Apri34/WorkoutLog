@@ -15,6 +15,10 @@ import com.workoutlog.workoutlog.views.CustomEditText
 
 class AddExerciseDialogFragment: DialogFragment() {
 
+    companion object {
+        const val ERROR_KEY = "error"
+    }
+
     private var listener: IAddExercise? = null
     private lateinit var etName: CustomEditText
     private lateinit var exercises: List<String>
@@ -27,7 +31,7 @@ class AddExerciseDialogFragment: DialogFragment() {
         etName = view.findViewById(R.id.edit_text_dialog_add_exercise)
 
         if(savedInstanceState != null) {
-            val error = savedInstanceState.getSerializable(EditExerciseDialogFragment.ERROR_KEY) as CustomEditText.Error
+            val error = savedInstanceState.getSerializable(ERROR_KEY) as CustomEditText.Error
             etName.showErrorMessage(error)
         }
 
@@ -48,7 +52,7 @@ class AddExerciseDialogFragment: DialogFragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putSerializable(EditExerciseDialogFragment.ERROR_KEY, etName.error)
+        outState.putSerializable(ERROR_KEY, etName.error)
     }
 
     interface IAddExercise{

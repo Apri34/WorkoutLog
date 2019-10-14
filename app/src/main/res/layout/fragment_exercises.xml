@@ -10,8 +10,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
+            android:paddingLeft="@dimen/padding_recyclerview_side"
+            android:paddingRight="@dimen/padding_recyclerview_side"
     />
 
     <ImageButton

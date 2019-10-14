@@ -102,6 +102,7 @@ class NavigationActivity : AppCompatActivity() {
         supportFragmentManager.addOnBackStackChangedListener {
             if(supportFragmentManager.backStackEntryCount == 0) {
                 navView.setCheckedItem(R.id.nav_home)
+                supportActionBar!!.title = getString(R.string.home)
             }
         }
 
@@ -128,7 +129,7 @@ class NavigationActivity : AppCompatActivity() {
                             .replace(R.id.content_frame_navigation_activity, exercisesFragment)
                             .addToBackStack(null)
                             .commit()
-                    } else {
+                    } else if(navView.checkedItem?.itemId != R.id.nav_exercises) {
                         supportFragmentManager.popBackStack()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.content_frame_navigation_activity, exercisesFragment)
@@ -144,7 +145,7 @@ class NavigationActivity : AppCompatActivity() {
                             .replace(R.id.content_frame_navigation_activity, trainingplansFragment)
                             .addToBackStack(null)
                             .commit()
-                    } else {
+                    } else  if(navView.checkedItem?.itemId != R.id.nav_trainingplans){
                         supportFragmentManager.popBackStack()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.content_frame_navigation_activity, trainingplansFragment)
@@ -160,7 +161,7 @@ class NavigationActivity : AppCompatActivity() {
                             .replace(R.id.content_frame_navigation_activity, currentTrainingplanFragment)
                             .addToBackStack(null)
                             .commit()
-                    } else {
+                    } else  if(navView.checkedItem?.itemId != R.id.nav_current_trainingplan){
                         supportFragmentManager.popBackStack()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.content_frame_navigation_activity, currentTrainingplanFragment)
@@ -176,7 +177,7 @@ class NavigationActivity : AppCompatActivity() {
                             .replace(R.id.content_frame_navigation_activity, historyFragment)
                             .addToBackStack(null)
                             .commit()
-                    } else {
+                    } else  if(navView.checkedItem?.itemId != R.id.nav_history){
                         supportFragmentManager.popBackStack()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.content_frame_navigation_activity, historyFragment)

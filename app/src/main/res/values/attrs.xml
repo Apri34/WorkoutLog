@@ -11,5 +11,6 @@
         <attr name="textSize" format="dimension"/>
         <attr name="hintColorError" format="color"/>
         <attr name="textColor" format="color"/>
+        <attr name="showHintWithText" format="boolean"/>
     </declare-styleable>
 </resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:descendantFocusability="beforeDescendants"
+              android:focusableInTouchMode="true"
+              android:paddingLeft="10dp"
+              android:paddingStart="10dp"
+              android:paddingRight="10dp"
+              android:paddingEnd="10dp"
+              android:paddingTop="10dp"
+>
+
+    <com.workoutlog.workoutlog.views.CustomEditText
+            android:id="@+id/edit_text_dialog_add_trainingplan"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/textfield_height_login_register"
+            app:hint="@string/name"
+            app:hintSize="@dimen/hint_size_login_register"
+            app:hintColorFocused="@color/colorSecondaryLight"
+            app:customBackground="@drawable/background_custom_edit_text_no_color"
+            app:textColor="@color/colorSecondary"
+    />
+
+</LinearLayout>

@@ -22,4 +22,17 @@
     <dimen name="button_round_elevation">4dp</dimen>
     <dimen name="view_exercises_padding">4dp</dimen>
     <dimen name="view_exercises_text_padding_left">10dp</dimen>
+    <dimen name="padding_recyclerview_side">4dp</dimen>
+    <dimen name="recyclerview_card_elevation">4dp</dimen>
+    <dimen name="text_size_card_exercises">14sp</dimen>
+    <dimen name="margin_side_card_exercises">20dp</dimen>
+    <dimen name="margin_between_widgets_card_exercises">6dp</dimen>
+    <dimen name="text_size_spinner_exercises">16sp</dimen>
+    <dimen name="edit_text_width_exercise_in_routine">40dp</dimen>
+    <dimen name="edit_text_height_exercise_in_routine">20dp</dimen>
+    <dimen name="spinner_padding_top_bottom">4dp</dimen>
+    <dimen name="text_size_edit_trainingplan">22sp</dimen>
+    <dimen name="margin_between_widgets_edit_trainingplans">16dp</dimen>
+    <dimen name="text_size_basic_recycler_view">16sp</dimen>
+    <dimen name="padding_top_bottom_view_basic_recyclerview">4dp</dimen>
 </resources>

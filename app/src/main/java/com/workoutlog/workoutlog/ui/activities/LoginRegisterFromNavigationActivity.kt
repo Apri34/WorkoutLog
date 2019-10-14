@@ -1,9 +1,12 @@
 package com.workoutlog.workoutlog.ui.activities
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.workoutlog.workoutlog.R
@@ -83,6 +86,10 @@ class LoginRegisterFromNavigationActivity : AppCompatActivity(), LoginFragment.I
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+            window.statusBarColor = ContextCompat.getColor(this, R.color.colorSecondaryDark)
+        }
         setContentView(R.layout.activity_login_register_from_navigation)
         fragmentLogin = LoginFragment()
         fragmentRegister = RegisterFragment()

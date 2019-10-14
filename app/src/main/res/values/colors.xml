@@ -3,14 +3,21 @@
     <color name="colorAccent">#E3D081</color>
 
     <color name="colorPrimary">#E3D081</color>
+    <color name="colorPrimaryAlpha50">#7EE3D081</color>
     <color name="colorPrimaryDark">#DAC158</color>
     <color name="colorPrimaryLight">#E2D5A1</color>
     <color name="colorSecondary">#54494B</color>
     <color name="colorSecondaryLight">#6B5F60</color>
     <color name="colorSecondaryDark">#494042</color>
+    <color name="colorSecondaryAlpha50">#7E54494B</color>
     <color name="def_hint_color">#9C9C9C</color>
     <color name="hint_color_error">#FF8585</color>
     <color name="white_ripple_light">#E7E7E7</color>
     <color name="white_ripple_dark">#C5C5C5</color>
     <color name="white">#fff</color>
+    <color name="color_spinner_exercises">#f3f2dd</color>
+    <color name="color_spinner_exercises_ripple_light">#FAF9E3</color>
+    <color name="color_spinner_exercises_ripple_dark">#CBF3F2DD</color>
+    <color name="error_ripple_dark">#FD7070</color>
+    <color name="error_ripple_light">#FCB1B1</color>
 </resources>

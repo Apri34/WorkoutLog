@@ -247,4 +247,460 @@ public class DatabaseInitializer {
             return mDao.getAllExerciseNames();
         }
     }
+
+    public void deleteExercise(@NonNull final ExerciseDao dao, Exercise exercise) {
+        DeleteExercise task = new DeleteExercise(dao);
+        task.execute(exercise);
+    }
+
+    private static class DeleteExercise extends AsyncTask<Exercise, Void, Void> {
+
+        final ExerciseDao mDao;
+
+        DeleteExercise(ExerciseDao dao) { mDao = dao; }
+
+        @Override
+        protected Void doInBackground(Exercise... exercises) {
+            mDao.deleteExercise(exercises[0]);
+            return null;
+        }
+    }
+
+    public void deleteTrainingplan(@NonNull final TrainingplanDao dao, Trainingplan trainingplan) {
+        DeleteTrainingplan task = new DeleteTrainingplan(dao);
+        task.execute(trainingplan);
+    }
+
+    private static class DeleteTrainingplan extends AsyncTask<Trainingplan, Void, Void> {
+
+        final TrainingplanDao mDao;
+
+        DeleteTrainingplan(TrainingplanDao dao) { mDao = dao; }
+
+        @Override
+        protected Void doInBackground(Trainingplan... trainingplans) {
+            mDao.deleteTrainingplan(trainingplans[0]);
+            return null;
+        }
+    }
+
+    public List<String> getAllTrainingplanNames(@NonNull final TrainingplanDao dao) throws ExecutionException, InterruptedException {
+        GetAllTrainingplanNames task = new GetAllTrainingplanNames(dao);
+        return task.execute().get();
+    }
+
+    private static class GetAllTrainingplanNames extends AsyncTask<Void, Void, List<String>> {
+
+        final TrainingplanDao mDao;
+
+        GetAllTrainingplanNames(TrainingplanDao dao) { mDao = dao; }
+
+        @Override
+        protected List<String> doInBackground(Void... voids) {
+            return mDao.getAllTrainingplanNames();
+        }
+    }
+
+    public Trainingplan getTrainingplanById(@NonNull final TrainingplanDao dao, int id) throws ExecutionException, InterruptedException {
+        GetTrainingplanById task = new GetTrainingplanById(dao);
+        return task.execute(id).get();
+    }
+
+    private static class GetTrainingplanById extends AsyncTask<Integer, Void, Trainingplan> {
+
+        final TrainingplanDao mDao;
+
+        GetTrainingplanById(TrainingplanDao dao) { mDao = dao; }
+
+        @Override
+        protected Trainingplan doInBackground(Integer... integers) {
+            return mDao.getTrainingplanById(integers[0]);
+        }
+    }
+
+    public Trainingplan getLastTrainingplan(@NonNull final TrainingplanDao dao) throws ExecutionException, InterruptedException {
+        GetLastTrainingplan task = new GetLastTrainingplan(dao);
+        return task.execute().get();
+    }
+
+    private static class GetLastTrainingplan extends AsyncTask<Void, Void, Trainingplan> {
+
+        final TrainingplanDao mDao;
+
+        GetLastTrainingplan(TrainingplanDao dao) { mDao = dao; }
+
+        @Override
+        protected Trainingplan doInBackground(Void... voids) {
+            return mDao.getLastTrainingplan();
+        }
+    }
+
+    public List<Routine> getRoutinesByTpId(@NonNull final RoutineDao dao, int tpId) throws ExecutionException, InterruptedException {
+        GetRoutinesByTpId task = new GetRoutinesByTpId(dao);
+        return task.execute(tpId).get();
+    }
+
+    private static class GetRoutinesByTpId extends AsyncTask<Integer, Void, List<Routine>> {
+
+        final RoutineDao mDao;
+
+        GetRoutinesByTpId(RoutineDao dao) { mDao = dao; }
+
+        @Override
+        protected List<Routine> doInBackground(Integer... integers) {
+            return mDao.getRoutinesByTpId(integers[0]);
+        }
+    }
+
+    public List<String> getRoutineNamesByTpId(@NonNull final RoutineDao dao, int tpId) throws ExecutionException, InterruptedException {
+        GetRoutineNamesByTpId task = new GetRoutineNamesByTpId(dao);
+        return task.execute(tpId).get();
+    }
+
+    private static class GetRoutineNamesByTpId extends AsyncTask<Integer, Void, List<String>> {
+
+        final RoutineDao mDao;
+
+        GetRoutineNamesByTpId(RoutineDao dao) { mDao = dao; }
+
+        @Override
+        protected List<String> doInBackground(Integer... integers) {
+            return mDao.getRoutineNamesByTpId(integers[0]);
+        }
+    }
+
+    public int getNumberRoutinesInTp(@NonNull final RoutineDao dao, int tpId) throws ExecutionException, InterruptedException {
+        GetNumberRoutinesInTp task = new GetNumberRoutinesInTp(dao);
+        return task.execute(tpId).get();
+    }
+
+    private static class GetNumberRoutinesInTp extends AsyncTask<Integer, Void, Integer> {
+
+        final RoutineDao mDao;
+
+        GetNumberRoutinesInTp(RoutineDao dao) { mDao = dao; }
+
+        @Override
+        protected Integer doInBackground(Integer... integers) {
+            return mDao.getNumberRoutinesInTp(integers[0]);
+        }
+    }
+
+    public void insertRoutine(@NonNull final RoutineDao dao, Routine routine){
+        InsertRoutine task = new InsertRoutine(dao);
+        task.execute(routine);
+    }
+
+    private static class InsertRoutine extends AsyncTask<Routine, Void, Void> {
+
+        final RoutineDao mDao;
+
+         InsertRoutine(RoutineDao dao) { mDao = dao; }
+
+        @Override
+        protected Void doInBackground(Routine... routines) {
+             mDao.insertRoutine(routines[0]);
+            return null;
+        }
+    }
+
+    public Routine getLastRoutine(@NonNull final RoutineDao dao) throws ExecutionException, InterruptedException {
+        GetLastRoutine task = new GetLastRoutine(dao);
+        return task.execute().get();
+    }
+
+    private static class GetLastRoutine extends AsyncTask<Void, Void, Routine> {
+
+        final RoutineDao mDao;
+
+        GetLastRoutine(RoutineDao dao) { mDao = dao; }
+
+        @Override
+        protected Routine doInBackground(Void... voids) {
+            return mDao.getLastRoutine();
+        }
+    }
+
+    public void deleteRoutine(@NonNull final RoutineDao dao, Routine routine) {
+        DeleteRoutine task = new DeleteRoutine(dao);
+        task.execute(routine);
+    }
+
+    private static class DeleteRoutine extends AsyncTask<Routine, Void, Void> {
+
+        final RoutineDao mDao;
+
+        DeleteRoutine(RoutineDao dao) { mDao = dao; }
+
+        @Override
+        protected Void doInBackground(Routine... routines) {
+            mDao.deleteRoutine(routines[0]);
+            return null;
+        }
+    }
+
+    public void updateTrainingplan(@NonNull final TrainingplanDao dao, Trainingplan trainingplan) {
+        UpdateTrainingplan task = new UpdateTrainingplan(dao);
+        task.execute(trainingplan);
+    }
+
+    private static class UpdateTrainingplan extends AsyncTask<Trainingplan, Void, Void> {
+
+         final TrainingplanDao mDao;
+
+         UpdateTrainingplan(TrainingplanDao dao) { mDao = dao; }
+
+        @Override
+        protected Void doInBackground(Trainingplan... trainingplans) {
+            mDao.updateTrainingplan(trainingplans[0].getTpId(), trainingplans[0].getTpName());
+            return null;
+        }
+    }
+
+    public Routine getRoutineById(@NonNull final RoutineDao dao, int rId) throws ExecutionException, InterruptedException {
+        GetRoutineById task = new GetRoutineById(dao);
+        return task.execute(rId).get();
+    }
+
+    private static class GetRoutineById extends AsyncTask<Integer, Void, Routine> {
+
+        final RoutineDao mDao;
+
+        GetRoutineById(RoutineDao dao) { mDao = dao; }
+
+        @Override
+        protected Routine doInBackground(Integer... integers) {
+            return mDao.getRoutineById(integers[0]);
+        }
+    }
+
+    public void insertNormal(@NonNull final NormalDao dao, Normal normal) {
+        InsertNormal task = new InsertNormal(dao);
+        task.execute(normal);
+    }
+
+    private static class InsertNormal extends AsyncTask<Normal, Void, Void> {
+
+        final NormalDao mDao;
+
+        InsertNormal(NormalDao dao) { mDao = dao; }
+
+        @Override
+        protected Void doInBackground(Normal... normals) {
+            mDao.insertNormal(normals[0]);
+            return null;
+        }
+    }
+
+    public void insertSuperset(@NonNull final SupersetDao dao, Superset superset) {
+        InsertSuperset task = new InsertSuperset(dao);
+        task.execute(superset);
+    }
+
+    private static class InsertSuperset extends AsyncTask<Superset, Void, Void> {
+
+        final SupersetDao mDao;
+
+        InsertSuperset(SupersetDao dao) { mDao = dao; }
+
+        @Override
+        protected Void doInBackground(Superset... supersets) {
+            mDao.insertSuperset(supersets[0]);
+            return null;
+        }
+    }
+
+    public void insertDropset(@NonNull final DropsetDao dao, Dropset dropset) {
+        InsertDropset task = new InsertDropset(dao);
+        task.execute(dropset);
+    }
+
+    private static class InsertDropset extends AsyncTask<Dropset, Void, Void> {
+
+        final DropsetDao mDao;
+
+        InsertDropset(DropsetDao dao) { mDao = dao; }
+
+        @Override
+        protected Void doInBackground(Dropset... dropsets) {
+            mDao.insertDropset(dropsets[0]);
+            return null;
+        }
+    }
+
+    public void deleteNormal(@NonNull final NormalDao normalDao, Normal normal) {
+        DeleteNormal task = new DeleteNormal(normalDao);
+        task.execute(normal);
+    }
+
+    private static class DeleteNormal extends AsyncTask<Normal, Void, Void> {
+
+        final NormalDao mDao;
+
+        DeleteNormal(NormalDao dao) { mDao = dao; }
+
+        @Override
+        protected Void doInBackground(Normal... normals) {
+            mDao.deleteNormal(normals[0]);
+
+            return null;
+        }
+    }
+
+    public void deleteSuperset(@NonNull final SupersetDao supersetDao, Superset superset) {
+        DeleteSuperset task = new DeleteSuperset(supersetDao);
+        task.execute(superset);
+    }
+
+    private static class DeleteSuperset extends AsyncTask<Superset, Void, Void> {
+
+        final SupersetDao mDao;
+
+        DeleteSuperset(SupersetDao dao) { mDao = dao; }
+
+        @Override
+        protected Void doInBackground(Superset... supersets) {
+            mDao.deleteSuperset(supersets[0]);
+            return null;
+        }
+    }
+
+    public void deleteDropset(@NonNull final DropsetDao dropsetDao, Dropset dropset) {
+        DeleteDropset task = new DeleteDropset(dropsetDao);
+        task.execute(dropset);
+    }
+
+    private static class DeleteDropset extends AsyncTask<Dropset, Void, Void> {
+
+        final DropsetDao mDao;
+
+        DeleteDropset(DropsetDao dao) { mDao = dao; }
+
+        @Override
+        protected Void doInBackground(Dropset... dropsets) {
+            mDao.deleteDropset(dropsets[0]);
+            return null;
+        }
+    }
+
+    public List<Normal> getNormalsByRoutineId(@NonNull final NormalDao dao, int rId) throws ExecutionException, InterruptedException {
+        GetNormalsByRoutineId task = new GetNormalsByRoutineId(dao);
+        return task.execute(rId).get();
+    }
+
+    private static class GetNormalsByRoutineId extends AsyncTask<Integer, Void, List<Normal>> {
+
+        final NormalDao mDao;
+
+        GetNormalsByRoutineId(NormalDao dao) { mDao = dao; }
+
+        @Override
+        protected List<Normal> doInBackground(Integer... integers) {
+            return mDao.getNormalsByRoutineId(integers[0]);
+        }
+    }
+
+    public List<Superset> getSupersetsByRoutineId(@NonNull final SupersetDao dao, int rId) throws ExecutionException, InterruptedException {
+        GetSupersetsByRoutineId task = new GetSupersetsByRoutineId(dao);
+        return task.execute(rId).get();
+    }
+
+    private static class GetSupersetsByRoutineId extends AsyncTask<Integer, Void, List<Superset>> {
+
+        final SupersetDao mDao;
+
+        GetSupersetsByRoutineId(SupersetDao dao) { mDao = dao; }
+
+        @Override
+        protected List<Superset> doInBackground(Integer... integers) {
+            return mDao.getSupersetsByRoutineId(integers[0]);
+        }
+    }
+
+    public List<Dropset> getDropsetsByRoutineId(@NonNull final DropsetDao dao, int rId) throws ExecutionException, InterruptedException {
+        GetDropsetsByRoutineId task = new GetDropsetsByRoutineId(dao);
+        return task.execute(rId).get();
+    }
+
+    private static class GetDropsetsByRoutineId extends AsyncTask<Integer, Void, List<Dropset>> {
+
+        final DropsetDao mDao;
+
+        GetDropsetsByRoutineId(DropsetDao dao) { mDao = dao; }
+
+        @Override
+        protected List<Dropset> doInBackground(Integer... integers) {
+            return mDao.getDropsetsByRoutineId(integers[0]);
+        }
+    }
+
+    public void updateRoutine(@NonNull final RoutineDao dao, int rId, String rName) {
+        UpdateRoutine task = new UpdateRoutine(dao);
+        Routine routine = new Routine(rId, rName, 0, 0);
+        task.execute(routine);
+    }
+
+    private static class UpdateRoutine extends AsyncTask<Routine, Void, Void> {
+
+        final RoutineDao mDao;
+
+        UpdateRoutine(RoutineDao dao) { mDao = dao; }
+
+        @Override
+        protected Void doInBackground(Routine... routines) {
+            mDao.updateRoutine(routines[0].getRId(), routines[0].getRName());
+            return null;
+        }
+    }
+
+    public List<Normal> getNormalsByEId(@NonNull final NormalDao dao, int eId) throws ExecutionException, InterruptedException {
+        GetNormalsByEId task = new GetNormalsByEId(dao);
+        return task.execute(eId).get();
+    }
+
+    private static class GetNormalsByEId extends AsyncTask<Integer, Void, List<Normal>> {
+
+        final NormalDao mDao;
+
+        GetNormalsByEId(NormalDao dao) { mDao = dao; }
+
+        @Override
+        protected List<Normal> doInBackground(Integer... integers) {
+            return mDao.getNormalsByEId(integers[0]);
+        }
+    }
+
+    public List<Superset> getSupersetsByEId(@NonNull final SupersetDao dao, int eId) throws ExecutionException, InterruptedException {
+        GetSupersetsByEId task = new GetSupersetsByEId(dao);
+        return task.execute(eId).get();
+    }
+
+    private static class GetSupersetsByEId extends AsyncTask<Integer, Void, List<Superset>> {
+
+        final SupersetDao mDao;
+
+        GetSupersetsByEId(SupersetDao dao) { mDao = dao; }
+
+        @Override
+        protected List<Superset> doInBackground(Integer... integers) {
+            return mDao.getSupersetsByEId(integers[0]);
+        }
+    }
+
+    public List<Dropset> getDropsetsByEId(@NonNull final DropsetDao dao, int eId) throws ExecutionException, InterruptedException {
+        GetDropsetsByEId task = new GetDropsetsByEId(dao);
+        return task.execute(eId).get();
+    }
+
+    private static class GetDropsetsByEId extends AsyncTask<Integer, Void, List<Dropset>> {
+
+        final DropsetDao mDao;
+
+        GetDropsetsByEId(DropsetDao dao) { mDao = dao; }
+
+        @Override
+        protected List<Dropset> doInBackground(Integer... integers) {
+            return mDao.getDropsetsByEId(integers[0]);
+        }
+    }
 }

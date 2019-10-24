@@ -11,6 +11,7 @@
               android:paddingRight="10dp"
               android:paddingEnd="10dp"
               android:paddingTop="10dp"
+              android:background="@color/colorSecondary"
 >
 
     <com.workoutlog.workoutlog.views.CustomEditText
@@ -19,8 +20,7 @@
             android:layout_height="@dimen/textfield_height_login_register"
             app:hint="@string/name"
             app:hintSize="@dimen/hint_size_login_register"
-            app:hintColorFocused="@color/colorSecondaryLight"
-            app:customBackground="@drawable/background_custom_edit_text_no_color"
+            app:customBackground="@drawable/background_edittext_login_register"
             app:textColor="@color/colorSecondary"
     />
 

@@ -2,10 +2,12 @@ package com.workoutlog.workoutlog.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +29,37 @@ class ExercisesFragment: Fragment(),
         val normals = dbInitializer.getNormalsByEId(database.normalDao(), item.eId)
         val supersets = dbInitializer.getSupersetsByEId(database.supersetDao(), item.eId)
         val dropsets = dbInitializer.getDropsetsByEId(database.dropsetDao(), item.eId)
+        if(PreferenceManager.getDefaultSharedPreferences(context).contains(KEY_CURRENT_TP_STATE) &&
+            PreferenceManager.getDefaultSharedPreferences(context).getInt(KEY_CURRENT_TP_STATE, -1) > TP_SELECTED) {
+            val tpId = PreferenceManager.getDefaultSharedPreferences(context).getInt(KEY_TP_ID, -1)
+
+            normals.forEach {
+                val routine = dbInitializer.getRoutineById(database.routineDao(), it.rId)
+                if(routine.tpId == tpId) {
+                    val dialog = MessageDialogFragment.newInstance(getString(R.string.exercise_is_part_of_current_tp_cant_delete))
+                    dialog.show(childFragmentManager, "cantDeleteExercise")
+                    return
+                }
+            }
+
+            supersets.forEach {
+                val routine = dbInitializer.getRoutineById(database.routineDao(), it.rId)
+                if(routine.tpId == tpId) {
+                    val dialog = MessageDialogFragment.newInstance(getString(R.string.exercise_is_part_of_current_tp_cant_delete))
+                    dialog.show(childFragmentManager, "cantDeleteExercise")
+                    return
+                }
+            }
+
+            dropsets.forEach {
+                val routine = dbInitializer.getRoutineById(database.routineDao(), it.rId)
+                if(routine.tpId == tpId) {
+                    val dialog = MessageDialogFragment.newInstance(getString(R.string.exercise_is_part_of_current_tp_cant_delete))
+                    dialog.show(childFragmentManager, "cantDeleteExercise")
+                    return
+                }
+            }
+        }
         val routines = ArrayList<Int>()
         normals.forEach {
             if(it.rId !in routines) routines.add(it.rId)
@@ -95,6 +128,12 @@ class ExercisesFragment: Fragment(),
     private lateinit var database: AppDatabase
     private lateinit var dbInitializer: DatabaseInitializer
 
+    companion object {
+        private const val TP_SELECTED = 1
+        private const val KEY_CURRENT_TP_STATE = "currentTpState"
+        private const val KEY_TP_ID = "tpId"
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_exercises, container, false)
 
@@ -104,6 +143,7 @@ class ExercisesFragment: Fragment(),
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
         val dividerItemDecoration = DividerItemDecoration(recyclerView.context, LinearLayoutManager.VERTICAL)
+        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(context!!, R.drawable.recyclerview_divider)!!)
         recyclerView.addItemDecoration(dividerItemDecoration)
 
         val exercises = dbInitializer.getAllExercises(database.exerciseDao())

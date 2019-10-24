@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:drawable="@drawable/background_calender_item_not_in_month" app:state_chosen="false" app:state_in_month="false"/>
+    <item android:drawable="@drawable/background_calender_item_in_month_chosen" app:state_in_month="true" app:state_chosen="true"/>
+    <item android:drawable="@drawable/background_calender_item_in_month_not_chosen" app:state_in_month="true" app:state_chosen="false"/>
+</selector>

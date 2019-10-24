@@ -11,8 +11,11 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             tools:replace="allowBackup">
-        <activity android:name=".ui.activities.EditRoutineActivity"
-                  android:windowSoftInputMode="stateHidden">
+        <activity android:name=".ui.activities.CreateCurrentTrainingplanActivity">
+        </activity>
+        <activity
+                android:name=".ui.activities.EditRoutineActivity"
+                android:windowSoftInputMode="stateHidden">
         </activity>
         <activity android:name=".ui.activities.EditTrainingplanActivity">
         </activity>

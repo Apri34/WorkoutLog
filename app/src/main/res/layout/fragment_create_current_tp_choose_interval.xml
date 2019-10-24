@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@android:color/transparent"
+>
+
+    <com.workoutlog.workoutlog.views.IntervalPicker
+            android:id="@+id/interval_picker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:textSizeItemsIP="@dimen/text_size_items_interval"
+            app:textSizeTopIP="@dimen/text_size_top_interval"
+    />
+
+    <com.workoutlog.workoutlog.views.CustomIntervalCreator
+            android:id="@+id/custom_interval_creator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:textSizeItemsCIC="@dimen/text_size_items_interval"
+            app:textSizeTopCIC="@dimen/text_size_top_interval"
+    />
+
+</LinearLayout>

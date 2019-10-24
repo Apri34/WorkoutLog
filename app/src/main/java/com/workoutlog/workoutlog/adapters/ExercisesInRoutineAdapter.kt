@@ -141,6 +141,10 @@ class ExercisesInRoutineAdapter(private val context: Context, private var exerci
 
     inner class NormalViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
+        private lateinit var textViewReps: TextView
+        private lateinit var textViewSets: TextView
+        private lateinit var textViewRpe: TextView
+        private lateinit var textViewBreak: TextView
         private lateinit var textViewNumber: TextView
         private lateinit var spinner: Spinner
         private lateinit var buttonFinish: ImageButton
@@ -175,6 +179,10 @@ class ExercisesInRoutineAdapter(private val context: Context, private var exerci
                 spinner.setSelection(spinner.adapter.count)
             }
 
+            textViewBreak = view.findViewById(R.id.text_view_break_view_normal)
+            textViewReps = view.findViewById(R.id.text_view_reps_view_normal)
+            textViewSets = view.findViewById(R.id.text_view_sets_view_normal)
+            textViewRpe = view.findViewById(R.id.text_view_rpe_view_normal)
             buttonFinish = view.findViewById(R.id.button_finish_card_view_normal)
             buttonEdit = view.findViewById(R.id.button_edit_card_view_normal)
             buttonDelete = view.findViewById(R.id.button_delete_card_view_normal)
@@ -302,11 +310,21 @@ class ExercisesInRoutineAdapter(private val context: Context, private var exerci
             etRpe.isClickable = editable
             etRpe.isEnabled = editable
             cardView.isSelected = editable
+            textViewBreak.isEnabled = editable
+            textViewReps.isEnabled = editable
+            textViewRpe.isEnabled = editable
+            textViewSets.isEnabled = editable
         }
     }
 
     inner class SupersetViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
+        private lateinit var textViewReps1: TextView
+        private lateinit var textViewReps2: TextView
+        private lateinit var textViewRpe2: TextView
+        private lateinit var textViewSets: TextView
+        private lateinit var textViewRpe1: TextView
+        private lateinit var textViewBreak: TextView
         private lateinit var textViewNumber: TextView
         private lateinit var spinner1: Spinner
         private lateinit var spinner2: Spinner
@@ -346,6 +364,12 @@ class ExercisesInRoutineAdapter(private val context: Context, private var exerci
                 spinner2.setSelection(spinner2.adapter.count)
             }
 
+            textViewReps1 = view.findViewById(R.id.text_view_reps1_view_superset)
+            textViewReps2 = view.findViewById(R.id.text_view_reps2_view_superset)
+            textViewSets = view.findViewById(R.id.text_view_sets_view_superset)
+            textViewRpe1 = view.findViewById(R.id.text_view_rpe1_view_superset)
+            textViewRpe2 = view.findViewById(R.id.text_view_rpe2_view_superset)
+            textViewBreak = view.findViewById(R.id.text_view_break_view_superset)
             buttonFinish = view.findViewById(R.id.button_finish_card_view_superset)
             buttonEdit = view.findViewById(R.id.button_edit_card_view_superset)
             buttonDelete = view.findViewById(R.id.button_delete_card_view_superset)
@@ -505,11 +529,21 @@ class ExercisesInRoutineAdapter(private val context: Context, private var exerci
             etRpe2.isClickable = editable
             etRpe2.isEnabled = editable
             cardView.isSelected = editable
+            textViewBreak.isEnabled = editable
+            textViewReps1.isEnabled = editable
+            textViewRpe1.isEnabled = editable
+            textViewReps2.isEnabled = editable
+            textViewRpe2.isEnabled = editable
+            textViewSets.isEnabled = editable
         }
     }
 
     inner class DropsetViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
+        private lateinit var textViewReps: TextView
+        private lateinit var textViewSets: TextView
+        private lateinit var textViewDrops: TextView
+        private lateinit var textViewBreak: TextView
         private lateinit var textViewNumber: TextView
         private lateinit var spinner: Spinner
         private lateinit var buttonFinish: ImageButton
@@ -541,6 +575,10 @@ class ExercisesInRoutineAdapter(private val context: Context, private var exerci
                 spinner.setSelection(spinner.adapter.count)
             }
 
+            textViewBreak = view.findViewById(R.id.text_view_break_view_dropset)
+            textViewReps = view.findViewById(R.id.text_view_reps_view_dropset)
+            textViewSets = view.findViewById(R.id.text_view_sets_view_dropset)
+            textViewDrops = view.findViewById(R.id.text_view_drops_view_dropset)
             buttonFinish = view.findViewById(R.id.button_finish_card_view_dropset)
             buttonEdit = view.findViewById(R.id.button_edit_card_view_dropset)
             buttonDelete = view.findViewById(R.id.button_delete_card_view_dropset)
@@ -673,6 +711,10 @@ class ExercisesInRoutineAdapter(private val context: Context, private var exerci
             etDrops.isClickable = editable
             etDrops.isEnabled = editable
             cardView.isSelected = editable
+            textViewBreak.isEnabled = editable
+            textViewReps.isEnabled = editable
+            textViewDrops.isEnabled = editable
+            textViewSets.isEnabled = editable
         }
     }
 

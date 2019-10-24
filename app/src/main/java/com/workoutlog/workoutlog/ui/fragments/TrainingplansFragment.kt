@@ -2,10 +2,12 @@ package com.workoutlog.workoutlog.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,6 +50,15 @@ class TrainingplansFragment: Fragment(),
     }
 
     override fun delete(item: Trainingplan) {
+        if (PreferenceManager.getDefaultSharedPreferences(context).contains(KEY_CURRENT_TP_STATE) &&
+                PreferenceManager.getDefaultSharedPreferences(context).getInt(KEY_CURRENT_TP_STATE, -1) >= TP_SELECTED) {
+            val tpId = PreferenceManager.getDefaultSharedPreferences(context).getInt(TP_ID_KEY, -1)
+            if(item.tpId == tpId) {
+                val dialog = MessageDialogFragment.newInstance(getString(R.string.current_tp_cant_delete))
+                dialog.show(childFragmentManager, "tpNotDeleted")
+                return
+            }
+        }
         val dialog = ConfirmDeleteDialog<Trainingplan>()
         dialog.setConfirmDeleteDialogId(1)
         dialog.setItem(item)
@@ -72,6 +83,8 @@ class TrainingplansFragment: Fragment(),
 
     companion object {
         const val TP_ID_KEY = "tpId"
+        private const val TP_SELECTED = 1
+        private const val KEY_CURRENT_TP_STATE = "currentTpState"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -86,6 +99,7 @@ class TrainingplansFragment: Fragment(),
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
         val dividerItemDecoration = DividerItemDecoration(recyclerView.context, LinearLayoutManager.VERTICAL)
+        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(context!!, R.drawable.recyclerview_divider)!!)
         recyclerView.addItemDecoration(dividerItemDecoration)
         val adapter = TrainingplansAdapter(dbInitializer.getAllTrainingplans(database.trainingplanDao()))
         adapter.setListener(this)

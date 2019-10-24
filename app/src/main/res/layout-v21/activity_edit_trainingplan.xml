@@ -8,6 +8,7 @@
         tools:context=".ui.activities.EditTrainingplanActivity"
         android:focusableInTouchMode="true"
         android:descendantFocusability="beforeDescendants"
+        android:background="@color/colorSecondary"
 >
 
     <androidx.appcompat.widget.Toolbar
@@ -34,8 +35,8 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar_edit_trainingplan_activity"
             android:layout_marginTop="@dimen/margin_between_widgets_edit_trainingplans"
             android:textSize="@dimen/text_size_edit_trainingplan"
-            android:textColor="@color/colorSecondary"
-            android:background="@drawable/background_edit_text_exercise_in_routine_pressed"
+            android:textColor="@color/colorPrimary"
+            android:background="@android:color/transparent"
     />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -1,5 +1,7 @@
 package com.workoutlog.workoutlog.database.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import androidx.room.*;
 
 import static androidx.room.ForeignKey.CASCADE;
@@ -9,7 +11,39 @@ import static androidx.room.ForeignKey.CASCADE;
                                     parentColumns = "TP_ID",
                                     childColumns = "TP_ID",
                                     onDelete = CASCADE))
-public class Routine {
+public class Routine implements Parcelable {
+    protected Routine(Parcel in) {
+        rId = in.readInt();
+        rName = in.readString();
+        tpId = in.readInt();
+        posInTp = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(rId);
+        dest.writeString(rName);
+        dest.writeInt(tpId);
+        dest.writeInt(posInTp);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Routine> CREATOR = new Creator<Routine>() {
+        @Override
+        public Routine createFromParcel(Parcel in) {
+            return new Routine(in);
+        }
+
+        @Override
+        public Routine[] newArray(int size) {
+            return new Routine[size];
+        }
+    };
+
     public int getRId() {
         return rId;
     }

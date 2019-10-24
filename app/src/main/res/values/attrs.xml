@@ -13,4 +13,24 @@
         <attr name="textColor" format="color"/>
         <attr name="showHintWithText" format="boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="CalenderItem">
+        <attr name="state_chosen" format="boolean"/>
+        <attr name="state_in_month" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="IntervalPicker">
+        <attr name="textSizeTopIP" format="dimension"/>
+        <attr name="textSizeItemsIP" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomIntervalCreator">
+        <attr name="textSizeTopCIC" format="dimension"/>
+        <attr name="textSizeItemsCIC" format="dimension"/>
+        <attr name="buttonHeight" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="Calender">
+        <attr name="isEditable" format="boolean"/>
+    </declare-styleable>
 </resources>

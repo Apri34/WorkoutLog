@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager.getDefaultSharedPreferences
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
@@ -26,7 +27,7 @@ class EditTrainingplanActivity : AppCompatActivity(),
     RoutinesAdapter.IRoutinesAdapter,
     DeleteOrEditDialogFragment.IDeleteOrEditDialog<Routine>,
     ConfirmDeleteDialog.IConfirmDelete<Routine>,
-    EditTrainingplanDialogFragment.IEditTrainingplan{
+    EditTrainingplanDialogFragment.IEditTrainingplan {
 
     override fun routineClicked(rtn: Routine) {
         editRoutine(rtn)
@@ -49,13 +50,19 @@ class EditTrainingplanActivity : AppCompatActivity(),
     }
 
     override fun delete(item: Routine) {
-        val dialog = ConfirmDeleteDialog<Routine>()
-        dialog.setItem(item)
-        dialog.setTitle(item.rName)
-        dialog.setMessage(getString(R.string.really_delete_routine_question))
-        dialog.setListener(this)
-        dialog.setConfirmDeleteDialogId(1)
-        dialog.show(supportFragmentManager, "confirmDelete")
+        if(isCurrentTp) {
+            MessageDialogFragment.newInstance(getString(R.string.you_cant_add_or_delete_routines_in_yout_current_tp)).show(
+                supportFragmentManager, "cant_delete_or_add_routine"
+            )
+        } else {
+            val dialog = ConfirmDeleteDialog<Routine>()
+            dialog.setItem(item)
+            dialog.setTitle(item.rName)
+            dialog.setMessage(getString(R.string.really_delete_routine_question))
+            dialog.setListener(this)
+            dialog.setConfirmDeleteDialogId(1)
+            dialog.show(supportFragmentManager, "confirmDelete")
+        }
     }
 
     override fun edit(item: Routine) {
@@ -79,6 +86,7 @@ class EditTrainingplanActivity : AppCompatActivity(),
     companion object {
         private const val TP_ID_KEY = "tpId"
         private const val ROUTINE_ID_KEY = "routineId"
+        private const val KEY_TP_ID = "tpId"
     }
 
     private lateinit var toolbar: Toolbar
@@ -89,6 +97,8 @@ class EditTrainingplanActivity : AppCompatActivity(),
     private lateinit var dbInitializer: DatabaseInitializer
     private lateinit var database: AppDatabase
 
+    private var isCurrentTp = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -96,6 +106,8 @@ class EditTrainingplanActivity : AppCompatActivity(),
             window.statusBarColor = ContextCompat.getColor(this, R.color.colorSecondaryDark)
         }
         setContentView(R.layout.activity_edit_trainingplan)
+
+        isCurrentTp = getDefaultSharedPreferences(this).getInt(KEY_TP_ID, -1) == intent.extras!!.getInt(TP_ID_KEY)
 
         dbInitializer = DatabaseInitializer.getInstance()
         database = AppDatabase.getInstance(this)
@@ -112,6 +124,7 @@ class EditTrainingplanActivity : AppCompatActivity(),
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
         val dividerItemDecoration = DividerItemDecoration(recyclerView.context, LinearLayoutManager.VERTICAL)
+        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(this, R.drawable.recyclerview_divider)!!)
         recyclerView.addItemDecoration(dividerItemDecoration)
         val routines = dbInitializer.getRoutinesByTpId(database.routineDao(), trainingplan.tpId)
         val adapter = RoutinesAdapter(routines)
@@ -147,8 +160,14 @@ class EditTrainingplanActivity : AppCompatActivity(),
     }
 
     private fun addRoutine() {
-        val dialog = AddRoutineDialogFragment.getInstance(trainingplan.tpId)
-        dialog.show(supportFragmentManager, "addRoutine")
+        if(isCurrentTp) {
+            MessageDialogFragment.newInstance(getString(R.string.you_cant_add_or_delete_routines_in_yout_current_tp)).show(
+                supportFragmentManager, "cant_delete_or_add_routine"
+            )
+        } else {
+            val dialog = AddRoutineDialogFragment.getInstance(trainingplan.tpId)
+            dialog.show(supportFragmentManager, "addRoutine")
+        }
     }
 
     private fun editRoutine(routine: Routine) {

@@ -8,7 +8,7 @@
           android:ellipsize="marquee"
           android:textAlignment="center"
           android:textSize="@dimen/text_size_spinner_exercises"
-          android:textColor="@color/colorSecondary"
+          android:textColor="@color/color_spinner_item_exercise_in_routine"
           android:textStyle="bold"
           android:paddingBottom="@dimen/spinner_padding_top_bottom"
           android:paddingTop="@dimen/spinner_padding_top_bottom"

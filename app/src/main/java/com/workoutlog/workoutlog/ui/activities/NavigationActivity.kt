@@ -3,6 +3,7 @@ package com.workoutlog.workoutlog.ui.activities
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
@@ -12,12 +13,64 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.workoutlog.workoutlog.R
 import com.workoutlog.workoutlog.ui.fragments.*
 
-class NavigationActivity : AppCompatActivity() {
+class NavigationActivity : AppCompatActivity(), CurrentTrainingplanFragment.ICurrentTrainingplanFragment {
+
+    override fun refreshFragment(fragment: Fragment): Boolean {
+        if(fragment.isAdded) {
+            supportFragmentManager.beginTransaction()
+                .detach(fragment)
+                .attach(fragment)
+                .commit()
+        }
+        return true
+    }
+
+    override fun createNewCurrentTrainingplan() {
+        PreferenceManager.getDefaultSharedPreferences(this).edit()
+            .putInt(KEY_CURRENT_TP_STATE, NO_CURRENT_TP)
+            .remove(KEY_TP_ID)
+            .remove(KEY_INTERVAL)
+            .remove(KEY_START_DAY)
+            .remove(KEY_START_MONTH)
+            .remove(KEY_START_YEAR)
+            .remove(KEY_DELOAD_CYCLES)
+            .remove(KEY_DELOAD_VOLUME)
+            .remove(KEY_DELOAD_WEIGHT)
+            .remove(KEY_DELOAD_SET)
+            .apply()
+        startActivity(Intent(this, CreateCurrentTrainingplanActivity::class.java))
+    }
+
+    override fun editTrainingplan() {
+        val intent = Intent(this, CreateCurrentTrainingplanActivity::class.java)
+        intent.putExtra(KEY_FRAGMENT, KEY_FRAG_SELECT_TP)
+        startActivity(intent)
+    }
+
+    override fun editInterval() {val intent = Intent(this, CreateCurrentTrainingplanActivity::class.java)
+        intent.putExtra(KEY_FRAGMENT, KEY_FRAG_CHOOSE_INTERVAL)
+        startActivity(intent)
+    }
+
+    override fun editStartDay() {val intent = Intent(this, CreateCurrentTrainingplanActivity::class.java)
+        intent.putExtra(KEY_FRAGMENT, KEY_FRAG_CHOOSE_START)
+        startActivity(intent)
+    }
+
+    override fun editDeload() {val intent = Intent(this, CreateCurrentTrainingplanActivity::class.java)
+        intent.putExtra(KEY_FRAGMENT, KEY_FRAG_DELOAD)
+        startActivity(intent)
+    }
+
+    override fun createCurrentTrainingplan() {
+        startActivity(Intent(this, CreateCurrentTrainingplanActivity::class.java))
+    }
 
     companion object {
         private const val HOME_FRAGMENT_KEY = "homeFragment"
@@ -25,6 +78,24 @@ class NavigationActivity : AppCompatActivity() {
         private const val TRAININGPLANS_FRAGMENT_KEY = "trainingplansFragment"
         private const val CURRENT_TRAININGPLAN_FRAGMENT_KEY = "currentTrainingplanFragment"
         private const val HISTORY_FRAGMENT_KEY = "historyFragment"
+
+        private const val KEY_FRAGMENT = "fragment"
+        private const val KEY_FRAG_CHOOSE_INTERVAL = "chooseInterval"
+        private const val KEY_FRAG_CHOOSE_START = "chooseStart"
+        private const val KEY_FRAG_DELOAD = "deload"
+        private const val KEY_FRAG_SELECT_TP = "selectTp"
+
+        private const val KEY_CURRENT_TP_STATE = "currentTpState"
+        private const val NO_CURRENT_TP = 0
+        private const val KEY_TP_ID = "tpId"
+        private const val KEY_INTERVAL = "interval"
+        private const val KEY_START_DAY = "startDay"
+        private const val KEY_START_MONTH = "startMonth"
+        private const val KEY_START_YEAR = "startYear"
+        private const val KEY_DELOAD_CYCLES = "deloadCycles"
+        private const val KEY_DELOAD_VOLUME = "deloadVolume"
+        private const val KEY_DELOAD_WEIGHT = "deloadWeight"
+        private const val KEY_DELOAD_SET = "deloadSet"
     }
 
     private lateinit var mAuth: FirebaseAuth
@@ -202,6 +273,15 @@ class NavigationActivity : AppCompatActivity() {
             }
             drawerLayout.closeDrawers()
             true
+        }
+
+        if(intent.hasExtra("openTrainingplans")) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.content_frame_navigation_activity, trainingplansFragment)
+                .addToBackStack(null)
+                .commit()
+            navView.setCheckedItem(R.id.nav_trainingplans)
+            supportActionBar!!.title = getString(R.string.trainingplans)
         }
     }
 

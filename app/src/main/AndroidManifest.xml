@@ -11,6 +11,14 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             tools:replace="allowBackup">
+        <activity android:name=".ui.activities.WorkoutActivity"
+                  android:configChanges="orientation"
+                  android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.activities.CreateRoutineActivity">
+        </activity>
+        <activity android:name=".ui.activities.ChooseRoutineActivity">
+        </activity>
         <activity android:name=".ui.activities.CreateCurrentTrainingplanActivity">
         </activity>
         <activity

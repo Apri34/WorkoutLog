@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+        android:id="@+id/layout_view_exercises"
+        xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -12,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_basic_recycler_view"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/text_color_recycler_view"
             android:paddingLeft="@dimen/view_exercises_text_padding_left"
             android:paddingStart="@dimen/view_exercises_text_padding_left"
             android:paddingTop="@dimen/padding_top_bottom_view_basic_recyclerview"

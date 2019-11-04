@@ -94,9 +94,26 @@ public class CalenderItem extends androidx.appcompat.widget.AppCompatTextView {
         this.month = month;
         this.year = year;
     }
+
+    public void setDateInLandscape(int day, int month, int year) {
+        String d = (day < 10 ? "0" : "") + String.valueOf(day);
+        String m = (month < 10 ? "0" : "") + String.valueOf(month);
+        setText(String.format("%s.%s\n", d, m));
+        this.day = day;
+        this.month = month;
+        this.year = year;
+    }
+
     public void setRoutine(String routine) {
         if(routine.length() > 7) {
             routine = routine.substring(0, 4) + "...";
+        }
+        setText(String.format("%s%s", getText(), routine));
+    }
+
+    public void setRoutineInLandscape(String routine) {
+        if(routine.length() > 12) {
+            routine = routine.substring(0, 9) + "...";
         }
         setText(String.format("%s%s", getText(), routine));
     }

@@ -24,4 +24,7 @@ public interface NormalDao {
 
     @Query("SELECT * FROM Normal WHERE E_ID = :eId")
     List<Normal> getNormalsByEId(int eId);
+
+    @Query("SELECT * FROM Normal WHERE E_ID = :eId AND R_ID = :rId")
+    Normal getNormalByEIdAndRId(int eId, int rId);
 }

@@ -120,6 +120,27 @@
         gets deleted. Do you want to continue?
     </string>
     <string name="finish_this_plan_no_routines">You have to finish this plan first. There are no routines.</string>
+    <string name="start">Start</string>
+    <string name="choose_other_workout">Choose other workout</string>
+    <string name="choose_from_routines_or_create_new">Choose from Routines or create new?</string>
+    <string name="choose_workout">Choose Workout</string>
+    <string name="create_new">Create new</string>
+    <string name="restday_workout_though">Today is Restday. Workout though?</string>
+    <string name="create_workout">Create Workout</string>
+    <string name="number_sets">%s. Set</string>
+    <string name="history_item_set">Set %1s: %2s reps %3s kg, RPE %4s</string>
+    <plurals name="you_have_completed_your_goal">
+        <item quantity="one">You have completed your goal: %d set</item>
+        <item quantity="other">You have completed your goal: %d sets</item>
+    </plurals>
+    <string name="next">Next</string>
+    <string name="stay">Stay</string>
+    <string name="_dropset_">(Dropset)</string>
+    <string name="this_is_the_last_exercise">This is the last exercise</string>
+    <string name="this_is_the_first_exercise">This is the first exercise</string>
+    <string name="sure_you_want_leave">Are you sure you want to leave?</string>
+    <string name="workout">Workout</string>
+    <string name="you_have_to_select_exercises">You have to select exercises</string>
 
     <string-array name="exercise_types">
         <item>Normal Exercise</item>

@@ -6,7 +6,7 @@ import java.sql.Date;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity (indices = {@Index(value = {"E_ID"}, unique = true)},
+@Entity (indices = {@Index(value = {"E_ID"})},
         foreignKeys = @ForeignKey(entity = Exercise.class,
                                     parentColumns = "E_ID",
                                     childColumns = "E_ID",

@@ -1,16 +1,14 @@
 package com.workoutlog.workoutlog.views;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
@@ -39,6 +37,7 @@ public class Calender extends ConstraintLayout {
     private final Context context;
 
     private final boolean isEditable;
+    private final boolean isInPortrait;
 
     public void setInterval(List<Integer> interval, List<Routine> routines) {
         this.interval = interval;
@@ -86,6 +85,8 @@ public class Calender extends ConstraintLayout {
 
         a.recycle();
 
+        isInPortrait = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+
         tvMonth = findViewById(R.id.calender_text_view_month);
         ImageButton buttonNext = findViewById(R.id.calender_button_next_month);
         buttonNext.setOnClickListener(new OnClickListener() {
@@ -102,12 +103,18 @@ public class Calender extends ConstraintLayout {
             }
         });
         calender = findViewById(R.id.calender_table_layout);
+        ScrollView scrollView = findViewById(R.id.scroll_view_calender_table_layout);
 
         if(!isEditable) {
             ConstraintSet set = new ConstraintSet();
             set.clear(R.id.calender);
-            set.connect(R.id.calender_table_layout, ConstraintSet.TOP, R.id.calender, ConstraintSet.TOP);
-            tvMonth.setVisibility(View.GONE);
+            if(isInPortrait)
+                set.connect(R.id.calender_table_layout, ConstraintSet.TOP, R.id.calender, ConstraintSet.TOP);
+            else {
+                scrollView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            }
+            if(tvMonth != null)
+                tvMonth.setVisibility(View.GONE);
             buttonNext.setVisibility(View.GONE);
             buttonPrev.setVisibility(View.GONE);
         }
@@ -137,7 +144,8 @@ public class Calender extends ConstraintLayout {
     }
     private void makeCalender() {
         ArrayList<TableRow> rows = new ArrayList<>();
-        tvMonth.setText(String.format("%s %s", getMonth(month), year));
+        if(tvMonth != null)
+            tvMonth.setText(String.format("%s %s", getMonth(month), year));
         calender.removeAllViews();
         calender.addView(createCalenderHeader());
         int dayOfWeek = getFirstDayOfCurrentMonth() - 2;
@@ -187,7 +195,10 @@ public class Calender extends ConstraintLayout {
 
     private CalenderItem createCalenderItem(int day, int month, int year) {
         CalenderItem item = new CalenderItem(context);
-        item.setDate(day, month, year);
+        if(isInPortrait)
+            item.setDate(day, month, year);
+        else
+            item.setDateInLandscape(day, month, year);
         item.setInMonth(true);
         item.setOnItemClickedListener(new CalenderItem.IItemClicked() {
             @Override
@@ -202,7 +213,10 @@ public class Calender extends ConstraintLayout {
                 month > selectedMonth && year >= selectedYear || year > selectedYear) &&
                 isNotPause(day, month, year)) {
             item.setChosen(true);
-            item.setRoutine(getRoutine(day, month, year));
+            if(isInPortrait)
+                item.setRoutine(getRoutine(day, month, year));
+            else
+                item.setRoutineInLandscape(getRoutine(day, month, year));
         }
         item.setClickable(isEditable);
         return item;
@@ -210,13 +224,19 @@ public class Calender extends ConstraintLayout {
 
     private CalenderItem createCalenderItemPrev(int day, int month, int year) {
         CalenderItem item = new CalenderItem(context);
-        item.setDate(day, month, year);
+        if(isInPortrait)
+            item.setDate(day, month, year);
+        else
+            item.setDateInLandscape(day, month, year);
         item.setInMonth(false);
         if(selectedDay != -1 && (year >= selectedYear && month >= selectedMonth && day >= selectedDay ||
                 month > selectedMonth && year >= selectedYear || year > selectedYear) &&
                 isNotPause(day, month, year)) {
             item.setChosen(true);
-            item.setRoutine(getRoutine(day, month, year));
+            if(isInPortrait)
+                item.setRoutine(getRoutine(day, month, year));
+            else
+                item.setRoutineInLandscape(getRoutine(day, month, year));
         }
 
         return item;

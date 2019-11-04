@@ -212,7 +212,7 @@
                         android:id="@+id/image_view_drag_view_normal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_drag_handle_colorsprimary_24dp"
+                        android:src="@drawable/ic_drag_handle_colorprimary_24dp"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"

@@ -59,4 +59,17 @@
     <dimen name="text_size_create_current_tp_created_items">18sp</dimen>
     <dimen name="page_identicator_item_width">20dp</dimen>
     <dimen name="page_identicator_item_height">16dp</dimen>
+    <dimen name="margin_side_workout_activity">20dp</dimen>
+    <dimen name="margin_vertical_workout_activity_bottom_section">10dp</dimen>
+    <dimen name="text_size_workout_activity">20sp</dimen>
+    <dimen name="text_size_set_exercise_fragments">22sp</dimen>
+    <dimen name="text_size_stats_section_exercise_fragments">20sp</dimen>
+    <dimen name="margin_vertical_text_view_set_exercises_fragments">30dp</dimen>
+    <dimen name="tab_layout_height">30dp</dimen>
+    <dimen name="padding_button_round_smaller_vector">6dp</dimen>
+    <dimen name="padding_side_history_item">16dp</dimen>
+    <dimen name="padding_vertical_history_item">4dp</dimen>
+    <dimen name="text_size_goal">16sp</dimen>
+    <dimen name="margin_top_goal">8dp</dimen>
+    <dimen name="margin_side_dialog_create_normal">30dp</dimen>
 </resources>

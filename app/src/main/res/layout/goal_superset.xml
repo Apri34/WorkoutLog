@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+            android:id="@+id/text_view_goal_superset_exc1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ll_goal_superset1"
+            android:layout_marginTop="@dimen/margin_top_goal"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_goal"
+    />
+
+    <LinearLayout
+            android:id="@+id/ll_goal_superset1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@id/ll_goal_superset2"
+            app:layout_constraintTop_toBottomOf="@id/text_view_goal_superset_exc1"
+            app:layout_constraintBottom_toTopOf="@+id/text_view_goal_superset_exc2"
+            android:orientation="vertical"
+    >
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reps"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_goal"
+        />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rpe"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_goal"
+        />
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/ll_goal_superset1_values"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/text_view_goal_superset_exc1"
+            app:layout_constraintBottom_toTopOf="@+id/text_view_goal_superset_exc2"
+            app:layout_constraintLeft_toRightOf="@id/ll_goal_superset2"
+            app:layout_constraintRight_toRightOf="parent"
+            android:orientation="vertical"
+    >
+
+        <TextView
+                android:id="@+id/text_view_goal_superset_reps1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_goal"/>
+        <TextView
+                android:id="@+id/text_view_goal_superset_rpe1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_goal"/>
+
+    </LinearLayout>
+
+    <TextView
+            android:id="@+id/text_view_goal_superset_exc2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_goal_superset1"
+            app:layout_constraintBottom_toTopOf="@id/ll_goal_superset2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_goal"
+    />
+
+    <LinearLayout
+            android:id="@+id/ll_goal_superset2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/ll_goal_superset1_values"
+            app:layout_constraintTop_toBottomOf="@id/text_view_goal_superset_exc2"
+            android:orientation="vertical"
+    >
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reps"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_goal"
+        />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rpe"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_goal"
+        />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sets"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_goal"
+        />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/break_seconds"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_goal"
+        />
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/ll_goal_superset2_values"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/text_view_goal_superset_exc2"
+            app:layout_constraintLeft_toRightOf="@id/ll_goal_superset2"
+            app:layout_constraintRight_toRightOf="parent"
+            android:orientation="vertical"
+    >
+
+        <TextView
+                android:id="@+id/text_view_goal_superset_reps2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_goal"/>
+        <TextView
+                android:id="@+id/text_view_goal_superset_rpe2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_goal"/>
+        <TextView
+                android:id="@+id/text_view_goal_superset_sets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_goal"/>
+        <TextView
+                android:id="@+id/text_view_goal_superset_break"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_goal"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

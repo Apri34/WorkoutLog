@@ -35,7 +35,7 @@ public class IntervalPicker extends ConstraintLayout {
     private static final int PAUSE_DAY = 0;
 
     private final ViewFlipper intervalFrame;
-    private final ArrayList<LinearLayout> intervals;
+    private final ArrayList<ScrollView> intervals;
     private final ImageButton buttonNext;
     private final ImageButton buttonPrev;
     private final ArrayList<Integer> listInterval1;
@@ -51,6 +51,15 @@ public class IntervalPicker extends ConstraintLayout {
 
     private final Context context;
 
+    public void refreshButtons() {
+        boolean nextEnabled = currentInterval != intervals.size() - 1;
+        buttonNext.setEnabled(nextEnabled);
+        buttonNext.setClickable(nextEnabled);
+        boolean prevEnabled = currentInterval != 0;
+        buttonPrev.setEnabled(prevEnabled);
+        buttonPrev.setClickable(prevEnabled);
+    }
+
     public boolean setInterval(ArrayList<Integer> interval) {
         boolean isInterval1 = true;
         if(interval.size() == listInterval1.size()) {
@@ -65,7 +74,7 @@ public class IntervalPicker extends ConstraintLayout {
         }
         if(isInterval1) {
             currentInterval = 0;
-            return true;
+            return false;
         }
         boolean isInterval2 = true;
         if(interval.size() == listInterval2.size()) {
@@ -81,7 +90,7 @@ public class IntervalPicker extends ConstraintLayout {
         if(isInterval2) {
             currentInterval = 1;
             intervalFrame.showNext();
-            return true;
+            return false;
         }
         boolean isInterval3 = true;
         if(interval.size() == listInterval3.size()) {
@@ -98,9 +107,9 @@ public class IntervalPicker extends ConstraintLayout {
             currentInterval = 2;
             intervalFrame.showNext();
             intervalFrame.showNext();
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public ArrayList<Integer> getSelectedInterval() {
@@ -186,12 +195,7 @@ public class IntervalPicker extends ConstraintLayout {
             }
         });
 
-        boolean nextEnabled = currentInterval != intervals.size() - 1;
-        buttonNext.setEnabled(nextEnabled);
-        buttonNext.setClickable(nextEnabled);
-        boolean prevEnabled = currentInterval != 0;
-        buttonPrev.setEnabled(prevEnabled);
-        buttonPrev.setClickable(prevEnabled);
+        refreshButtons();
     }
 
     private void createInterval1(List<Routine> routines) throws ExecutionException, InterruptedException {
@@ -261,6 +265,10 @@ public class IntervalPicker extends ConstraintLayout {
     }
 
     private void writeInterval(ArrayList<Integer> interval) throws ExecutionException, InterruptedException {
+        ScrollView scrollView = new ScrollView(context);
+        scrollView.setHorizontalScrollBarEnabled(false);
+        scrollView.setVerticalScrollBarEnabled(false);
+        scrollView.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.WRAP_CONTENT, ScrollView.LayoutParams.MATCH_PARENT));
         LinearLayout layout = new LinearLayout(context);
         layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         layout.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
@@ -282,7 +290,8 @@ public class IntervalPicker extends ConstraintLayout {
                 layout.addView(createItem(context, routine));
             }
         }
-        intervals.add(layout);
+        scrollView.addView(layout);
+        intervals.add(scrollView);
         intervalFrame.addView(intervals.get(intervals.size() - 1));
     }
 

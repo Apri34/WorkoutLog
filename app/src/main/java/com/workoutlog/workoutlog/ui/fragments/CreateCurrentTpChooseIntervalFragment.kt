@@ -42,6 +42,9 @@ class CreateCurrentTpChooseIntervalFragment: Fragment() {
     companion object {
         private const val KEY_TP_ID = "tpId"
         private const val KEY_INTERVAL = "interval"
+        private const val KEY_IS_IN_CUSTOM_INTERVAL = "isIncustomInterval"
+        private const val KEY_CUSTOM_INTERVAL = "customInterval"
+        private const val KEY_SELECTED_INTERVAL = "selectedInterval"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -75,22 +78,44 @@ class CreateCurrentTpChooseIntervalFragment: Fragment() {
         }
         customIntervalCreator.setTrainingplan(trainingplan)
 
-        if(PreferenceManager.getDefaultSharedPreferences(context).contains(KEY_INTERVAL)) {
-            val interval = getArrayListFromJsonString(
-                PreferenceManager.getDefaultSharedPreferences(context).getString(
-                    KEY_INTERVAL, ""
-                )!!
-            )
-
-            isCustomInterval = !intervalPicker.setInterval(interval)
-            if (isCustomInterval) {
+        if(savedInstanceState != null) {
+            isCustomInterval = savedInstanceState.getBoolean(KEY_IS_IN_CUSTOM_INTERVAL)
+            if(isCustomInterval) {
                 intervalPicker.visibility = View.GONE
                 customIntervalCreator.visibility = View.VISIBLE
-                customIntervalCreator.interval = interval
+                customIntervalCreator.interval = savedInstanceState.getIntegerArrayList(KEY_CUSTOM_INTERVAL)
+            } else {
+                intervalPicker.setInterval(savedInstanceState.getIntegerArrayList(KEY_SELECTED_INTERVAL))
+                intervalPicker.refreshButtons()
+            }
+        } else {
+            if (PreferenceManager.getDefaultSharedPreferences(context).contains(KEY_INTERVAL)) {
+                val interval = getArrayListFromJsonString(
+                    PreferenceManager.getDefaultSharedPreferences(context).getString(
+                        KEY_INTERVAL, ""
+                    )!!
+                )
+
+                isCustomInterval = !intervalPicker.setInterval(interval)
+                if (isCustomInterval) {
+                    intervalPicker.visibility = View.GONE
+                    customIntervalCreator.visibility = View.VISIBLE
+                    customIntervalCreator.interval = interval
+                }
             }
         }
 
         return view
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(KEY_IS_IN_CUSTOM_INTERVAL, isInCustomInterval())
+        if(isInCustomInterval()) {
+            outState.putIntegerArrayList(KEY_CUSTOM_INTERVAL, customIntervalCreator.interval)
+        } else {
+            outState.putIntegerArrayList(KEY_SELECTED_INTERVAL, intervalPicker.selectedInterval)
+        }
     }
 
     interface IIntervalChosen {

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Dao
 public interface TrainingplanDao {
-    @Query("SELECT * FROM Trainingplan")
+    @Query("SELECT * FROM Trainingplan WHERE TP_ID >= 0")
     List<Trainingplan> getAll();
 
     @Query("SELECT TP_Name FROM Trainingplan")

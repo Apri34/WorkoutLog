@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:background="@android:color/transparent"
+>
+
+    <LinearLayout
+            android:id="@+id/ll_create_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/edit_text_sets_dialog_create_normal"
+            app:layout_constraintTop_toTopOf="@id/edit_text_sets_dialog_create_normal"
+            app:layout_constraintBottom_toBottomOf="@id/edit_text_break_dialog_create_normal"
+    >
+
+        <TextView
+                android:id="@+id/text_view_sets_dialog_create_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reps"
+                android:textSize="@dimen/text_size_card_exercises"
+                android:textColor="@color/white"
+        />
+
+        <TextView
+                android:id="@+id/text_view_reps_dialog_create_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sets"
+                android:textSize="@dimen/text_size_card_exercises"
+                android:textColor="@color/white"
+        />
+
+        <TextView
+                android:id="@+id/text_view_rpe_dialog_create_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rpe"
+                android:textSize="@dimen/text_size_card_exercises"
+                android:textColor="@color/white"
+        />
+
+        <TextView
+                android:id="@+id/text_view_break_dialog_create_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/break_seconds"
+                android:textSize="@dimen/text_size_card_exercises"
+                android:textColor="@color/white"
+        />
+
+    </LinearLayout>
+
+    <EditText
+            android:id="@+id/edit_text_sets_dialog_create_normal"
+            android:layout_width="@dimen/edit_text_width_exercise_in_routine"
+            android:layout_height="@dimen/edit_text_height_exercise_in_routine"
+            android:inputType="number"
+            android:background="@drawable/background_edit_text_create_normal"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_card_exercises"
+            android:textCursorDrawable="@drawable/black_cursor"
+            app:layout_constraintLeft_toRightOf="@id/ll_create_normal"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="@dimen/margin_side_dialog_create_normal"
+            android:layout_marginStart="@dimen/margin_side_dialog_create_normal"
+            app:layout_constraintTop_toTopOf="parent"
+            android:hint="@null"
+            tools:ignore="autofill"
+    />
+
+    <EditText
+            android:id="@+id/edit_text_reps_dialog_create_normal"
+            android:layout_width="@dimen/edit_text_width_exercise_in_routine"
+            android:layout_height="@dimen/edit_text_height_exercise_in_routine"
+            android:inputType="number"
+            android:background="@drawable/background_edit_text_create_normal"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_card_exercises"
+            android:textCursorDrawable="@drawable/black_cursor"
+            app:layout_constraintLeft_toRightOf="@id/ll_create_normal"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="@dimen/margin_side_dialog_create_normal"
+            android:layout_marginStart="@dimen/margin_side_dialog_create_normal"
+            app:layout_constraintTop_toBottomOf="@id/edit_text_sets_dialog_create_normal"
+            android:hint="@null"
+            tools:ignore="autofill"
+    />
+
+    <EditText
+            android:id="@+id/edit_text_rpe_dialog_create_normal"
+            android:layout_width="@dimen/edit_text_width_exercise_in_routine"
+            android:layout_height="@dimen/edit_text_height_exercise_in_routine"
+            android:inputType="number"
+            android:background="@drawable/background_edit_text_create_normal"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_card_exercises"
+            android:textCursorDrawable="@drawable/black_cursor"
+            app:layout_constraintLeft_toRightOf="@id/ll_create_normal"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="@dimen/margin_side_dialog_create_normal"
+            android:layout_marginStart="@dimen/margin_side_dialog_create_normal"
+            app:layout_constraintTop_toBottomOf="@id/edit_text_reps_dialog_create_normal"
+            android:hint="@null"
+            tools:ignore="autofill"
+    />
+
+    <EditText
+            android:id="@+id/edit_text_break_dialog_create_normal"
+            android:layout_width="@dimen/edit_text_width_exercise_in_routine"
+            android:layout_height="@dimen/edit_text_height_exercise_in_routine"
+            android:inputType="number"
+            android:background="@drawable/background_edit_text_create_normal"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_card_exercises"
+            android:textCursorDrawable="@drawable/black_cursor"
+            app:layout_constraintLeft_toRightOf="@id/ll_create_normal"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="@dimen/margin_side_dialog_create_normal"
+            android:layout_marginStart="@dimen/margin_side_dialog_create_normal"
+            app:layout_constraintTop_toBottomOf="@id/edit_text_rpe_dialog_create_normal"
+            android:hint="@null"
+            tools:ignore="autofill"
+    />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

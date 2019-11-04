@@ -29,7 +29,7 @@ public class TextWatcherNoZero implements TextWatcher {
         EditText et = editText.get();
         if(et == null) return;
         String number = s.toString();
-        if(!number.equals("0")) return;
+        if(!number.equals("0") && !number.equals(".")) return;
         else number = "";
         et.removeTextChangedListener(this);
         et.setText(number);

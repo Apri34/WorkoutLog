@@ -24,13 +24,8 @@ import java.util.*
 class CreateCurrentTrainingplanActivity : AppCompatActivity(),
     CreateCurrentTpSelectTpFragment.ISelectTpFragment,
     CreateCurrentTpChooseIntervalFragment.IIntervalChosen,
-    CreateCurrentTpDeloadFragment.IDeloadFragment,
-    LeaveDialogFragment.ILeave
+    CreateCurrentTpDeloadFragment.IDeloadFragment
 {
-
-    override fun leave() {
-        finish()
-    }
 
     override fun noDeload() {
         getDefaultSharedPreferences(this).edit()
@@ -46,7 +41,7 @@ class CreateCurrentTrainingplanActivity : AppCompatActivity(),
     override fun intervalChosen(interval: ArrayList<Int>) {
         getDefaultSharedPreferences(this).edit().putString(KEY_INTERVAL, getJsonStringFromArrayList(interval))
             .putInt(KEY_CURRENT_TP_STATE, INTERVAL_CHOSEN).apply()
-        addChooseStartFragment()
+        addChooseStartFragment(false)
     }
 
     override fun addTrainingplan() {
@@ -67,7 +62,7 @@ class CreateCurrentTrainingplanActivity : AppCompatActivity(),
                 .remove(KEY_START_YEAR)
                 .apply()
         }
-        addChooseIntervalFragment()
+        addChooseIntervalFragment(false)
     }
 
     private lateinit var toolbar: Toolbar
@@ -146,50 +141,52 @@ class CreateCurrentTrainingplanActivity : AppCompatActivity(),
         pageIdenticator = findViewById(R.id.page_identicator_activity_current_tp)
         val fragment = intent.extras?.getString(KEY_FRAGMENT)
 
-        when(getDefaultSharedPreferences(this).getInt(KEY_CURRENT_TP_STATE, NO_CURRENT_TP)) {
-            NO_CURRENT_TP -> {
-                addSelectTpFragment()
-                supportActionBar!!.title = getString(R.string.select_a_trainingplan)
-            }
-            TP_SELECTED -> {
-                addSelectTpFragment()
-                addChooseIntervalFragment()
-                supportActionBar!!.title = getString(R.string.choose_an_interval)
-            }
-            INTERVAL_CHOSEN -> {
-                addSelectTpFragment()
-                addChooseIntervalFragment()
-                addChooseStartFragment()
-                supportActionBar!!.title = getString(R.string.choose_a_day_to_start)
-            }
-            START_DAY_CHOSEN -> {
-                addSelectTpFragment()
-                addChooseIntervalFragment()
-                addChooseStartFragment()
-                addDeloadFragment()
-                supportActionBar!!.title = getString(R.string.deload)
-            }
-            CURRENT_TP_FINISHED -> {
-                if(fragment == null) finish()
-                else {
-                    when(fragment) {
-                        KEY_FRAG_SELECT_TP -> {
-                            addSelectTpFragment()
-                        }
-                        KEY_FRAG_CHOOSE_INTERVAL -> {
-                            addSelectTpFragment()
-                            addChooseIntervalFragment()
-                        }
-                        KEY_FRAG_CHOOSE_START -> {
-                            addSelectTpFragment()
-                            addChooseIntervalFragment()
-                            addChooseStartFragment()
-                        }
-                        KEY_FRAG_DELOAD -> {
-                            addSelectTpFragment()
-                            addChooseIntervalFragment()
-                            addChooseStartFragment()
-                            addDeloadFragment()
+        if(savedInstanceState == null) {
+            when (getDefaultSharedPreferences(this).getInt(KEY_CURRENT_TP_STATE, NO_CURRENT_TP)) {
+                NO_CURRENT_TP -> {
+                    addSelectTpFragment(false)
+                    supportActionBar!!.title = getString(R.string.select_a_trainingplan)
+                }
+                TP_SELECTED -> {
+                    addSelectTpFragment(false)
+                    addChooseIntervalFragment(false)
+                    supportActionBar!!.title = getString(R.string.choose_an_interval)
+                }
+                INTERVAL_CHOSEN -> {
+                    addSelectTpFragment(false)
+                    addChooseIntervalFragment(false)
+                    addChooseStartFragment(false)
+                    supportActionBar!!.title = getString(R.string.choose_a_day_to_start)
+                }
+                START_DAY_CHOSEN -> {
+                    addSelectTpFragment(false)
+                    addChooseIntervalFragment(false)
+                    addChooseStartFragment(false)
+                    addDeloadFragment()
+                    supportActionBar!!.title = getString(R.string.deload)
+                }
+                CURRENT_TP_FINISHED -> {
+                    if (fragment == null) finish()
+                    else {
+                        when (fragment) {
+                            KEY_FRAG_SELECT_TP -> {
+                                addSelectTpFragment(false)
+                            }
+                            KEY_FRAG_CHOOSE_INTERVAL -> {
+                                addSelectTpFragment(false)
+                                addChooseIntervalFragment(false)
+                            }
+                            KEY_FRAG_CHOOSE_START -> {
+                                addSelectTpFragment(false)
+                                addChooseIntervalFragment(false)
+                                addChooseStartFragment(false)
+                            }
+                            KEY_FRAG_DELOAD -> {
+                                addSelectTpFragment(false)
+                                addChooseIntervalFragment(false)
+                                addChooseStartFragment(false)
+                                addDeloadFragment()
+                            }
                         }
                     }
                 }
@@ -219,25 +216,31 @@ class CreateCurrentTrainingplanActivity : AppCompatActivity(),
             android.R.id.home -> {
                 when {
                     fragmentDeload.isAdded -> {
-                        supportFragmentManager.popBackStack()
+                        getPrevFragment()
                         pageIdenticator.prevPage()
                         supportActionBar!!.title = getString(R.string.choose_a_day_to_start)
                     }
                     fragmentChooseStart.isAdded -> {
-                        supportFragmentManager.popBackStack()
+                        getPrevFragment()
                         pageIdenticator.prevPage()
                         supportActionBar!!.title = getString(R.string.choose_an_interval)
                     }
                     fragmentChooseInterval.isAdded -> {
                         if(fragmentChooseInterval.isInCustomInterval()) fragmentChooseInterval.returnFromCustomInterval()
                         else {
-                            supportFragmentManager.popBackStack()
+                            getPrevFragment()
                             pageIdenticator.prevPage()
                             supportActionBar!!.title = getString(R.string.select_a_trainingplan)
                         }
                     }
                     fragmentSelectTp.isAdded -> {
-                        finish()
+                        val dialog = LeaveDialogFragment.newInstance(getString(R.string.current_trainingplan), getString(R.string.you_are_about_to_leave))
+                        dialog.setListener(object: LeaveDialogFragment.ILeave {
+                            override fun leave() {
+                                finish()
+                            }
+                        })
+                        dialog.show(supportFragmentManager, "leave")
                     }
                 }
                 true
@@ -283,7 +286,7 @@ class CreateCurrentTrainingplanActivity : AppCompatActivity(),
                                     .putString(KEY_INTERVAL, getJsonStringFromArrayList(selectedInterval))
                                     .putInt(KEY_CURRENT_TP_STATE, INTERVAL_CHOSEN)
                                     .apply()
-                                addChooseStartFragment()
+                                addChooseStartFragment(false)
                             } else {
                                 Toast.makeText(
                                     this,
@@ -305,7 +308,7 @@ class CreateCurrentTrainingplanActivity : AppCompatActivity(),
                                 )
                                 .putInt(KEY_CURRENT_TP_STATE, INTERVAL_CHOSEN)
                                 .apply()
-                            addChooseStartFragment()
+                            addChooseStartFragment(false)
                         }
                         return true
                     }
@@ -315,7 +318,7 @@ class CreateCurrentTrainingplanActivity : AppCompatActivity(),
                             getDefaultSharedPreferences(this).edit()
                                 .putInt(KEY_TP_ID, selectedItem.tpId)
                                 .apply()
-                            addChooseIntervalFragment()
+                            addChooseIntervalFragment(false)
                         } else {
                             Toast.makeText(this, getString(R.string.you_have_to_select_tp), Toast.LENGTH_SHORT).show()
                         }
@@ -331,19 +334,33 @@ class CreateCurrentTrainingplanActivity : AppCompatActivity(),
     }
 
     override fun onBackPressed() {
-        val dialog = LeaveDialogFragment()
-        dialog.setListener(this)
+        val dialog = LeaveDialogFragment.newInstance(getString(R.string.current_trainingplan), getString(R.string.you_are_about_to_leave))
+        dialog.setListener(object: LeaveDialogFragment.ILeave {
+            override fun leave() {
+                finish()
+            }
+        })
         dialog.show(supportFragmentManager, "leave")
     }
 
-    private fun addSelectTpFragment() {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.content_frame_create_current_trainingplan_activity, fragmentSelectTp, KEY_FRAG_SELECT_TP)
-            .commit()
+    private fun addSelectTpFragment(remove: Boolean) {
+        if(!remove) {
+            supportFragmentManager.beginTransaction()
+                .add(R.id.content_frame_create_current_trainingplan_activity, fragmentSelectTp)
+                .commit()
+        } else {
+            supportFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.anim.slide_in_left,
+                    R.anim.slide_out_right
+                )
+                .replace(R.id.content_frame_create_current_trainingplan_activity, fragmentSelectTp)
+                .commit()
+        }
         supportActionBar!!.title = getString(R.string.select_a_trainingplan)
         pageIdenticator.selectPage(0)
     }
-    private fun addChooseIntervalFragment() {
+    private fun addChooseIntervalFragment(remove: Boolean) {
         val tpId = getDefaultSharedPreferences(this).getInt(KEY_TP_ID, 0)
         if(tpId == 0) {
             //???
@@ -351,15 +368,27 @@ class CreateCurrentTrainingplanActivity : AppCompatActivity(),
         val args = Bundle()
         args.putInt(KEY_TP_ID, tpId)
         fragmentChooseInterval.arguments = args
-        supportFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
-            .addToBackStack(null)
-            .replace(R.id.content_frame_create_current_trainingplan_activity, fragmentChooseInterval)
-            .commit()
+        if(!remove) {
+            supportFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.anim.slide_in_right,
+                    R.anim.slide_out_left
+                )
+                .replace(R.id.content_frame_create_current_trainingplan_activity, fragmentChooseInterval)
+                .commit()
+        } else {
+            supportFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.anim.slide_in_left,
+                    R.anim.slide_out_right
+                )
+                .replace(R.id.content_frame_create_current_trainingplan_activity, fragmentChooseInterval)
+                .commit()
+        }
         supportActionBar!!.title = getString(R.string.choose_an_interval)
         pageIdenticator.selectPage(1)
     }
-    private fun addChooseStartFragment() {
+    private fun addChooseStartFragment(remove: Boolean) {
         val sInterval = getDefaultSharedPreferences(this).getString(KEY_INTERVAL, "")
         val interval =
             (if(sInterval == "") {
@@ -374,18 +403,29 @@ class CreateCurrentTrainingplanActivity : AppCompatActivity(),
         args.putIntegerArrayList("interval", interval)
         args.putParcelableArrayList("routines", routines as ArrayList<out Parcelable>)
         fragmentChooseStart.arguments = args
-        supportFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
-            .addToBackStack(null)
-            .replace(R.id.content_frame_create_current_trainingplan_activity, fragmentChooseStart)
-            .commit()
+        if(!remove) {
+            supportFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.anim.slide_in_right,
+                    R.anim.slide_out_left
+                )
+                .replace(R.id.content_frame_create_current_trainingplan_activity, fragmentChooseStart)
+                .commit()
+        } else {
+            supportFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.anim.slide_in_left,
+                    R.anim.slide_out_right
+                )
+                .replace(R.id.content_frame_create_current_trainingplan_activity, fragmentChooseStart)
+                .commit()
+        }
         supportActionBar!!.title = getString(R.string.choose_a_day_to_start)
         pageIdenticator.selectPage(2)
     }
     private fun addDeloadFragment() {
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
-            .addToBackStack(null)
             .replace(R.id.content_frame_create_current_trainingplan_activity, fragmentDeload)
             .commit()
         supportActionBar!!.title = getString(R.string.deload)
@@ -413,5 +453,16 @@ class CreateCurrentTrainingplanActivity : AppCompatActivity(),
             x++
         }
         return list
+    }
+
+    private fun getPrevFragment() {
+        when {
+            fragmentDeload.isAdded ->
+                addChooseStartFragment(true)
+            fragmentChooseStart.isAdded ->
+                addChooseIntervalFragment(true)
+            fragmentChooseInterval.isAdded ->
+                addSelectTpFragment(true)
+        }
     }
 }

@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.workoutlog.workoutlog.database.daos.*;
 import com.workoutlog.workoutlog.database.entities.*;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -701,6 +702,126 @@ public class DatabaseInitializer {
         @Override
         protected List<Dropset> doInBackground(Integer... integers) {
             return mDao.getDropsetsByEId(integers[0]);
+        }
+    }
+
+    public List<ExerciseDone> getExerciseDonesByEId(@NonNull final ExerciseDoneDao dao, int eId) throws ExecutionException, InterruptedException {
+        GetExerciseDonesByEId task = new GetExerciseDonesByEId(dao);
+        return task.execute(eId).get();
+    }
+
+    private static class GetExerciseDonesByEId extends AsyncTask<Integer, Void, List<ExerciseDone>> {
+
+        final ExerciseDoneDao mDao;
+
+        GetExerciseDonesByEId(ExerciseDoneDao dao) { mDao = dao; }
+
+        @Override
+        protected List<ExerciseDone> doInBackground(Integer... integers) {
+            return mDao.getExerciseDonesByEId(integers[0]);
+        }
+    }
+
+    public void insertSetDone(@NonNull final SetDoneDao dao, SetDone setDone) {
+        InsertSetDone task = new InsertSetDone(dao);
+        task.execute(setDone);
+    }
+
+    private static class InsertSetDone extends AsyncTask<SetDone, Void, Void> {
+
+        final SetDoneDao mDao;
+
+        InsertSetDone(SetDoneDao dao) { mDao = dao; }
+
+        @Override
+        protected Void doInBackground(SetDone... setDones) {
+            mDao.insertSetDone(setDones[0]);
+            return null;
+        }
+    }
+
+    public List<SetDone> getSetDonesByEdId(@NonNull final SetDoneDao dao, int edId) throws ExecutionException, InterruptedException {
+        GetSetDonesByEdId task = new GetSetDonesByEdId(dao);
+        return task.execute(edId).get();
+    }
+
+    private static class GetSetDonesByEdId extends AsyncTask<Integer, Void, List<SetDone>> {
+
+        final SetDoneDao mDao;
+
+        GetSetDonesByEdId(SetDoneDao dao) { mDao = dao; }
+
+        @Override
+        protected List<SetDone> doInBackground(Integer... integers) {
+            return mDao.getSetDonesByEdId(integers[0]);
+        }
+    }
+
+    public int getNumberExerciseDonesOnDate(@NonNull final ExerciseDoneDao dao, Date date) throws ExecutionException, InterruptedException {
+        GetNumberExerciseDonesOnDate task = new GetNumberExerciseDonesOnDate(dao);
+        return task.execute(date).get();
+    }
+
+    private static class GetNumberExerciseDonesOnDate extends AsyncTask<Date, Void, Integer> {
+
+        final ExerciseDoneDao mDao;
+
+        GetNumberExerciseDonesOnDate(ExerciseDoneDao dao) { mDao = dao; }
+
+        @Override
+        protected Integer doInBackground(Date... dates) {
+            return mDao.getNumberOnDate(dates[0]);
+        }
+    }
+
+    public int getLastEdId(@NonNull final ExerciseDoneDao dao) throws ExecutionException, InterruptedException {
+        GetLastEdId task = new GetLastEdId(dao);
+        return task.execute().get();
+    }
+
+    private static class GetLastEdId extends AsyncTask<Void, Void, Integer> {
+
+        final ExerciseDoneDao mDao;
+
+        GetLastEdId(ExerciseDoneDao dao) { mDao = dao; }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            return mDao.getLastEdId();
+        }
+    }
+
+    public String getExerciseNameById(@NonNull final ExerciseDao dao, int eId) throws ExecutionException, InterruptedException {
+        GetExerciseNameById task = new GetExerciseNameById(dao);
+        return task.execute(eId).get();
+    }
+
+    private static class GetExerciseNameById extends AsyncTask<Integer, Void, String> {
+
+        final ExerciseDao mDao;
+
+        GetExerciseNameById(ExerciseDao dao) { mDao = dao; }
+
+        @Override
+        protected String doInBackground(Integer... integers) {
+            return mDao.getExerciseNameById(integers[0]);
+        }
+    }
+
+    public Normal getNormalByEIdAndRId(@NonNull final NormalDao dao, int eId, int rId) throws ExecutionException, InterruptedException {
+        GetNormalByEIdAndRId task = new GetNormalByEIdAndRId(dao);
+        return task.execute(eId, rId).get();
+    }
+
+    private static class GetNormalByEIdAndRId extends AsyncTask<Integer, Void, Normal> {
+
+        final NormalDao mDao;
+
+        GetNormalByEIdAndRId(NormalDao dao) { mDao = dao; }
+
+        @Override
+        protected Normal doInBackground(Integer... integers) {
+            return mDao.getNormalByEIdAndRId(integers[0], integers[1]);
         }
     }
 }

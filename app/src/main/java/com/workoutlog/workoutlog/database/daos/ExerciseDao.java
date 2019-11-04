@@ -13,6 +13,9 @@ public interface ExerciseDao {
     @Query("SELECT E_Name FROM Exercise")
     List<String> getAllExerciseNames();
 
+    @Query("SELECT E_Name FROM Exercise WHERE E_ID = :eId")
+    String getExerciseNameById(int eId);
+
     @Insert
     void insertExercise(Exercise exercise);
 

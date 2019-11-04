@@ -2,24 +2,43 @@ package com.workoutlog.workoutlog.ui.fragments
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.DialogFragment
 import com.workoutlog.workoutlog.R
-import java.lang.ClassCastException
 
-class LeaveDialogFragment: DialogFragment() {
+class LeaveDialogFragment :DialogFragment() {
+
+    private var listener: ILeave? = null
+    fun setListener(listener: ILeave) {
+        this.listener = listener
+    }
+
+    companion object {
+        private const val KEY_MESSAGE = "message"
+        private const val KEY_TITLE = "title"
+
+        fun newInstance(title: String, message: String): LeaveDialogFragment {
+            val fragment = LeaveDialogFragment()
+            val args = Bundle()
+            args.putString(KEY_MESSAGE, message)
+            args.putString(KEY_TITLE, title)
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-
         val builder = AlertDialog.Builder(context, R.style.CustomDialogTheme)
-        builder.setTitle(context!!.getString(R.string.current_trainingplan))
-            .setMessage(getString(R.string.you_are_about_to_leave))
-            .setPositiveButton(R.string.leave) {_,_->
+
+        val title = arguments!!.getString(KEY_TITLE, getString(R.string.leave))
+        val message = arguments!!.getString(KEY_MESSAGE, getString(R.string.sure_you_want_leave))
+
+        builder.setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(android.R.string.yes) {_,_->
                 if(listener != null) listener!!.leave()
             }
-            .setNegativeButton(android.R.string.cancel) {_,_->
+            .setNegativeButton(android.R.string.no) {_,_->
 
             }
 
@@ -28,14 +47,5 @@ class LeaveDialogFragment: DialogFragment() {
 
     interface ILeave {
         fun leave()
-    }
-
-    private var listener: ILeave? = null
-    fun setListener(context: Context) {
-        try {
-            listener = context as ILeave
-        } catch (e: ClassCastException) {
-            Log.i(context.toString(), " must implement ILeave")
-        }
     }
 }

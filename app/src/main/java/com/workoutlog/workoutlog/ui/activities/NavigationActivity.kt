@@ -17,9 +17,38 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.workoutlog.workoutlog.R
+import com.workoutlog.workoutlog.database.AppDatabase
+import com.workoutlog.workoutlog.database.DatabaseInitializer
 import com.workoutlog.workoutlog.ui.fragments.*
+import org.json.JSONObject
+import java.util.*
 
-class NavigationActivity : AppCompatActivity(), CurrentTrainingplanFragment.ICurrentTrainingplanFragment {
+class NavigationActivity : AppCompatActivity(), CurrentTrainingplanFragment.ICurrentTrainingplanFragment,
+    StartWorkoutDialogFragment.IStartWorkout,
+    StartWorkoutNoSpecRoutineDialogFragment.IStartWorkoutNoSpecRoutine{
+
+    override fun startCurrentWorkout(rId: Int) {
+        val routine = dbInitializer.getRoutineById(database.routineDao(), rId)
+        val intent = Intent(this, WorkoutActivity::class.java)
+        intent.putExtra(KEY_ROUTINE_WORKOUT, routine)
+        intent.putExtra(KEY_DELETABLE, false)
+        startActivity(intent)
+    }
+
+    override fun chooseOtherWorkout() {
+        val dialog = StartWorkoutNoSpecRoutineDialogFragment()
+        dialog.show(supportFragmentManager, "StartOtherWorkout")
+    }
+
+    override fun createRoutine() {
+        val intent = Intent(this, CreateRoutineActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun chooseRoutine() {
+        val intent = Intent(this, ChooseRoutineActivity::class.java)
+        startActivity(intent)
+    }
 
     override fun refreshFragment(fragment: Fragment): Boolean {
         if(fragment.isAdded) {
@@ -87,6 +116,7 @@ class NavigationActivity : AppCompatActivity(), CurrentTrainingplanFragment.ICur
 
         private const val KEY_CURRENT_TP_STATE = "currentTpState"
         private const val NO_CURRENT_TP = 0
+        private const val CURRENT_TP_FINISHED = 4
         private const val KEY_TP_ID = "tpId"
         private const val KEY_INTERVAL = "interval"
         private const val KEY_START_DAY = "startDay"
@@ -96,6 +126,9 @@ class NavigationActivity : AppCompatActivity(), CurrentTrainingplanFragment.ICur
         private const val KEY_DELOAD_VOLUME = "deloadVolume"
         private const val KEY_DELOAD_WEIGHT = "deloadWeight"
         private const val KEY_DELOAD_SET = "deloadSet"
+
+        private const val KEY_ROUTINE_WORKOUT = "routineWorkout"
+        private const val KEY_DELETABLE = "deletable"
     }
 
     private lateinit var mAuth: FirebaseAuth
@@ -109,6 +142,9 @@ class NavigationActivity : AppCompatActivity(), CurrentTrainingplanFragment.ICur
     private lateinit var textViewNavHeaderUser: TextView
     private lateinit var toolbar: Toolbar
 
+    private lateinit var dbInitializer: DatabaseInitializer
+    private lateinit var database: AppDatabase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -116,6 +152,9 @@ class NavigationActivity : AppCompatActivity(), CurrentTrainingplanFragment.ICur
             window.statusBarColor = ContextCompat.getColor(this, R.color.colorSecondaryDark)
         }
         setContentView(R.layout.activity_navigation)
+
+        dbInitializer = DatabaseInitializer.getInstance()
+        database = AppDatabase.getInstance(this)
 
         mAuth = FirebaseAuth.getInstance()
         navView = findViewById(R.id.nav_view_navigation_activity)
@@ -268,7 +307,30 @@ class NavigationActivity : AppCompatActivity(), CurrentTrainingplanFragment.ICur
                     logout()
                 }
                 R.id.nav_start_workout -> {
-
+                    if(PreferenceManager.getDefaultSharedPreferences(this).contains(KEY_CURRENT_TP_STATE) &&
+                        (PreferenceManager.getDefaultSharedPreferences(this).getInt(KEY_CURRENT_TP_STATE, NO_CURRENT_TP) == CURRENT_TP_FINISHED)) {
+                        val tp = dbInitializer.getTrainingplanById(
+                            database.trainingplanDao(),
+                            PreferenceManager.getDefaultSharedPreferences(this).getInt(KEY_TP_ID, -1))
+                        val c = Calendar.getInstance()
+                        val day = c.get(Calendar.DAY_OF_MONTH)
+                        val month = c.get(Calendar.MONTH)
+                        val year = c.get(Calendar.YEAR)
+                        val rId = getRoutine(day, month, year, tp.tpId)
+                        if(rId != null) {
+                            if(rId != 0) {
+                                val routine = dbInitializer.getRoutineById(database.routineDao(), rId)
+                                val dialog = StartWorkoutDialogFragment.newInstance(routine.rName, tp.tpName, rId)
+                                dialog.show(supportFragmentManager, "startWorkout")
+                            } else {
+                                val dialog = StartWorkoutNoSpecRoutineDialogFragment.newInstance(getString(R.string.restday_workout_though))
+                                dialog.show(supportFragmentManager, "startWorkoutRestday")
+                            }
+                        }
+                    } else {
+                        val dialog = StartWorkoutNoSpecRoutineDialogFragment()
+                        dialog.show(supportFragmentManager, "startWorkoutNoCurrentTp")
+                    }
                 }
             }
             drawerLayout.closeDrawers()
@@ -329,5 +391,37 @@ class NavigationActivity : AppCompatActivity(), CurrentTrainingplanFragment.ICur
         }
         startActivity(Intent(this, MainActivity::class.java))
         finish()
+    }
+
+    private fun getRoutine(day: Int, month: Int, year: Int, tpId: Int): Int? {
+        val routines = dbInitializer.getRoutinesByTpId(database.routineDao(), tpId)
+        val interval = getArrayListFromJsonString(PreferenceManager.getDefaultSharedPreferences(this).getString(KEY_INTERVAL, "")!!)
+        if (routines == null || interval.size == 0) return null
+
+        val c = Calendar.getInstance()
+        c.set(year, month, day, 0, 0, 0)
+        val timeNow = c.timeInMillis
+
+        val selectedYear = PreferenceManager.getDefaultSharedPreferences(this).getInt(KEY_START_YEAR, -1)
+        val selectedMonth = PreferenceManager.getDefaultSharedPreferences(this).getInt(KEY_START_MONTH, -1)
+        val selectedDay = PreferenceManager.getDefaultSharedPreferences(this).getInt(KEY_START_DAY, -1)
+        if(selectedDay == -1 || selectedMonth == -1 || selectedYear == -1) return null
+        c.set(selectedYear, selectedMonth, selectedDay, 0, 0, 0)
+        val timeStart = c.timeInMillis
+        val dif = timeNow - timeStart
+        val days = Math.round(dif.toFloat() / (1000 * 60 * 60 * 24).toFloat())
+        val dayInInterval = days % interval.size
+        return interval[dayInInterval]
+    }
+
+    private fun getArrayListFromJsonString(json: String): ArrayList<Int> {
+        val list = ArrayList<Int>()
+        val obj = JSONObject(json)
+        var x = 0
+        while(obj.has(x.toString())) {
+            list.add(obj.getInt(x.toString()))
+            x++
+        }
+        return list
     }
 }

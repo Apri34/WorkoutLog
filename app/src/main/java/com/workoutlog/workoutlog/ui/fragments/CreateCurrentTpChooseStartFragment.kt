@@ -36,7 +36,12 @@ class CreateCurrentTpChooseStartFragment: Fragment() {
         calender = view.findViewById(R.id.calender_choose_start_day)
         calender.setInterval(interval, routines)
 
-        if(PreferenceManager.getDefaultSharedPreferences(context).contains(KEY_START_DAY) &&
+        if(savedInstanceState != null) {
+            val day = savedInstanceState.getInt(KEY_START_DAY, -1)
+            val month = savedInstanceState.getInt(KEY_START_MONTH, -1)
+            val year = savedInstanceState.getInt(KEY_START_YEAR, -1)
+            calender.setStart(day, month, year)
+        } else if(PreferenceManager.getDefaultSharedPreferences(context).contains(KEY_START_DAY) &&
             PreferenceManager.getDefaultSharedPreferences(context).contains(KEY_START_MONTH) &&
             PreferenceManager.getDefaultSharedPreferences(context).contains(KEY_START_YEAR)) {
             setStart(PreferenceManager.getDefaultSharedPreferences(context).getInt(KEY_START_DAY, -1),
@@ -45,5 +50,15 @@ class CreateCurrentTpChooseStartFragment: Fragment() {
         }
 
         return view
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val day = calender.selectedDay
+        val month = calender.selectedMonth
+        val year = calender.selectedYear
+        outState.putInt(KEY_START_DAY, day)
+        outState.putInt(KEY_START_MONTH, month)
+        outState.putInt(KEY_START_YEAR, year)
     }
 }

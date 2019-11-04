@@ -10,7 +10,10 @@ import androidx.fragment.app.FragmentActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.workoutlog.workoutlog.R
+import com.workoutlog.workoutlog.database.AppDatabase
+import com.workoutlog.workoutlog.database.DatabaseInitializer
 import com.workoutlog.workoutlog.database.DatabaseSynchronizer
+import com.workoutlog.workoutlog.database.entities.Trainingplan
 import com.workoutlog.workoutlog.ui.fragments.LoginFragment
 import com.workoutlog.workoutlog.ui.fragments.RegisterFragment
 import com.workoutlog.workoutlog.views.CustomEditText
@@ -90,6 +93,10 @@ class MainActivity : FragmentActivity(), LoginFragment.ILogin, RegisterFragment.
     private lateinit var fragmentLogin: LoginFragment
     private lateinit var fragmentRegister: RegisterFragment
 
+    companion object {
+        private const val KEY_IS_DB_CREATED = "isDbCreated"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -97,6 +104,15 @@ class MainActivity : FragmentActivity(), LoginFragment.ILogin, RegisterFragment.
             window.statusBarColor = ContextCompat.getColor(this, R.color.colorSecondaryDark)
         }
         setContentView(R.layout.activity_main)
+
+        if(!getDefaultSharedPreferences(this).getBoolean(KEY_IS_DB_CREATED, false)) {
+            val tp = Trainingplan(-1, "tpForSingleRoutines")
+            val dbInitializer = DatabaseInitializer.getInstance()
+            val database = AppDatabase.getInstance(this)
+            dbInitializer.insertTrainingplan(database.trainingplanDao(), tp)
+            getDefaultSharedPreferences(this).edit().putBoolean(KEY_IS_DB_CREATED, true).apply()
+        }
+
         fragmentLogin = LoginFragment()
         fragmentRegister = RegisterFragment()
 

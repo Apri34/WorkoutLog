@@ -4,7 +4,7 @@ import androidx.room.*;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity (indices = {@Index(value = {"ED_ID"}, unique = true)},
+@Entity (indices = {@Index(value = {"ED_ID"})},
         foreignKeys = @ForeignKey(entity = ExerciseDone.class,
                                     parentColumns = "ED_ID",
                                     childColumns = "ED_ID",
@@ -18,10 +18,10 @@ public class SetDone {
     private final int reps;
 
     @ColumnInfo (name = "weight")
-    private final int weightInKg ;
+    private final float weightInKg ;
 
     @ColumnInfo (name = "RPE")
-    private final int rpe;
+    private final float rpe;
 
     @ColumnInfo (name = "Pos_In_Exc_Done")
     private final int posInExcDone;
@@ -37,11 +37,11 @@ public class SetDone {
         return reps;
     }
 
-    public int getWeightInKg() {
+    public float getWeightInKg() {
         return weightInKg;
     }
 
-    public int getRpe() {
+    public float getRpe() {
         return rpe;
     }
 
@@ -53,7 +53,7 @@ public class SetDone {
         return edId;
     }
 
-    public SetDone(int sdId, int reps, int weightInKg, int rpe, int posInExcDone, int edId) {
+    public SetDone(int sdId, int reps, float weightInKg, float rpe, int posInExcDone, int edId) {
         this.sdId = sdId;
         this.reps = reps;
         this.weightInKg = weightInKg;

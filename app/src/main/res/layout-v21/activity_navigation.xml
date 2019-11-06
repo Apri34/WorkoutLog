@@ -48,6 +48,7 @@
             app:itemTextColor="@color/color_drawer_item"
             app:itemIconTint="@color/color_drawer_item"
             app:headerLayout="@layout/nav_header"
+            app:theme="@style/ThemeOverlay.AppCompat.Light"
     />
 
 </androidx.drawerlayout.widget.DrawerLayout>

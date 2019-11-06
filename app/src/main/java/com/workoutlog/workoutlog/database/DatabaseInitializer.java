@@ -6,6 +6,7 @@ import com.workoutlog.workoutlog.database.daos.*;
 import com.workoutlog.workoutlog.database.entities.*;
 
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -758,8 +759,17 @@ public class DatabaseInitializer {
     }
 
     public int getNumberExerciseDonesOnDate(@NonNull final ExerciseDoneDao dao, Date date) throws ExecutionException, InterruptedException {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(date.getTime());
+        c.add(Calendar.DAY_OF_MONTH, -1);
+        c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), 23, 59, 59);
+        Date startDate = new Date(c.getTimeInMillis());
+        c.setTimeInMillis(date.getTime());
+        c.add(Calendar.DAY_OF_MONTH, +1);
+        c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        Date endDate = new Date(c.getTimeInMillis());
         GetNumberExerciseDonesOnDate task = new GetNumberExerciseDonesOnDate(dao);
-        return task.execute(date).get();
+        return task.execute(startDate, endDate).get();
     }
 
     private static class GetNumberExerciseDonesOnDate extends AsyncTask<Date, Void, Integer> {
@@ -770,7 +780,7 @@ public class DatabaseInitializer {
 
         @Override
         protected Integer doInBackground(Date... dates) {
-            return mDao.getNumberOnDate(dates[0]);
+            return mDao.getNumberOnDate(dates[0], dates[1]);
         }
     }
 
@@ -808,20 +818,72 @@ public class DatabaseInitializer {
         }
     }
 
-    public Normal getNormalByEIdAndRId(@NonNull final NormalDao dao, int eId, int rId) throws ExecutionException, InterruptedException {
-        GetNormalByEIdAndRId task = new GetNormalByEIdAndRId(dao);
-        return task.execute(eId, rId).get();
+    public List<ExerciseDone> getExerciseDonesByDate(@NonNull final ExerciseDoneDao dao, Date date) throws ExecutionException, InterruptedException {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(date.getTime());
+        c.add(Calendar.DAY_OF_MONTH, -1);
+        c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), 23, 59, 59);
+        Date startDate = new Date(c.getTimeInMillis());
+        c.setTimeInMillis(date.getTime());
+        c.add(Calendar.DAY_OF_MONTH, +1);
+        c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        Date endDate = new Date(c.getTimeInMillis());
+
+        GetExerciseDonesByDate task = new GetExerciseDonesByDate(dao);
+        return task.execute(startDate, endDate).get();
     }
 
-    private static class GetNormalByEIdAndRId extends AsyncTask<Integer, Void, Normal> {
+    private static class GetExerciseDonesByDate extends AsyncTask<Date, Void, List<ExerciseDone>> {
 
-        final NormalDao mDao;
+        final ExerciseDoneDao mDao;
 
-        GetNormalByEIdAndRId(NormalDao dao) { mDao = dao; }
+        GetExerciseDonesByDate(ExerciseDoneDao dao) { mDao = dao; }
 
         @Override
-        protected Normal doInBackground(Integer... integers) {
-            return mDao.getNormalByEIdAndRId(integers[0], integers[1]);
+        protected List<ExerciseDone> doInBackground(Date... dates) {
+            return mDao.getExerciseDonesByDate(dates[0], dates[1]);
+        }
+    }
+
+    public boolean existsNoNextWorkout(@NonNull final ExerciseDoneDao dao, Date date) throws ExecutionException, InterruptedException {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(date.getTime());
+        c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), 23, 59, 59);
+        GetNumExerciseDonesFromDate task = new GetNumExerciseDonesFromDate(dao);
+        int num = task.execute(new Date(c.getTimeInMillis())).get();
+        return num <= 0;
+    }
+
+    private static class GetNumExerciseDonesFromDate extends AsyncTask<Date, Void, Integer> {
+
+        final ExerciseDoneDao mDao;
+
+        GetNumExerciseDonesFromDate(ExerciseDoneDao dao) { mDao = dao; }
+
+        @Override
+        protected Integer doInBackground(Date... dates) {
+            return mDao.getNumExerciseDonesFromDate(dates[0]);
+        }
+    }
+
+    public boolean existsNoPrevWorkout(@NonNull final ExerciseDoneDao dao, Date date) throws ExecutionException, InterruptedException {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(date.getTime());
+        c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        GetNumExerciseDonesUntilDate task = new GetNumExerciseDonesUntilDate(dao);
+        int num = task.execute(new Date(c.getTimeInMillis())).get();
+        return num <= 0;
+    }
+
+    private static class GetNumExerciseDonesUntilDate extends AsyncTask<Date, Void, Integer> {
+
+        final ExerciseDoneDao mDao;
+
+        GetNumExerciseDonesUntilDate(ExerciseDoneDao dao) { mDao = dao; }
+
+        @Override
+        protected Integer doInBackground(Date... dates) {
+            return mDao.getNumExerciseDonesUntilDate(dates[0]);
         }
     }
 }

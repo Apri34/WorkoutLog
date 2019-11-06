@@ -3,7 +3,6 @@ package com.workoutlog.workoutlog.views;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.TableRow;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -62,12 +61,9 @@ public class CalenderItem extends androidx.appcompat.widget.AppCompatTextView {
         }
         refreshDrawableState();
         setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(listener != null) {
-                    listener.itemClicked(day, month, year);
-                }
+        setOnClickListener(v -> {
+            if(listener != null) {
+                listener.itemClicked(day, month, year);
             }
         });
         setClickable(true);

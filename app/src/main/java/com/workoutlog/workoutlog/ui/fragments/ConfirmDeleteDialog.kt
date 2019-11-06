@@ -49,7 +49,7 @@ class ConfirmDeleteDialog<T>: DialogFragment() {
             title = getString(R.string.delete_question)
         }
         if(message == null) {
-            message = "This cannot be returned"
+            message = getString(R.string.this_cannot_be_returned)
         }
 
         val builder = AlertDialog.Builder(context, R.style.CustomDialogTheme)

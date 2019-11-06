@@ -5,6 +5,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.workoutlog.workoutlog"
@@ -39,5 +43,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha02'
     annotationProcessor "androidx.room:room-compiler:2.2.1"
     implementation 'androidx.recyclerview:recyclerview-selection:1.0.0'
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
 }
 apply plugin: 'com.google.gms.google-services'

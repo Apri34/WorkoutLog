@@ -141,6 +141,11 @@
     <string name="sure_you_want_leave">Are you sure you want to leave?</string>
     <string name="workout">Workout</string>
     <string name="you_have_to_select_exercises">You have to select exercises</string>
+    <string name="this_is_the_last_workout">This is the last workout</string>
+    <string name="this_is_the_first_workout">This is the first workout</string>
+    <string name="date">%1d.%2d.%3d</string>
+    <string name="you_have_not_finished_any_workouts">You have not finished any workouts</string>
+    <string name="this_cannot_be_returned">This cannot be returned</string>
 
     <string-array name="exercise_types">
         <item>Normal Exercise</item>

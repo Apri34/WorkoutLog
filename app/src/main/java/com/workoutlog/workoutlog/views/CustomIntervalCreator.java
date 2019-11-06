@@ -5,8 +5,6 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -96,39 +94,23 @@ public class CustomIntervalCreator extends ConstraintLayout {
 
         customInterval = findViewById(R.id.custom_interval);
         buttonCreateInterval = findViewById(R.id.button_interval_created);
-        buttonCreateInterval.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(listener != null)
-                    listener.intervalCreated(interval);
-            }
+        buttonCreateInterval.setOnClickListener(v -> {
+            if(listener != null)
+                listener.intervalCreated(interval);
         });
         buttonRemove = findViewById(R.id.button_interval_remove_item);
-        buttonRemove.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeItem();
-            }
-        });
+        buttonRemove.setOnClickListener(v -> removeItem());
         buttonBar = findViewById(R.id.button_bar_custom_interval_creator);
         buttonPause = findViewById(R.id.button_interval_pause);
-        buttonPause.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addItem(-1);
-                refreshButtons();
-            }
+        buttonPause.setOnClickListener(v -> {
+            addItem(-1);
+            refreshButtons();
         });
 
         interval = new ArrayList<>();
         dbInitializer = DatabaseInitializer.getInstance();
         database = AppDatabase.getInstance(context);
-        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                resizeWidgets();
-            }
-        });
+        getViewTreeObserver().addOnGlobalLayoutListener(this::resizeWidgets);
     }
 
     public void setTrainingplan(Trainingplan trp) throws ExecutionException, InterruptedException {
@@ -180,14 +162,11 @@ public class CustomIntervalCreator extends ConstraintLayout {
         btn.setBackground(ContextCompat.getDrawable(context, R.drawable.background_button));
         btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, buttonHeight));
         btn.setTag(buttonBar.getChildCount());
-        btn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int index = (int) v.getTag();
-                addItem(index);
-                refreshIntervalFinished();
-                refreshButtons();
-            }
+        btn.setOnClickListener(v -> {
+            int index = (int) v.getTag();
+            addItem(index);
+            refreshIntervalFinished();
+            refreshButtons();
         });
         btn.setHeight(getResources().getDimensionPixelSize(R.dimen.button_height_custom_interval_creator));
         int padding = getResources().getDimensionPixelSize(R.dimen.button_padding_custom_interval_creator);

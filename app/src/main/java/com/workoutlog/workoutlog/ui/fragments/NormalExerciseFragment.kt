@@ -124,7 +124,7 @@ class NormalExerciseFragment: Fragment() {
                 val reps = etReps.text.toString().toInt()
 
                 sets++
-                if(listener != null) listener!!.normalSetDone(normal, reps, weight, rpe, sets + 1)
+                if(listener != null) listener!!.normalSetDone(normal, reps, weight, rpe, sets - 1)
                 tvSet.text = String.format(getString(R.string.number_sets), sets + 1)
             }
         }

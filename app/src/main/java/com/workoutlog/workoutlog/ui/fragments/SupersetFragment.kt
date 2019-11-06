@@ -199,7 +199,7 @@ class SupersetFragment: Fragment(){
 
                 sets++
                 if(listener != null)
-                    listener!!.supersetDone(superset, reps1, weight1, rpe1, reps2, weight2, rpe2, sets + 1)
+                    listener!!.supersetDone(superset, reps1, weight1, rpe1, reps2, weight2, rpe2, sets - 1)
                 tvSet.text = String.format(getString(R.string.number_sets), sets + 1)
             }
         }

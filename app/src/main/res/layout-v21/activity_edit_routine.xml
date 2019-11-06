@@ -6,8 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.activities.EditRoutineActivity"
-        android:background="@color/colorSecondary">
-
+>
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_edit_routine_activity"
             android:layout_width="match_parent"

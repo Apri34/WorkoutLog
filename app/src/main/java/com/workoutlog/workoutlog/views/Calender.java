@@ -89,19 +89,9 @@ public class Calender extends ConstraintLayout {
 
         tvMonth = findViewById(R.id.calender_text_view_month);
         ImageButton buttonNext = findViewById(R.id.calender_button_next_month);
-        buttonNext.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nextMonth();
-            }
-        });
+        buttonNext.setOnClickListener(v -> nextMonth());
         ImageButton buttonPrev = findViewById(R.id.calender_button_prev_month);
-        buttonPrev.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                prevMonth();
-            }
-        });
+        buttonPrev.setOnClickListener(v -> prevMonth());
         calender = findViewById(R.id.calender_table_layout);
         ScrollView scrollView = findViewById(R.id.scroll_view_calender_table_layout);
 
@@ -200,14 +190,11 @@ public class Calender extends ConstraintLayout {
         else
             item.setDateInLandscape(day, month, year);
         item.setInMonth(true);
-        item.setOnItemClickedListener(new CalenderItem.IItemClicked() {
-            @Override
-            public void itemClicked(int day, int month, int year) {
-                selectedDay = day;
-                selectedMonth = month;
-                selectedYear = year;
-                makeCalender();
-            }
+        item.setOnItemClickedListener((day1, month1, year1) -> {
+            selectedDay = day1;
+            selectedMonth = month1;
+            selectedYear = year1;
+            makeCalender();
         });
         if(selectedDay != -1 && (year >= selectedYear && month >= selectedMonth && day >= selectedDay ||
                 month > selectedMonth && year >= selectedYear || year > selectedYear) &&

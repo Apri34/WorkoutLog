@@ -72,7 +72,7 @@ class CreateCurrentTpChooseIntervalFragment: Fragment() {
         intervalPicker.setTrainingplan(trainingplan)
 
         customIntervalCreator = view.findViewById(R.id.custom_interval_creator)
-        customIntervalCreator.setIntervalCreatedListener {interval ->
+        customIntervalCreator.setIntervalCreatedListener { interval ->
             if(listener != null)
                 listener!!.intervalChosen(interval)
         }
@@ -96,7 +96,7 @@ class CreateCurrentTpChooseIntervalFragment: Fragment() {
                     )!!
                 )
 
-                isCustomInterval = !intervalPicker.setInterval(interval)
+                isCustomInterval = intervalPicker.setInterval(interval)
                 if (isCustomInterval) {
                     intervalPicker.visibility = View.GONE
                     customIntervalCreator.visibility = View.VISIBLE

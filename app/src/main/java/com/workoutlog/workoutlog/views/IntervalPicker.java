@@ -144,29 +144,16 @@ public class IntervalPicker extends ConstraintLayout {
         a.recycle();
 
         Button buttonCustom = findViewById(R.id.button_interval_picker_custom);
-        buttonCustom.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(listener != null) {
-                    listener.customInterval();
-                }
+        buttonCustom.setOnClickListener(v -> {
+            if(listener != null) {
+                listener.customInterval();
             }
         });
 
         buttonNext = findViewById(R.id.button_next_interval_picker);
-        buttonNext.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nextInterval();
-            }
-        });
+        buttonNext.setOnClickListener(v -> nextInterval());
         buttonPrev = findViewById(R.id.button_prev_interval_picker);
-        buttonPrev.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                prevInterval();
-            }
-        });
+        buttonPrev.setOnClickListener(v -> prevInterval());
 
         dbInitializer = DatabaseInitializer.getInstance();
         database = AppDatabase.getInstance(context);
@@ -176,21 +163,18 @@ public class IntervalPicker extends ConstraintLayout {
         intervals = new ArrayList<>();
 
         intervalFrame = findViewById(R.id.interval_picker_interval);
-        intervalFrame.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(listener != null) {
-                    switch (currentInterval) {
-                        case 0:
-                            listener.intervalClicked(listInterval1);
-                            break;
-                        case 1:
-                            listener.intervalClicked(listInterval2);
-                            break;
-                        case 2:
-                            listener.intervalClicked(listInterval3);
-                            break;
-                    }
+        intervalFrame.setOnClickListener(v -> {
+            if(listener != null) {
+                switch (currentInterval) {
+                    case 0:
+                        listener.intervalClicked(listInterval1);
+                        break;
+                    case 1:
+                        listener.intervalClicked(listInterval2);
+                        break;
+                    case 2:
+                        listener.intervalClicked(listInterval3);
+                        break;
                 }
             }
         });

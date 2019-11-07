@@ -886,4 +886,8 @@ public class DatabaseInitializer {
             return mDao.getNumExerciseDonesUntilDate(dates[0]);
         }
     }
+
+    public boolean existsWorkoutOnDate(@NonNull final ExerciseDoneDao dao, Date date) throws ExecutionException, InterruptedException {
+        return getExerciseDonesByDate(dao, date).size() > 0;
+    }
 }

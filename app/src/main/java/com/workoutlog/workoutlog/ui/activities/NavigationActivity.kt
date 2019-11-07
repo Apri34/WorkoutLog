@@ -19,13 +19,73 @@ import com.google.firebase.auth.FirebaseAuth
 import com.workoutlog.workoutlog.R
 import com.workoutlog.workoutlog.database.AppDatabase
 import com.workoutlog.workoutlog.database.DatabaseInitializer
+import com.workoutlog.workoutlog.database.entities.Routine
 import com.workoutlog.workoutlog.ui.fragments.*
 import org.json.JSONObject
+import java.sql.Date
 import java.util.*
 
-class NavigationActivity : AppCompatActivity(), CurrentTrainingplanFragment.ICurrentTrainingplanFragment,
+class NavigationActivity : AppCompatActivity(),
+    CurrentTrainingplanFragment.ICurrentTrainingplanFragment,
     StartWorkoutDialogFragment.IStartWorkout,
-    StartWorkoutNoSpecRoutineDialogFragment.IStartWorkoutNoSpecRoutine{
+    StartWorkoutNoSpecRoutineDialogFragment.IStartWorkoutNoSpecRoutine,
+    HomeFragment.IHomeFragment
+{
+
+    override fun refreshHomeFragment(fragment: Fragment): Boolean {
+        return if(navView.checkedItem?.itemId == R.id.nav_home && fragment.isAdded) {
+            supportFragmentManager.beginTransaction()
+                .detach(fragment)
+                .attach(fragment)
+                .commit()
+            true
+        } else false
+    }
+
+    override fun startWorkout(routine: Routine) {
+        val intent = Intent(this, WorkoutActivity::class.java)
+        intent.putExtra(KEY_ROUTINE_WORKOUT, routine)
+        intent.putExtra(KEY_DELETABLE, false)
+        startActivity(intent)
+    }
+
+    override fun editCurrentTpDayStart() {
+        val intent = Intent(this, CreateCurrentTrainingplanActivity::class.java)
+        intent.putExtra(KEY_FRAGMENT, KEY_FRAG_CHOOSE_START)
+        startActivity(intent)
+    }
+
+    override fun editCurrentTp() {
+        val intent = Intent(this, CreateCurrentTrainingplanActivity::class.java)
+        intent.putExtra(KEY_FRAGMENT, KEY_FRAG_SELECT_TP)
+        startActivity(intent)
+    }
+
+    override fun editCurrentTpInterval() {
+        val intent = Intent(this, CreateCurrentTrainingplanActivity::class.java)
+        intent.putExtra(KEY_FRAGMENT, KEY_FRAG_CHOOSE_INTERVAL)
+        startActivity(intent)
+    }
+
+    override fun goToHistory() {
+        supportFragmentManager.popBackStack()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.content_frame_navigation_activity, historyFragment)
+            .addToBackStack(null)
+            .commit()
+        navView.setCheckedItem(R.id.nav_history)
+        supportActionBar!!.title = getString(R.string.history)
+    }
+
+    override fun chooseTp() {
+        supportFragmentManager.popBackStack()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.content_frame_navigation_activity, currentTrainingplanFragment)
+            .addToBackStack(null)
+            .commit()
+        navView.setCheckedItem(R.id.nav_current_trainingplan)
+        supportActionBar!!.title = getString(R.string.current_trainingplan)
+    }
 
     override fun startCurrentWorkout(rId: Int) {
         val routine = dbInitializer.getRoutineById(database.routineDao(), rId)
@@ -50,14 +110,14 @@ class NavigationActivity : AppCompatActivity(), CurrentTrainingplanFragment.ICur
         startActivity(intent)
     }
 
-    override fun refreshFragment(fragment: Fragment): Boolean {
-        if(fragment.isAdded) {
+    override fun refreshCurrentTrainingplanFragment(fragment: Fragment): Boolean {
+        return if(navView.checkedItem?.itemId == R.id.nav_current_trainingplan && fragment.isAdded) {
             supportFragmentManager.beginTransaction()
                 .detach(fragment)
                 .attach(fragment)
                 .commit()
-        }
-        return true
+            true
+        } else false
     }
 
     override fun createNewCurrentTrainingplan() {
@@ -82,17 +142,20 @@ class NavigationActivity : AppCompatActivity(), CurrentTrainingplanFragment.ICur
         startActivity(intent)
     }
 
-    override fun editInterval() {val intent = Intent(this, CreateCurrentTrainingplanActivity::class.java)
+    override fun editInterval() {
+        val intent = Intent(this, CreateCurrentTrainingplanActivity::class.java)
         intent.putExtra(KEY_FRAGMENT, KEY_FRAG_CHOOSE_INTERVAL)
         startActivity(intent)
     }
 
-    override fun editStartDay() {val intent = Intent(this, CreateCurrentTrainingplanActivity::class.java)
+    override fun editStartDay() {
+        val intent = Intent(this, CreateCurrentTrainingplanActivity::class.java)
         intent.putExtra(KEY_FRAGMENT, KEY_FRAG_CHOOSE_START)
         startActivity(intent)
     }
 
-    override fun editDeload() {val intent = Intent(this, CreateCurrentTrainingplanActivity::class.java)
+    override fun editDeload() {
+        val intent = Intent(this, CreateCurrentTrainingplanActivity::class.java)
         intent.putExtra(KEY_FRAGMENT, KEY_FRAG_DELOAD)
         startActivity(intent)
     }
@@ -307,29 +370,19 @@ class NavigationActivity : AppCompatActivity(), CurrentTrainingplanFragment.ICur
                     logout()
                 }
                 R.id.nav_start_workout -> {
-                    if(PreferenceManager.getDefaultSharedPreferences(this).contains(KEY_CURRENT_TP_STATE) &&
-                        (PreferenceManager.getDefaultSharedPreferences(this).getInt(KEY_CURRENT_TP_STATE, NO_CURRENT_TP) == CURRENT_TP_FINISHED)) {
-                        val tp = dbInitializer.getTrainingplanById(
-                            database.trainingplanDao(),
-                            PreferenceManager.getDefaultSharedPreferences(this).getInt(KEY_TP_ID, -1))
-                        val c = Calendar.getInstance()
-                        val day = c.get(Calendar.DAY_OF_MONTH)
-                        val month = c.get(Calendar.MONTH)
-                        val year = c.get(Calendar.YEAR)
-                        val rId = getRoutine(day, month, year, tp.tpId)
-                        if(rId != null) {
-                            if(rId != 0) {
-                                val routine = dbInitializer.getRoutineById(database.routineDao(), rId)
-                                val dialog = StartWorkoutDialogFragment.newInstance(routine.rName, tp.tpName, rId)
-                                dialog.show(supportFragmentManager, "startWorkout")
-                            } else {
-                                val dialog = StartWorkoutNoSpecRoutineDialogFragment.newInstance(getString(R.string.restday_workout_though))
-                                dialog.show(supportFragmentManager, "startWorkoutRestday")
+                    val c = Calendar.getInstance()
+                    val date = Date(c.timeInMillis)
+                    val workoutDone = dbInitializer.existsWorkoutOnDate(database.exerciseDoneDao(), date)
+                    if(workoutDone) {
+                        val dialog = WorkoutDoneDialogFragment()
+                        dialog.setListener(object : WorkoutDoneDialogFragment.IWorkoutAgain {
+                            override fun workoutAgain() {
+                                openChooseWorkoutDialog()
                             }
-                        }
+                        })
+                        dialog.show(supportFragmentManager, "workoutAgain")
                     } else {
-                        val dialog = StartWorkoutNoSpecRoutineDialogFragment()
-                        dialog.show(supportFragmentManager, "startWorkoutNoCurrentTp")
+                        openChooseWorkoutDialog()
                     }
                 }
             }
@@ -377,6 +430,33 @@ class NavigationActivity : AppCompatActivity(), CurrentTrainingplanFragment.ICur
              drawerLayout.closeDrawers()
         } else {
             super.onBackPressed()
+        }
+    }
+
+    private fun openChooseWorkoutDialog() {
+        if(PreferenceManager.getDefaultSharedPreferences(this).contains(KEY_CURRENT_TP_STATE) &&
+            (PreferenceManager.getDefaultSharedPreferences(this).getInt(KEY_CURRENT_TP_STATE, NO_CURRENT_TP) == CURRENT_TP_FINISHED)) {
+            val tp = dbInitializer.getTrainingplanById(
+                database.trainingplanDao(),
+                PreferenceManager.getDefaultSharedPreferences(this).getInt(KEY_TP_ID, -1))
+            val c = Calendar.getInstance()
+            val day = c.get(Calendar.DAY_OF_MONTH)
+            val month = c.get(Calendar.MONTH)
+            val year = c.get(Calendar.YEAR)
+            val rId = getRoutine(day, month, year, tp.tpId)
+            if(rId != null) {
+                if(rId != 0) {
+                    val routine = dbInitializer.getRoutineById(database.routineDao(), rId)
+                    val dialog = StartWorkoutDialogFragment.newInstance(routine.rName, tp.tpName, rId)
+                    dialog.show(supportFragmentManager, "startWorkout")
+                } else {
+                    val dialog = StartWorkoutNoSpecRoutineDialogFragment.newInstance(getString(R.string.restday_workout_though))
+                    dialog.show(supportFragmentManager, "startWorkoutRestday")
+                }
+            }
+        } else {
+            val dialog = StartWorkoutNoSpecRoutineDialogFragment()
+            dialog.show(supportFragmentManager, "startWorkoutNoCurrentTp")
         }
     }
 

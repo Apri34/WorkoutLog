@@ -146,6 +146,19 @@
     <string name="date">%1d.%2d.%3d</string>
     <string name="you_have_not_finished_any_workouts">You have not finished any workouts</string>
     <string name="this_cannot_be_returned">This cannot be returned</string>
+    <string name="you_have_already_workoud_out_another_workout">You have already worked out today. Do another workout?
+    </string>
+    <string name="you_have_finished_your_workout_today">You have finished your workout today.</string>
+    <string name="pause_today">Pause today</string>
+    <string name="today_is_restday_you_should_not_work_out_today">Today is Restday. You should not work out today.
+    </string>
+    <string name="take_a_look_at_your_history">Take a look at your History</string>
+    <string name="edit_your_current_tp">Edit your current Trainingplan</string>
+    <string name="you_have_not_chosen_your_current_trainingplan">You have not chosen your current Trainingplan</string>
+    <string name="choose">Choose</string>
+    <string name="superset_">Superset: %s</string>
+    <string name="dropset_">Dropset: %s</string>
+    <string name="workout_of_today">Workout of Today</string>
 
     <string-array name="exercise_types">
         <item>Normal Exercise</item>

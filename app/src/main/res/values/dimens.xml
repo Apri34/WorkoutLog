@@ -72,4 +72,9 @@
     <dimen name="text_size_goal">16sp</dimen>
     <dimen name="margin_top_goal">8dp</dimen>
     <dimen name="margin_side_dialog_create_normal">30dp</dimen>
+    <dimen name="text_size_home_fragment_big">20sp</dimen>
+    <dimen name="margin_home_fragment_top">20dp</dimen>
+    <dimen name="text_size_home_fragment_small">16sp</dimen>
+    <dimen name="margin_left_view_full_exercise">20dp</dimen>
+    <dimen name="margin_recycler_view_between_items_home_fragment">12dp</dimen>
 </resources>

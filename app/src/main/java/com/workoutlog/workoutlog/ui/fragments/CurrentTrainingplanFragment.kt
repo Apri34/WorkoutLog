@@ -83,7 +83,7 @@ class CurrentTrainingplanFragment: Fragment(), ConfirmDeleteCurrentTpDialog.ICon
         super.onResume()
         if(refreshed) refreshed = false
         else
-            if(listener != null) refreshed = listener!!.refreshFragment(this)
+            if(listener != null) refreshed = listener!!.refreshCurrentTrainingplanFragment(this)
     }
 
     interface ICurrentTrainingplanFragment {
@@ -93,7 +93,7 @@ class CurrentTrainingplanFragment: Fragment(), ConfirmDeleteCurrentTpDialog.ICon
         fun editStartDay()
         fun editDeload()
         fun createNewCurrentTrainingplan()
-        fun refreshFragment(fragment: Fragment): Boolean
+        fun refreshCurrentTrainingplanFragment(fragment: Fragment): Boolean
     }
 
     override fun onAttach(context: Context) {

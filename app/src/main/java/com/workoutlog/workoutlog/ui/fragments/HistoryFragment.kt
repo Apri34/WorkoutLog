@@ -111,7 +111,7 @@ class HistoryFragment: Fragment() {
     }
 
     private fun getNextWorkout() {
-        if(dbInitializer.existsNoNextWorkout(database.exerciseDoneDao(), Date(c.timeInMillis))) {
+        if(!dbInitializer.existsNoNextWorkout(database.exerciseDoneDao(), Date(c.timeInMillis))) {
             val prevC = c
             c.add(Calendar.DAY_OF_MONTH, +1)
             exerciseDones.clear()
@@ -141,7 +141,7 @@ class HistoryFragment: Fragment() {
     }
 
     private fun getPrevWorkout() {
-        if(dbInitializer.existsNoPrevWorkout(database.exerciseDoneDao(), Date(c.timeInMillis))) {
+        if(!dbInitializer.existsNoPrevWorkout(database.exerciseDoneDao(), Date(c.timeInMillis))) {
             val prevC = c
             c.add(Calendar.DAY_OF_MONTH, -1)
             exerciseDones.clear()

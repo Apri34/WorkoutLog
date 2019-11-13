@@ -1,5 +1,6 @@
 package com.workoutlog.workoutlog.database;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import androidx.annotation.NonNull;
 import com.workoutlog.workoutlog.database.daos.*;
@@ -12,23 +13,25 @@ import java.util.concurrent.ExecutionException;
 
 public class DatabaseInitializer {
 
+    private static DatabaseSynchronizer databaseSynchronizer;
     private DatabaseInitializer(){}
     private static DatabaseInitializer INSTANCE = null;
-    public static DatabaseInitializer getInstance() {
+    public static DatabaseInitializer getInstance(Context context) {
         if(INSTANCE == null) {
             INSTANCE = new DatabaseInitializer();
+            databaseSynchronizer = DatabaseSynchronizer.Companion.getInstance(context);
         }
         return INSTANCE;
     }
 
-    public List<Dropset> getAllDropsets(@NonNull final DropsetDao dao) throws ExecutionException, InterruptedException {
+    List<Dropset> getAllDropsets(@NonNull final DropsetDao dao) throws ExecutionException, InterruptedException {
         GetAllDropsets task = new GetAllDropsets(dao);
         return task.execute().get();
     }
 
     private static class GetAllDropsets extends AsyncTask<Void, Void, List<Dropset>> {
 
-        final DropsetDao mDao;
+        private final DropsetDao mDao;
 
         GetAllDropsets(DropsetDao dao) {
             mDao = dao;
@@ -47,7 +50,7 @@ public class DatabaseInitializer {
 
     private static class GetAllExercises extends AsyncTask<Void, Void, List<Exercise>> {
 
-        final ExerciseDao mDao;
+        private final ExerciseDao mDao;
 
         GetAllExercises(ExerciseDao dao) {
             mDao = dao;
@@ -66,7 +69,7 @@ public class DatabaseInitializer {
 
     private static class GetAllExerciseDones extends AsyncTask<Void, Void, List<ExerciseDone>> {
 
-        final ExerciseDoneDao mDao;
+        private final ExerciseDoneDao mDao;
 
         GetAllExerciseDones(ExerciseDoneDao dao) { mDao = dao; }
 
@@ -76,14 +79,14 @@ public class DatabaseInitializer {
         }
     }
 
-    public List<Normal> getAllNormals(@NonNull final NormalDao dao) throws ExecutionException, InterruptedException {
+    List<Normal> getAllNormals(@NonNull final NormalDao dao) throws ExecutionException, InterruptedException {
         GetAllNormals task = new GetAllNormals(dao);
         return task.execute().get();
     }
 
     private static class GetAllNormals extends AsyncTask<Void, Void, List<Normal>> {
 
-        final NormalDao mDao;
+        private final NormalDao mDao;
 
         GetAllNormals(NormalDao dao) { mDao = dao; }
 
@@ -93,14 +96,14 @@ public class DatabaseInitializer {
         }
     }
 
-    public List<Routine> getAllRoutines(@NonNull final RoutineDao dao) throws ExecutionException, InterruptedException {
+    List<Routine> getAllRoutines(@NonNull final RoutineDao dao) throws ExecutionException, InterruptedException {
         GetAllRoutines task = new GetAllRoutines(dao);
         return task.execute().get();
     }
 
     private static class GetAllRoutines extends AsyncTask<Void, Void, List<Routine>> {
 
-        final RoutineDao mDao;
+        private final RoutineDao mDao;
 
         GetAllRoutines(RoutineDao dao) { mDao = dao; }
 
@@ -110,14 +113,14 @@ public class DatabaseInitializer {
         }
     }
 
-    public List<SetDone> getAllSetDones(@NonNull final SetDoneDao dao) throws ExecutionException, InterruptedException {
+    List<SetDone> getAllSetDones(@NonNull final SetDoneDao dao) throws ExecutionException, InterruptedException {
         GetAllSetDones task = new GetAllSetDones(dao);
         return task.execute().get();
     }
 
     private static class GetAllSetDones extends AsyncTask<Void, Void, List<SetDone>> {
 
-        final SetDoneDao mDao;
+        private final SetDoneDao mDao;
 
         GetAllSetDones(SetDoneDao dao) { mDao = dao; }
 
@@ -127,14 +130,14 @@ public class DatabaseInitializer {
         }
     }
 
-    public List<Superset> getAllSupersets(@NonNull final SupersetDao dao) throws ExecutionException, InterruptedException {
+    List<Superset> getAllSupersets(@NonNull final SupersetDao dao) throws ExecutionException, InterruptedException {
         GetAllSupersets task = new GetAllSupersets(dao);
         return task.execute().get();
     }
 
     private static class GetAllSupersets extends AsyncTask<Void, Void, List<Superset>> {
 
-        final SupersetDao mDao;
+        private final SupersetDao mDao;
 
         GetAllSupersets(SupersetDao dao) { mDao = dao; }
 
@@ -151,7 +154,7 @@ public class DatabaseInitializer {
 
     private static class GetAllTrainingplans extends AsyncTask<Void, Void, List<Trainingplan>> {
 
-        final TrainingplanDao mDao;
+        private final TrainingplanDao mDao;
 
         GetAllTrainingplans(TrainingplanDao dao) { mDao = dao; }
 
@@ -168,14 +171,27 @@ public class DatabaseInitializer {
 
     private static class InsertExercise extends AsyncTask<Exercise, Void, Void> {
 
-        final ExerciseDao mDao;
+        private final ExerciseDao mDao;
+        private Exercise exercise;
+        private int before;
+        private int after;
 
         InsertExercise(ExerciseDao dao) { mDao = dao; }
 
         @Override
         protected Void doInBackground(Exercise... exercises) {
+            before = mDao.getCount();
             mDao.insertExercise(exercises[0]);
+            exercise = mDao.getLastExercise();
+            after = mDao.getCount();
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(after > before) {
+                databaseSynchronizer.insertExercise(exercise);
+            }
         }
     }
 
@@ -186,14 +202,27 @@ public class DatabaseInitializer {
 
     private static class InsertExerciseDone extends AsyncTask<ExerciseDone, Void, Void> {
 
-        final ExerciseDoneDao mDao;
+        private final ExerciseDoneDao mDao;
+        private ExerciseDone exerciseDone;
+        private int before;
+        private int after;
 
         InsertExerciseDone(ExerciseDoneDao dao) { mDao = dao; }
 
         @Override
         protected Void doInBackground(ExerciseDone... exerciseDones) {
+            before = mDao.getCount();
             mDao.insertExerciseDone(exerciseDones[0]);
+            exerciseDone = mDao.getLastExerciseDone();
+            after = mDao.getCount();
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(after > before) {
+                databaseSynchronizer.insertExerciseDone(exerciseDone);
+            }
         }
     }
 
@@ -204,14 +233,27 @@ public class DatabaseInitializer {
 
     private static class InsertTrainingplan extends AsyncTask<Trainingplan, Void, Void> {
 
-        final TrainingplanDao mDao;
+        private final TrainingplanDao mDao;
+        private Trainingplan trainingplan;
+        private int before;
+        private int after;
 
         InsertTrainingplan(TrainingplanDao dao) { mDao = dao; }
 
         @Override
         protected Void doInBackground(Trainingplan... trainingplans) {
+            before = mDao.getCount();
             mDao.insertTrainingplan(trainingplans[0]);
+            trainingplan = mDao.getLastTrainingplan();
+            after = mDao.getCount();
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(after > before) {
+                databaseSynchronizer.insertTrainingplan(trainingplan);
+            }
         }
     }
 
@@ -222,14 +264,25 @@ public class DatabaseInitializer {
 
     private static class UpdateExercise extends AsyncTask<Exercise, Void, Void> {
 
-        final ExerciseDao mDao;
+        private final ExerciseDao mDao;
+        private Exercise exercise;
+        private String exerciseAfter;
 
         UpdateExercise(ExerciseDao dao) { mDao = dao; }
 
         @Override
         protected Void doInBackground(Exercise... exercises) {
+            exercise = exercises[0];
             mDao.updateExercise(exercises[0].getEId(), exercises[0].getEName());
+            exerciseAfter = mDao.getExerciseNameById(exercise.getEId());
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(exerciseAfter.equals(exercise.getEName())) {
+                databaseSynchronizer.updateExercise(exercise);
+            }
         }
     }
 
@@ -240,7 +293,7 @@ public class DatabaseInitializer {
 
     private static class GetAllExerciseNames extends AsyncTask<Void, Void, List<String>> {
 
-        final ExerciseDao mDao;
+        private final ExerciseDao mDao;
 
         GetAllExerciseNames(ExerciseDao dao) { mDao = dao; }
 
@@ -257,14 +310,27 @@ public class DatabaseInitializer {
 
     private static class DeleteExercise extends AsyncTask<Exercise, Void, Void> {
 
-        final ExerciseDao mDao;
+        private final ExerciseDao mDao;
+        private Exercise exercise;
+        private int before;
+        private int after;
 
         DeleteExercise(ExerciseDao dao) { mDao = dao; }
 
         @Override
         protected Void doInBackground(Exercise... exercises) {
+            before = mDao.getCount();
+            exercise = exercises[0];
             mDao.deleteExercise(exercises[0]);
+            after = mDao.getCount();
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(after < before) {
+                databaseSynchronizer.deleteExercise(exercise);
+            }
         }
     }
 
@@ -275,14 +341,27 @@ public class DatabaseInitializer {
 
     private static class DeleteTrainingplan extends AsyncTask<Trainingplan, Void, Void> {
 
-        final TrainingplanDao mDao;
+        private final TrainingplanDao mDao;
+        private Trainingplan trainingplan;
+        private int before;
+        private int after;
 
         DeleteTrainingplan(TrainingplanDao dao) { mDao = dao; }
 
         @Override
         protected Void doInBackground(Trainingplan... trainingplans) {
+            trainingplan = trainingplans[0];
+            before = mDao.getCount();
             mDao.deleteTrainingplan(trainingplans[0]);
+            after = mDao.getCount();
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(after < before) {
+                databaseSynchronizer.deleteTrainingplan(trainingplan);
+            }
         }
     }
 
@@ -293,7 +372,7 @@ public class DatabaseInitializer {
 
     private static class GetAllTrainingplanNames extends AsyncTask<Void, Void, List<String>> {
 
-        final TrainingplanDao mDao;
+        private final TrainingplanDao mDao;
 
         GetAllTrainingplanNames(TrainingplanDao dao) { mDao = dao; }
 
@@ -310,7 +389,7 @@ public class DatabaseInitializer {
 
     private static class GetTrainingplanById extends AsyncTask<Integer, Void, Trainingplan> {
 
-        final TrainingplanDao mDao;
+        private final TrainingplanDao mDao;
 
         GetTrainingplanById(TrainingplanDao dao) { mDao = dao; }
 
@@ -327,7 +406,7 @@ public class DatabaseInitializer {
 
     private static class GetLastTrainingplan extends AsyncTask<Void, Void, Trainingplan> {
 
-        final TrainingplanDao mDao;
+        private final TrainingplanDao mDao;
 
         GetLastTrainingplan(TrainingplanDao dao) { mDao = dao; }
 
@@ -344,7 +423,7 @@ public class DatabaseInitializer {
 
     private static class GetRoutinesByTpId extends AsyncTask<Integer, Void, List<Routine>> {
 
-        final RoutineDao mDao;
+        private final RoutineDao mDao;
 
         GetRoutinesByTpId(RoutineDao dao) { mDao = dao; }
 
@@ -361,7 +440,7 @@ public class DatabaseInitializer {
 
     private static class GetRoutineNamesByTpId extends AsyncTask<Integer, Void, List<String>> {
 
-        final RoutineDao mDao;
+        private final RoutineDao mDao;
 
         GetRoutineNamesByTpId(RoutineDao dao) { mDao = dao; }
 
@@ -378,7 +457,7 @@ public class DatabaseInitializer {
 
     private static class GetNumberRoutinesInTp extends AsyncTask<Integer, Void, Integer> {
 
-        final RoutineDao mDao;
+        private final RoutineDao mDao;
 
         GetNumberRoutinesInTp(RoutineDao dao) { mDao = dao; }
 
@@ -395,14 +474,27 @@ public class DatabaseInitializer {
 
     private static class InsertRoutine extends AsyncTask<Routine, Void, Void> {
 
-        final RoutineDao mDao;
+        private final RoutineDao mDao;
+        private Routine routine;
+        private int before;
+        private int after;
 
-         InsertRoutine(RoutineDao dao) { mDao = dao; }
+        InsertRoutine(RoutineDao dao) { mDao = dao; }
 
         @Override
         protected Void doInBackground(Routine... routines) {
-             mDao.insertRoutine(routines[0]);
+            before = mDao.getCount();
+            mDao.insertRoutine(routines[0]);
+            routine = mDao.getLastRoutine();
+            after = mDao.getCount();
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(after > before) {
+                databaseSynchronizer.insertRoutine(routine);
+            }
         }
     }
 
@@ -413,7 +505,7 @@ public class DatabaseInitializer {
 
     private static class GetLastRoutine extends AsyncTask<Void, Void, Routine> {
 
-        final RoutineDao mDao;
+        private final RoutineDao mDao;
 
         GetLastRoutine(RoutineDao dao) { mDao = dao; }
 
@@ -430,14 +522,27 @@ public class DatabaseInitializer {
 
     private static class DeleteRoutine extends AsyncTask<Routine, Void, Void> {
 
-        final RoutineDao mDao;
+        private final RoutineDao mDao;
+        private Routine routine;
+        private int before;
+        private int after;
 
         DeleteRoutine(RoutineDao dao) { mDao = dao; }
 
         @Override
         protected Void doInBackground(Routine... routines) {
+            routine = routines[0];
+            before = mDao.getCount();
             mDao.deleteRoutine(routines[0]);
+            after = mDao.getCount();
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(after < before) {
+                databaseSynchronizer.deleteRoutine(routine);
+            }
         }
     }
 
@@ -448,14 +553,25 @@ public class DatabaseInitializer {
 
     private static class UpdateTrainingplan extends AsyncTask<Trainingplan, Void, Void> {
 
-         final TrainingplanDao mDao;
+        private final TrainingplanDao mDao;
+        private Trainingplan trainingplan;
+        private String trainingplanAfter;
 
-         UpdateTrainingplan(TrainingplanDao dao) { mDao = dao; }
+        UpdateTrainingplan(TrainingplanDao dao) { mDao = dao; }
 
         @Override
         protected Void doInBackground(Trainingplan... trainingplans) {
+            trainingplan = trainingplans[0];
             mDao.updateTrainingplan(trainingplans[0].getTpId(), trainingplans[0].getTpName());
+            trainingplanAfter = mDao.getTrainingplanById(trainingplan.getTpId()).getTpName();
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(trainingplanAfter.equals(trainingplan.getTpName())) {
+                databaseSynchronizer.updateTrainingplan(trainingplan);
+            }
         }
     }
 
@@ -466,7 +582,7 @@ public class DatabaseInitializer {
 
     private static class GetRoutineById extends AsyncTask<Integer, Void, Routine> {
 
-        final RoutineDao mDao;
+        private final RoutineDao mDao;
 
         GetRoutineById(RoutineDao dao) { mDao = dao; }
 
@@ -483,14 +599,27 @@ public class DatabaseInitializer {
 
     private static class InsertNormal extends AsyncTask<Normal, Void, Void> {
 
-        final NormalDao mDao;
+        private final NormalDao mDao;
+        private Normal normal;
+        private int before;
+        private int after;
 
         InsertNormal(NormalDao dao) { mDao = dao; }
 
         @Override
         protected Void doInBackground(Normal... normals) {
+            before = mDao.getCount();
             mDao.insertNormal(normals[0]);
+            normal = mDao.getLastNormal();
+            after = mDao.getCount();
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(after > before) {
+                databaseSynchronizer.insertNormal(normal);
+            }
         }
     }
 
@@ -501,14 +630,27 @@ public class DatabaseInitializer {
 
     private static class InsertSuperset extends AsyncTask<Superset, Void, Void> {
 
-        final SupersetDao mDao;
+        private final SupersetDao mDao;
+        private Superset superset;
+        private int before;
+        private int after;
 
         InsertSuperset(SupersetDao dao) { mDao = dao; }
 
         @Override
         protected Void doInBackground(Superset... supersets) {
+            before = mDao.getCount();
             mDao.insertSuperset(supersets[0]);
+            superset = mDao.getLastSuperset();
+            after = mDao.getCount();
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(after > before) {
+                databaseSynchronizer.insertSuperset(superset);
+            }
         }
     }
 
@@ -519,14 +661,27 @@ public class DatabaseInitializer {
 
     private static class InsertDropset extends AsyncTask<Dropset, Void, Void> {
 
-        final DropsetDao mDao;
+        private final DropsetDao mDao;
+        private Dropset dropset;
+        private int before;
+        private int after;
 
         InsertDropset(DropsetDao dao) { mDao = dao; }
 
         @Override
         protected Void doInBackground(Dropset... dropsets) {
+            before = mDao.getCount();
             mDao.insertDropset(dropsets[0]);
+            dropset = mDao.getLastDropset();
+            after = mDao.getCount();
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(after > before) {
+                databaseSynchronizer.insertDropset(dropset);
+            }
         }
     }
 
@@ -537,15 +692,27 @@ public class DatabaseInitializer {
 
     private static class DeleteNormal extends AsyncTask<Normal, Void, Void> {
 
-        final NormalDao mDao;
+        private final NormalDao mDao;
+        private Normal normal;
+        private int before;
+        private int after;
 
         DeleteNormal(NormalDao dao) { mDao = dao; }
 
         @Override
         protected Void doInBackground(Normal... normals) {
+            normal = normals[0];
+            before = mDao.getCount();
             mDao.deleteNormal(normals[0]);
-
+            after = mDao.getCount();
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(after < before) {
+                databaseSynchronizer.deleteNormal(normal);
+            }
         }
     }
 
@@ -556,14 +723,27 @@ public class DatabaseInitializer {
 
     private static class DeleteSuperset extends AsyncTask<Superset, Void, Void> {
 
-        final SupersetDao mDao;
+        private final SupersetDao mDao;
+        private Superset superset;
+        private int before;
+        private int after;
 
         DeleteSuperset(SupersetDao dao) { mDao = dao; }
 
         @Override
         protected Void doInBackground(Superset... supersets) {
+            superset = supersets[0];
+            before = mDao.getCount();
             mDao.deleteSuperset(supersets[0]);
+            after = mDao.getCount();
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(after < before) {
+                databaseSynchronizer.deleteSuperset(superset);
+            }
         }
     }
 
@@ -574,14 +754,27 @@ public class DatabaseInitializer {
 
     private static class DeleteDropset extends AsyncTask<Dropset, Void, Void> {
 
-        final DropsetDao mDao;
+        private final DropsetDao mDao;
+        private Dropset dropset;
+        private int before;
+        private int after;
 
         DeleteDropset(DropsetDao dao) { mDao = dao; }
 
         @Override
         protected Void doInBackground(Dropset... dropsets) {
+            dropset = dropsets[0];
+            before = mDao.getCount();
             mDao.deleteDropset(dropsets[0]);
+            after = mDao.getCount();
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(after < before) {
+                databaseSynchronizer.deleteDropset(dropset);
+            }
         }
     }
 
@@ -592,7 +785,7 @@ public class DatabaseInitializer {
 
     private static class GetNormalsByRoutineId extends AsyncTask<Integer, Void, List<Normal>> {
 
-        final NormalDao mDao;
+        private final NormalDao mDao;
 
         GetNormalsByRoutineId(NormalDao dao) { mDao = dao; }
 
@@ -609,7 +802,7 @@ public class DatabaseInitializer {
 
     private static class GetSupersetsByRoutineId extends AsyncTask<Integer, Void, List<Superset>> {
 
-        final SupersetDao mDao;
+        private final SupersetDao mDao;
 
         GetSupersetsByRoutineId(SupersetDao dao) { mDao = dao; }
 
@@ -626,7 +819,7 @@ public class DatabaseInitializer {
 
     private static class GetDropsetsByRoutineId extends AsyncTask<Integer, Void, List<Dropset>> {
 
-        final DropsetDao mDao;
+        private final DropsetDao mDao;
 
         GetDropsetsByRoutineId(DropsetDao dao) { mDao = dao; }
 
@@ -644,14 +837,25 @@ public class DatabaseInitializer {
 
     private static class UpdateRoutine extends AsyncTask<Routine, Void, Void> {
 
-        final RoutineDao mDao;
+        private final RoutineDao mDao;
+        private Routine routine;
+        private String routineAfter;
 
         UpdateRoutine(RoutineDao dao) { mDao = dao; }
 
         @Override
         protected Void doInBackground(Routine... routines) {
+            routine = routines[0];
             mDao.updateRoutine(routines[0].getRId(), routines[0].getRName());
+            routineAfter = mDao.getRoutineById(routine.getRId()).getRName();
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(routineAfter.equals(routine.getRName())) {
+                databaseSynchronizer.updateRoutine(routine);
+            }
         }
     }
 
@@ -662,7 +866,7 @@ public class DatabaseInitializer {
 
     private static class GetNormalsByEId extends AsyncTask<Integer, Void, List<Normal>> {
 
-        final NormalDao mDao;
+        private final NormalDao mDao;
 
         GetNormalsByEId(NormalDao dao) { mDao = dao; }
 
@@ -679,7 +883,7 @@ public class DatabaseInitializer {
 
     private static class GetSupersetsByEId extends AsyncTask<Integer, Void, List<Superset>> {
 
-        final SupersetDao mDao;
+        private final SupersetDao mDao;
 
         GetSupersetsByEId(SupersetDao dao) { mDao = dao; }
 
@@ -696,7 +900,7 @@ public class DatabaseInitializer {
 
     private static class GetDropsetsByEId extends AsyncTask<Integer, Void, List<Dropset>> {
 
-        final DropsetDao mDao;
+        private final DropsetDao mDao;
 
         GetDropsetsByEId(DropsetDao dao) { mDao = dao; }
 
@@ -713,7 +917,7 @@ public class DatabaseInitializer {
 
     private static class GetExerciseDonesByEId extends AsyncTask<Integer, Void, List<ExerciseDone>> {
 
-        final ExerciseDoneDao mDao;
+        private final ExerciseDoneDao mDao;
 
         GetExerciseDonesByEId(ExerciseDoneDao dao) { mDao = dao; }
 
@@ -730,14 +934,27 @@ public class DatabaseInitializer {
 
     private static class InsertSetDone extends AsyncTask<SetDone, Void, Void> {
 
-        final SetDoneDao mDao;
+        private final SetDoneDao mDao;
+        private SetDone setDone;
+        private int before;
+        private int after;
 
         InsertSetDone(SetDoneDao dao) { mDao = dao; }
 
         @Override
         protected Void doInBackground(SetDone... setDones) {
+            before = mDao.getCount();
             mDao.insertSetDone(setDones[0]);
+            setDone = mDao.getLastSetDone();
+            after = mDao.getCount();
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(after > before) {
+                databaseSynchronizer.insertSetDone(setDone);
+            }
         }
     }
 
@@ -748,7 +965,7 @@ public class DatabaseInitializer {
 
     private static class GetSetDonesByEdId extends AsyncTask<Integer, Void, List<SetDone>> {
 
-        final SetDoneDao mDao;
+        private final SetDoneDao mDao;
 
         GetSetDonesByEdId(SetDoneDao dao) { mDao = dao; }
 
@@ -774,7 +991,7 @@ public class DatabaseInitializer {
 
     private static class GetNumberExerciseDonesOnDate extends AsyncTask<Date, Void, Integer> {
 
-        final ExerciseDoneDao mDao;
+        private final ExerciseDoneDao mDao;
 
         GetNumberExerciseDonesOnDate(ExerciseDoneDao dao) { mDao = dao; }
 
@@ -791,7 +1008,7 @@ public class DatabaseInitializer {
 
     private static class GetLastEdId extends AsyncTask<Void, Void, Integer> {
 
-        final ExerciseDoneDao mDao;
+        private final ExerciseDoneDao mDao;
 
         GetLastEdId(ExerciseDoneDao dao) { mDao = dao; }
 
@@ -808,7 +1025,7 @@ public class DatabaseInitializer {
 
     private static class GetExerciseNameById extends AsyncTask<Integer, Void, String> {
 
-        final ExerciseDao mDao;
+        private final ExerciseDao mDao;
 
         GetExerciseNameById(ExerciseDao dao) { mDao = dao; }
 
@@ -835,7 +1052,7 @@ public class DatabaseInitializer {
 
     private static class GetExerciseDonesByDate extends AsyncTask<Date, Void, List<ExerciseDone>> {
 
-        final ExerciseDoneDao mDao;
+        private final ExerciseDoneDao mDao;
 
         GetExerciseDonesByDate(ExerciseDoneDao dao) { mDao = dao; }
 
@@ -856,7 +1073,7 @@ public class DatabaseInitializer {
 
     private static class GetNumExerciseDonesFromDate extends AsyncTask<Date, Void, Integer> {
 
-        final ExerciseDoneDao mDao;
+        private final ExerciseDoneDao mDao;
 
         GetNumExerciseDonesFromDate(ExerciseDoneDao dao) { mDao = dao; }
 
@@ -877,7 +1094,7 @@ public class DatabaseInitializer {
 
     private static class GetNumExerciseDonesUntilDate extends AsyncTask<Date, Void, Integer> {
 
-        final ExerciseDoneDao mDao;
+        private final ExerciseDoneDao mDao;
 
         GetNumExerciseDonesUntilDate(ExerciseDoneDao dao) { mDao = dao; }
 
@@ -889,5 +1106,84 @@ public class DatabaseInitializer {
 
     public boolean existsWorkoutOnDate(@NonNull final ExerciseDoneDao dao, Date date) throws ExecutionException, InterruptedException {
         return getExerciseDonesByDate(dao, date).size() > 0;
+    }
+
+    public void deleteAll(@NonNull final DropsetDao dropsetDao,
+                          @NonNull final ExerciseDao exerciseDao,
+                          @NonNull final ExerciseDoneDao exerciseDoneDao,
+                          @NonNull final NormalDao normalDao,
+                          @NonNull final RoutineDao routineDao,
+                          @NonNull final SetDoneDao setDoneDao,
+                          @NonNull final SupersetDao supersetDao,
+                          @NonNull final TrainingplanDao trainingplanDao) {
+        DeleteAll task = new DeleteAll(dropsetDao,exerciseDao, exerciseDoneDao, normalDao, routineDao, setDoneDao, supersetDao, trainingplanDao);
+        task.execute();
+    }
+
+    private static class DeleteAll extends AsyncTask<Void, Void, Void> {
+
+        private final DropsetDao mDropsetDao;
+        private final ExerciseDao mExerciseDao;
+        private final ExerciseDoneDao mExerciseDoneDao;
+        private final NormalDao mNormalDao;
+        private final RoutineDao mRoutineDao;
+        private final SetDoneDao mSetDoneDao;
+        private final SupersetDao mSupersetDao;
+        private final TrainingplanDao mTrainingplanDao;
+
+        DeleteAll(DropsetDao dropsetDao,
+                  ExerciseDao exerciseDao,
+                  ExerciseDoneDao exerciseDoneDao,
+                  NormalDao normalDao,
+                  RoutineDao routineDao,
+                  SetDoneDao setDoneDao,
+                  SupersetDao supersetDao,
+                  TrainingplanDao trainingplanDao) {
+            mDropsetDao = dropsetDao;
+            mExerciseDao = exerciseDao;
+            mExerciseDoneDao = exerciseDoneDao;
+            mNormalDao = normalDao;
+            mRoutineDao = routineDao;
+            mSetDoneDao = setDoneDao;
+            mSupersetDao = supersetDao;
+            mTrainingplanDao = trainingplanDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            List<Dropset> dropsets = mDropsetDao.getAll();
+            for(int i = 0; i < dropsets.size(); i++) {
+                mDropsetDao.deleteDropset(dropsets.get(i));
+            }
+            List<Exercise> exercises = mExerciseDao.getAll();
+            for (int i = 0; i < exercises.size(); i++) {
+                mExerciseDao.deleteExercise(exercises.get(i));
+            }
+            List<ExerciseDone> exerciseDones = mExerciseDoneDao.getAll();
+            for (int i = 0; i < exerciseDones.size(); i++) {
+                mExerciseDoneDao.deleteExerciseDone(exerciseDones.get(i));
+            }
+            List<Normal> normals = mNormalDao.getAll();
+            for(int i = 0; i < normals.size(); i++) {
+                mNormalDao.deleteNormal(normals.get(i));
+            }
+            List<Routine> routines = mRoutineDao.getAll();
+            for(int i = 0; i < routines.size(); i++) {
+                mRoutineDao.deleteRoutine(routines.get(i));
+            }
+            List<SetDone> setDones = mSetDoneDao.getAll();
+            for(int i = 0; i < setDones.size(); i++) {
+                mSetDoneDao.deleteSetDone(setDones.get(i));
+            }
+            List<Superset> supersets = mSupersetDao.getAll();
+            for(int i = 0; i < supersets.size(); i++) {
+                mSupersetDao.deleteSuperset(supersets.get(i));
+            }
+            List<Trainingplan> trainingplans = mTrainingplanDao.getAll();
+            for(int i = 0; i < trainingplans.size(); i++) {
+                mTrainingplanDao.deleteTrainingplan(trainingplans.get(i));
+            }
+            return null;
+        }
     }
 }

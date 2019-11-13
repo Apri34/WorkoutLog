@@ -1,9 +1,6 @@
 package com.workoutlog.workoutlog.database.daos;
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
+import androidx.room.*;
 import com.workoutlog.workoutlog.database.entities.Routine;
 
 import java.util.List;
@@ -22,7 +19,7 @@ public interface RoutineDao {
     @Query("SELECT count(*) FROM Routine WHERE TP_ID = :tpId")
     int getNumberRoutinesInTp(int tpId);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertRoutine(Routine routine);
 
     @Query("SELECT * FROM Routine ORDER BY R_ID DESC LIMIT 1")
@@ -36,4 +33,7 @@ public interface RoutineDao {
 
     @Query("UPDATE Routine SET R_Name = :rName WHERE R_ID = :rId")
     void updateRoutine(int rId, String rName);
+
+    @Query("SELECT count(*) FROM Routine")
+    int getCount();
 }

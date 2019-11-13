@@ -1,9 +1,6 @@
 package com.workoutlog.workoutlog.database.daos;
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
+import androidx.room.*;
 import com.workoutlog.workoutlog.database.entities.Dropset;
 
 import java.util.List;
@@ -16,7 +13,7 @@ public interface DropsetDao {
     @Query("SELECT * FROM Dropset WHERE R_ID = :rId")
     List<Dropset> getDropsetsByRoutineId(int rId);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertDropset(Dropset dropset);
 
     @Delete
@@ -24,4 +21,10 @@ public interface DropsetDao {
 
     @Query("SELECT * FROM Dropset WHERE E_ID = :eId")
     List<Dropset> getDropsetsByEId(int eId);
+
+    @Query("SELECT count(*) FROM Dropset")
+    int getCount();
+
+    @Query("SELECT * FROM Dropset ORDER BY D_ID DESC LIMIT 1")
+    Dropset getLastDropset();
 }

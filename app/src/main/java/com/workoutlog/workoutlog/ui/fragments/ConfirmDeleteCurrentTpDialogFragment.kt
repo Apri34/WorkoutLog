@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.workoutlog.workoutlog.R
 import java.lang.ClassCastException
 
-class ConfirmDeleteCurrentTpDialog: DialogFragment() {
+class ConfirmDeleteCurrentTpDialogFragment: DialogFragment() {
 
     private lateinit var message: String
     private var title: String? = null
@@ -19,8 +19,8 @@ class ConfirmDeleteCurrentTpDialog: DialogFragment() {
         private const val KEY_MESSAGE = "message"
         private const val KEY_TITLE = "title"
 
-        fun newInstance(title: String?, message: String?): ConfirmDeleteCurrentTpDialog {
-            val dialog = ConfirmDeleteCurrentTpDialog()
+        fun newInstance(title: String?, message: String?): ConfirmDeleteCurrentTpDialogFragment {
+            val dialog = ConfirmDeleteCurrentTpDialogFragment()
             val args = Bundle()
             args.putString(KEY_MESSAGE, message)
             args.putString(KEY_TITLE, title)

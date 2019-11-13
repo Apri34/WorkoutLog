@@ -155,7 +155,7 @@ public class IntervalPicker extends ConstraintLayout {
         buttonPrev = findViewById(R.id.button_prev_interval_picker);
         buttonPrev.setOnClickListener(v -> prevInterval());
 
-        dbInitializer = DatabaseInitializer.getInstance();
+        dbInitializer = DatabaseInitializer.getInstance(context);
         database = AppDatabase.getInstance(context);
         listInterval1 = new ArrayList<>();
         listInterval2 = new ArrayList<>();

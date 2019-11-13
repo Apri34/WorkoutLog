@@ -17,8 +17,10 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.workoutlog.workoutlog.R
+import com.workoutlog.workoutlog.application.WorkoutLog
 import com.workoutlog.workoutlog.database.AppDatabase
 import com.workoutlog.workoutlog.database.DatabaseInitializer
+import com.workoutlog.workoutlog.database.DatabaseSynchronizer
 import com.workoutlog.workoutlog.database.entities.Routine
 import com.workoutlog.workoutlog.ui.fragments.*
 import org.json.JSONObject
@@ -207,6 +209,8 @@ class NavigationActivity : AppCompatActivity(),
 
     private lateinit var dbInitializer: DatabaseInitializer
     private lateinit var database: AppDatabase
+    private lateinit var databaseSynchronizer: DatabaseSynchronizer
+    private lateinit var mWorkoutLog: WorkoutLog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -215,9 +219,11 @@ class NavigationActivity : AppCompatActivity(),
             window.statusBarColor = ContextCompat.getColor(this, R.color.colorSecondaryDark)
         }
         setContentView(R.layout.activity_navigation)
+        mWorkoutLog = this.applicationContext as WorkoutLog
 
-        dbInitializer = DatabaseInitializer.getInstance()
+        dbInitializer = DatabaseInitializer.getInstance(this)
         database = AppDatabase.getInstance(this)
+        databaseSynchronizer = DatabaseSynchronizer.getInstance(this)
 
         mAuth = FirebaseAuth.getInstance()
         navView = findViewById(R.id.nav_view_navigation_activity)
@@ -228,6 +234,9 @@ class NavigationActivity : AppCompatActivity(),
         if(mAuth.currentUser != null) {
             navView.inflateMenu(R.menu.drawer_view_logged_in)
             textViewNavHeaderUser.text = mAuth.currentUser!!.email!!
+            if(savedInstanceState == null)
+                databaseSynchronizer.loginUser(mAuth.currentUser!!, this)
+
         } else {
             navView.inflateMenu(R.menu.drawer_view_logged_out)
             textViewNavHeaderUser.visibility = View.GONE
@@ -468,6 +477,7 @@ class NavigationActivity : AppCompatActivity(),
     private fun logout() {
         if(mAuth.currentUser != null) {
             mAuth.signOut()
+            DatabaseSynchronizer.getInstance(this).logoutUser()
         }
         startActivity(Intent(this, MainActivity::class.java))
         finish()
@@ -503,5 +513,26 @@ class NavigationActivity : AppCompatActivity(),
             x++
         }
         return list
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mWorkoutLog.currentActivity = this
+    }
+
+    override fun onPause() {
+        clearReferences()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        clearReferences()
+        super.onDestroy()
+    }
+
+    private fun clearReferences() {
+        val currActivity = mWorkoutLog.currentActivity
+        if (this == currActivity)
+            mWorkoutLog.currentActivity = null
     }
 }

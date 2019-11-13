@@ -10,24 +10,28 @@ import static androidx.room.ForeignKey.CASCADE;
                                     childColumns = "ED_ID",
                                     onDelete = CASCADE))
 public class SetDone {
+
+    @Ignore
+    public SetDone(){}
+
     @PrimaryKey (autoGenerate = true)
     @ColumnInfo (name = "SD_ID")
-    private final int sdId;
+    private int sdId;
 
     @ColumnInfo (name = "Reps")
-    private final int reps;
+    private int reps;
 
     @ColumnInfo (name = "weight")
-    private final float weightInKg ;
+    private float weightInKg ;
 
     @ColumnInfo (name = "RPE")
-    private final float rpe;
+    private float rpe;
 
     @ColumnInfo (name = "Pos_In_Exc_Done")
-    private final int posInExcDone;
+    private int posInExcDone;
 
     @ColumnInfo (name = "ED_ID")
-    private final int edId;
+    private int edId;
 
     public int getSdId() {
         return sdId;
@@ -51,6 +55,30 @@ public class SetDone {
 
     public int getEdId() {
         return edId;
+    }
+
+    public void setSdId(int sdId) {
+        this.sdId = sdId;
+    }
+
+    public void setReps(int reps) {
+        this.reps = reps;
+    }
+
+    public void setWeightInKg(float weightInKg) {
+        this.weightInKg = weightInKg;
+    }
+
+    public void setRpe(float rpe) {
+        this.rpe = rpe;
+    }
+
+    public void setPosInExcDone(int posInExcDone) {
+        this.posInExcDone = posInExcDone;
+    }
+
+    public void setEdId(int edId) {
+        this.edId = edId;
     }
 
     public SetDone(int sdId, int reps, float weightInKg, float rpe, int posInExcDone, int edId) {

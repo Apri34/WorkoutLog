@@ -88,7 +88,7 @@ class EditRoutineNameDialogFragment : DialogFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        routines = DatabaseInitializer.getInstance()
+        routines = DatabaseInitializer.getInstance(context)
             .getRoutineNamesByTpId(AppDatabase.getInstance(context).routineDao(), routine.tpId)
     }
 

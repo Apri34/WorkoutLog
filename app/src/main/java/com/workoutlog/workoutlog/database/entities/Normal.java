@@ -18,30 +18,34 @@ import static androidx.room.ForeignKey.CASCADE;
                                     childColumns = "R_ID",
                                     onDelete = CASCADE)})
 public class Normal extends ExerciseInRoutine implements Parcelable {
+
+    @Ignore
+    public Normal(){}
+
     @ColumnInfo(name = "N_ID")
     @PrimaryKey(autoGenerate = true)
-    private final int nId;
+    private int nId;
 
     @ColumnInfo(name = "E_ID")
-    private final int eId;
+    private int eId;
 
     @ColumnInfo(name = "Sets")
-    private final int sets;
+    private int sets;
 
     @ColumnInfo(name = "Reps")
-    private final int reps;
+    private int reps;
 
     @ColumnInfo(name = "Break")
-    private final @Nullable Integer breakInSeconds;
+    private @Nullable Integer breakInSeconds;
 
     @ColumnInfo(name = "RPE")
-    private final @Nullable Integer rpe;
+    private @Nullable Integer rpe;
 
     @ColumnInfo(name = "Pos_In_Routine")
     private int posInRoutine;
 
     @ColumnInfo(name = "R_ID")
-    private final int rId;
+    private int rId;
 
     protected Normal(Parcel in) {
         nId = in.readInt();
@@ -140,6 +144,34 @@ public class Normal extends ExerciseInRoutine implements Parcelable {
     public void increasePosInRoutine() { posInRoutine++; }
 
     public void setPosInRoutine(int posInRoutine) { this.posInRoutine = posInRoutine; }
+
+    public void setNId(int nId) {
+        this.nId = nId;
+    }
+
+    public void setEId(int eId) {
+        this.eId = eId;
+    }
+
+    public void setSets(int sets) {
+        this.sets = sets;
+    }
+
+    public void setReps(int reps) {
+        this.reps = reps;
+    }
+
+    public void setBreakInSeconds(@Nullable Integer breakInSeconds) {
+        this.breakInSeconds = breakInSeconds;
+    }
+
+    public void setRpe(@Nullable Integer rpe) {
+        this.rpe = rpe;
+    }
+
+    public void setRId(int rId) {
+        this.rId = rId;
+    }
 
     public Normal(int nId, int eId, int sets, int reps, @Nullable Integer breakInSeconds, @Nullable Integer rpe, int posInRoutine, int rId) {
         this.nId = nId;

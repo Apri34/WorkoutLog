@@ -20,25 +20,28 @@ import static androidx.room.ForeignKey.CASCADE;
 
 public class Dropset extends ExerciseInRoutine implements Parcelable {
 
+    @Ignore
+    public Dropset(){}
+
     @ColumnInfo(name = "D_ID")
     @PrimaryKey(autoGenerate = true)
-    private final int dId;
+    private int dId;
 
     @ColumnInfo(name = "E_ID")
-    private final int eId;
+    private int eId;
 
     @ColumnInfo(name = "Sets")
-    private final int sets;
+    private int sets;
 
     @ColumnInfo(name = "Reps")
-    private final int reps;
+    private int reps;
 
     @ColumnInfo(name = "Break")
     @Nullable
-    private final Integer breakInSeconds;
+    private Integer breakInSeconds;
 
     @ColumnInfo(name = "Drops")
-    private final int drops;
+    private int drops;
 
     @ColumnInfo(name = "Pos_In_Routine")
     private int posInRoutine;
@@ -132,8 +135,36 @@ public class Dropset extends ExerciseInRoutine implements Parcelable {
 
     public void setPosInRoutine(int posInRoutine) { this.posInRoutine = posInRoutine; }
 
+    public void setDId(int dId) {
+        this.dId = dId;
+    }
+
+    public void setEId(int eId) {
+        this.eId = eId;
+    }
+
+    public void setSets(int sets) {
+        this.sets = sets;
+    }
+
+    public void setReps(int reps) {
+        this.reps = reps;
+    }
+
+    public void setBreakInSeconds(@Nullable Integer breakInSeconds) {
+        this.breakInSeconds = breakInSeconds;
+    }
+
+    public void setDrops(int drops) {
+        this.drops = drops;
+    }
+
+    public void setRId(int rId) {
+        this.rId = rId;
+    }
+
     @ColumnInfo(name = "R_ID")
-    private final int rId;
+    private int rId;
 
     public Dropset(int dId, int eId, int sets, int reps, @Nullable Integer breakInSeconds, int drops, int posInRoutine, int rId) {
         this.dId = dId;

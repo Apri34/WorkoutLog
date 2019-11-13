@@ -49,7 +49,7 @@ class HomeFragment: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        dbInitializer = DatabaseInitializer.getInstance()
+        dbInitializer = DatabaseInitializer.getInstance(context)
         database = AppDatabase.getInstance(context)
 
         val c = Calendar.getInstance()

@@ -3,17 +3,21 @@ package com.workoutlog.workoutlog.database.entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
 public class Trainingplan {
 
+    @Ignore
+    public Trainingplan(){}
+
     @PrimaryKey (autoGenerate = true)
     @ColumnInfo (name = "TP_ID")
-    private final int tpId;
+    private int tpId;
 
     @ColumnInfo (name = "TP_Name")
-    private final String tpName;
+    private String tpName;
 
     public int getTpId() {
         return tpId;
@@ -21,6 +25,14 @@ public class Trainingplan {
 
     public String getTpName() {
         return tpName;
+    }
+
+    public void setTpId(int tpId) {
+        this.tpId = tpId;
+    }
+
+    public void setTpName(String tpName) {
+        this.tpName = tpName;
     }
 
     public Trainingplan(int tpId, String tpName) {

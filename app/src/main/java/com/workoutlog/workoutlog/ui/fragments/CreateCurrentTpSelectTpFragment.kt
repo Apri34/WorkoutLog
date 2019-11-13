@@ -51,7 +51,7 @@ class CreateCurrentTpSelectTpFragment: Fragment(), TrainingplansAdapter.ITrainin
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_create_current_tp_select_tp, container, false)
 
-        dbInitializer = DatabaseInitializer.getInstance()
+        dbInitializer = DatabaseInitializer.getInstance(context)
         database = AppDatabase.getInstance(context)
 
         buttonAdd = view.findViewById(R.id.button_add_create_current_tp_select_tp)

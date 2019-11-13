@@ -12,6 +12,10 @@ import static androidx.room.ForeignKey.CASCADE;
                                     childColumns = "TP_ID",
                                     onDelete = CASCADE))
 public class Routine implements Parcelable {
+
+    @Ignore
+    public Routine(){}
+
     protected Routine(Parcel in) {
         rId = in.readInt();
         rName = in.readString();
@@ -62,16 +66,32 @@ public class Routine implements Parcelable {
 
     @PrimaryKey (autoGenerate = true)
     @ColumnInfo (name = "R_ID")
-    private final int rId;
+    private int rId;
 
     @ColumnInfo (name = "R_Name")
-    private final String rName;
+    private String rName;
 
     @ColumnInfo (name = "TP_ID")
-    private final int tpId;
+    private int tpId;
 
     @ColumnInfo (name = "Pos_In_TP")
-    private final int posInTp;
+    private int posInTp;
+
+    public void setRId(int rId) {
+        this.rId = rId;
+    }
+
+    public void setRName(String rName) {
+        this.rName = rName;
+    }
+
+    public void setTpId(int tpId) {
+        this.tpId = tpId;
+    }
+
+    public void setPosInTp(int posInTp) {
+        this.posInTp = posInTp;
+    }
 
     public Routine(int rId, String rName, int tpId, int posInTp) {
         this.rId = rId;

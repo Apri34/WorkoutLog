@@ -57,8 +57,8 @@ class GoalWorkoutFragment: Fragment() {
                 GoalNormal(context, normal.sets, normal.reps, normal.rpe?.toFloat(), normal.breakInSeconds)
             }
             superset != null -> {
-                val exc1 = DatabaseInitializer.getInstance().getExerciseNameById(AppDatabase.getInstance(context).exerciseDao(), superset.eId1)
-                val exc2 = DatabaseInitializer.getInstance().getExerciseNameById(AppDatabase.getInstance(context).exerciseDao(), superset.eId2)
+                val exc1 = DatabaseInitializer.getInstance(context).getExerciseNameById(AppDatabase.getInstance(context).exerciseDao(), superset.eId1)
+                val exc2 = DatabaseInitializer.getInstance(context).getExerciseNameById(AppDatabase.getInstance(context).exerciseDao(), superset.eId2)
                 GoalSuperset(context, exc1, exc2, superset.reps1, superset.reps2, superset.rpe1?.toFloat(), superset.rpe2?.toFloat(), superset.sets, superset.breakInSeconds)
             }
             dropset != null -> {

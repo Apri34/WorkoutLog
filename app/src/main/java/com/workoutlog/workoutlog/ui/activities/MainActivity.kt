@@ -10,11 +10,12 @@ import androidx.fragment.app.FragmentActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.workoutlog.workoutlog.R
+import com.workoutlog.workoutlog.application.WorkoutLog
 import com.workoutlog.workoutlog.database.AppDatabase
 import com.workoutlog.workoutlog.database.DatabaseInitializer
-import com.workoutlog.workoutlog.database.DatabaseSynchronizer
 import com.workoutlog.workoutlog.database.entities.Trainingplan
 import com.workoutlog.workoutlog.ui.fragments.LoginFragment
+import com.workoutlog.workoutlog.ui.fragments.MessageDialogFragment
 import com.workoutlog.workoutlog.ui.fragments.RegisterFragment
 import com.workoutlog.workoutlog.views.CustomEditText
 
@@ -28,23 +29,24 @@ class MainActivity : FragmentActivity(), LoginFragment.ILogin, RegisterFragment.
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener(this) {
 
-                val user = mAuth.currentUser!!
-                DatabaseSynchronizer.getInstance(this).registerUser(user)
-
                 getDefaultSharedPreferences(this).edit().putBoolean(getString(R.string.continue_guest), false).apply()
                 startActivity(Intent(this, NavigationActivity::class.java))
                 finish()
             }
-            .addOnFailureListener {
-                when((it as FirebaseAuthException).errorCode) {
-                    "ERROR_EMAIL_ALREADY_IN_USE" -> {
-                        fragmentRegister.showErrorMessageOnEmail(CustomEditText.Error.ERROR_EMAIL_ALREADY_USED)
-                    }
-                    "ERROR_INVALID_EMAIL" -> {
-                        fragmentRegister.showErrorMessageOnEmail(CustomEditText.Error.ERROR_EMAIL_NOT_EXISTS)
-                    }
-                    "ERROR_WEAK_PASSWORD" -> {
-                        fragmentRegister.showErrorMessageOnPassword(CustomEditText.Error.ERROR_PASSWORD_REQUIREMENTS_NOT_MET)
+            .addOnFailureListener {e ->
+                if(e !is FirebaseAuthException) {
+                    MessageDialogFragment.newInstance(getString(R.string.something_went_wrong_check_internet)).show(supportFragmentManager, "noConnection")
+                } else {
+                    when (e.errorCode) {
+                        "ERROR_EMAIL_ALREADY_IN_USE" -> {
+                            fragmentRegister.showErrorMessageOnEmail(CustomEditText.Error.ERROR_EMAIL_ALREADY_USED)
+                        }
+                        "ERROR_INVALID_EMAIL" -> {
+                            fragmentRegister.showErrorMessageOnEmail(CustomEditText.Error.ERROR_EMAIL_NOT_EXISTS)
+                        }
+                        "ERROR_WEAK_PASSWORD" -> {
+                            fragmentRegister.showErrorMessageOnPassword(CustomEditText.Error.ERROR_PASSWORD_REQUIREMENTS_NOT_MET)
+                        }
                     }
                 }
             }
@@ -58,16 +60,20 @@ class MainActivity : FragmentActivity(), LoginFragment.ILogin, RegisterFragment.
                 startActivity(Intent(this, NavigationActivity::class.java))
                 finish()
             }
-            .addOnFailureListener {
-                when((it as FirebaseAuthException).errorCode) {
-                    "ERROR_INVALID_EMAIL" -> {
-                        fragmentLogin.showErrorMessageOnEmail(CustomEditText.Error.ERROR_WRONG_EMAIL)
-                    }
-                    "ERROR_USER_NOT_FOUND" -> {
-                        fragmentLogin.showErrorMessageOnEmail(CustomEditText.Error.ERROR_WRONG_EMAIL)
-                    }
-                    "ERROR_WRONG_PASSWORD" -> {
-                        fragmentLogin.showErrorMessageOnPassword(CustomEditText.Error.ERROR_WRONG_PASSWORD)
+            .addOnFailureListener { e ->
+                if(e !is FirebaseAuthException) {
+                    MessageDialogFragment.newInstance(getString(R.string.something_went_wrong_check_internet)).show(supportFragmentManager, "noConnection")
+                } else {
+                    when (e.errorCode) {
+                        "ERROR_INVALID_EMAIL" -> {
+                            fragmentLogin.showErrorMessageOnEmail(CustomEditText.Error.ERROR_WRONG_EMAIL)
+                        }
+                        "ERROR_USER_NOT_FOUND" -> {
+                            fragmentLogin.showErrorMessageOnEmail(CustomEditText.Error.ERROR_WRONG_EMAIL)
+                        }
+                        "ERROR_WRONG_PASSWORD" -> {
+                            fragmentLogin.showErrorMessageOnPassword(CustomEditText.Error.ERROR_WRONG_PASSWORD)
+                        }
                     }
                 }
             }
@@ -92,6 +98,7 @@ class MainActivity : FragmentActivity(), LoginFragment.ILogin, RegisterFragment.
 
     private lateinit var fragmentLogin: LoginFragment
     private lateinit var fragmentRegister: RegisterFragment
+    private lateinit var mWorkoutLog: WorkoutLog
 
     companion object {
         private const val KEY_IS_DB_CREATED = "isDbCreated"
@@ -104,10 +111,11 @@ class MainActivity : FragmentActivity(), LoginFragment.ILogin, RegisterFragment.
             window.statusBarColor = ContextCompat.getColor(this, R.color.colorSecondaryDark)
         }
         setContentView(R.layout.activity_main)
+        mWorkoutLog = this.applicationContext as WorkoutLog
 
         if(!getDefaultSharedPreferences(this).getBoolean(KEY_IS_DB_CREATED, false)) {
             val tp = Trainingplan(-1, "tpForSingleRoutines")
-            val dbInitializer = DatabaseInitializer.getInstance()
+            val dbInitializer = DatabaseInitializer.getInstance(this)
             val database = AppDatabase.getInstance(this)
             dbInitializer.insertTrainingplan(database.trainingplanDao(), tp)
             getDefaultSharedPreferences(this).edit().putBoolean(KEY_IS_DB_CREATED, true).apply()
@@ -132,5 +140,26 @@ class MainActivity : FragmentActivity(), LoginFragment.ILogin, RegisterFragment.
         supportFragmentManager.beginTransaction()
             .add(R.id.frame_layout_main_activity, fragmentLogin)
             .commit()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mWorkoutLog.currentActivity = this
+    }
+
+    override fun onPause() {
+        clearReferences()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        clearReferences()
+        super.onDestroy()
+    }
+
+    private fun clearReferences() {
+        val currActivity = mWorkoutLog.currentActivity
+        if (this == currActivity)
+            mWorkoutLog.currentActivity = null
     }
 }

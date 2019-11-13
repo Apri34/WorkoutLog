@@ -13,18 +13,21 @@ import static androidx.room.ForeignKey.CASCADE;
                                     onDelete = CASCADE))
 public class ExerciseDone {
 
+    @Ignore
+    public ExerciseDone(){}
+
     @PrimaryKey (autoGenerate = true)
     @ColumnInfo (name="ED_ID")
-    private final int edId;
+    private int edId;
 
     @ColumnInfo (name = "Date")
-    private final Date date;
+    private Date date;
 
     @ColumnInfo (name = "E_ID")
-    private final int eId;
+    private int eId;
 
     @ColumnInfo (name = "Pos_On_Date")
-    private final int posOnDate;
+    private int posOnDate;
 
     public int getEdId() {
         return edId;
@@ -40,6 +43,22 @@ public class ExerciseDone {
 
     public int getPosOnDate() {
         return posOnDate;
+    }
+
+    public void setEdId(int edId) {
+        this.edId = edId;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setEId(int eId) {
+        this.eId = eId;
+    }
+
+    public void setPosOnDate(int posOnDate) {
+        this.posOnDate = posOnDate;
     }
 
     public ExerciseDone(int edId, Date date, int eId, int posOnDate) {

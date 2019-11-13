@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.workoutlog.workoutlog.R
 import com.workoutlog.workoutlog.adapters.ChooseRoutineAdapter
+import com.workoutlog.workoutlog.application.WorkoutLog
 import com.workoutlog.workoutlog.database.AppDatabase
 import com.workoutlog.workoutlog.database.DatabaseInitializer
 import com.workoutlog.workoutlog.database.entities.Routine
+
 
 class ChooseRoutineActivity : AppCompatActivity() {
 
@@ -28,6 +30,7 @@ class ChooseRoutineActivity : AppCompatActivity() {
 
     private lateinit var dbInitializer: DatabaseInitializer
     private lateinit var database: AppDatabase
+    private lateinit var mWorkoutLog: WorkoutLog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +39,9 @@ class ChooseRoutineActivity : AppCompatActivity() {
             window.statusBarColor = ContextCompat.getColor(this, R.color.colorSecondaryDark)
         }
         setContentView(R.layout.activity_choose_routine)
+        mWorkoutLog = this.applicationContext as WorkoutLog
 
-        dbInitializer = DatabaseInitializer.getInstance()
+        dbInitializer = DatabaseInitializer.getInstance(this)
         database = AppDatabase.getInstance(this)
 
         toolbar = findViewById(R.id.toolbar_choose_workout_activity)
@@ -67,5 +71,26 @@ class ChooseRoutineActivity : AppCompatActivity() {
             }
         })
         recyclerView.adapter = adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mWorkoutLog.currentActivity = this
+    }
+
+    override fun onPause() {
+        clearReferences()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        clearReferences()
+        super.onDestroy()
+    }
+
+    private fun clearReferences() {
+        val currActivity = mWorkoutLog.currentActivity
+        if (this == currActivity)
+            mWorkoutLog.currentActivity = null
     }
 }

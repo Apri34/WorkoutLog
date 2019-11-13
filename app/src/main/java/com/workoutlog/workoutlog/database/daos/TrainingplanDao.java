@@ -1,9 +1,6 @@
 package com.workoutlog.workoutlog.database.daos;
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
+import androidx.room.*;
 import com.workoutlog.workoutlog.database.entities.Trainingplan;
 
 import java.util.List;
@@ -22,7 +19,7 @@ public interface TrainingplanDao {
     @Query("SELECT * FROM Trainingplan WHERE TP_ID = :tpId")
     Trainingplan getTrainingplanById(int tpId);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertTrainingplan(Trainingplan trainingplan);
 
     @Delete
@@ -30,4 +27,7 @@ public interface TrainingplanDao {
 
     @Query("UPDATE Trainingplan SET TP_Name = :tpName WHERE TP_ID = :tpId")
     void updateTrainingplan(int tpId, String tpName);
+
+    @Query("SELECT count(*) FROM Trainingplan")
+    int getCount();
 }

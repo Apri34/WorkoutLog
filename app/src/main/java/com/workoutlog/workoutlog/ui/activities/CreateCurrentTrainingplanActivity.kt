@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.workoutlog.workoutlog.R
+import com.workoutlog.workoutlog.application.WorkoutLog
 import com.workoutlog.workoutlog.database.AppDatabase
 import com.workoutlog.workoutlog.database.DatabaseInitializer
 import com.workoutlog.workoutlog.database.entities.Trainingplan
@@ -75,6 +76,7 @@ class CreateCurrentTrainingplanActivity : AppCompatActivity(),
 
     private lateinit var dbInitializer: DatabaseInitializer
     private lateinit var database: AppDatabase
+    private lateinit var mWorkoutLog: WorkoutLog
 
     companion object {
         private const val KEY_FRAGMENT = "fragment"
@@ -106,8 +108,9 @@ class CreateCurrentTrainingplanActivity : AppCompatActivity(),
             window.statusBarColor = ContextCompat.getColor(this, R.color.colorSecondaryDark)
         }
         setContentView(R.layout.activity_create_current_trainingplan)
+        mWorkoutLog = this.applicationContext as WorkoutLog
 
-        dbInitializer = DatabaseInitializer.getInstance()
+        dbInitializer = DatabaseInitializer.getInstance(this)
         database = AppDatabase.getInstance(this)
 
         if(savedInstanceState != null) {
@@ -464,5 +467,26 @@ class CreateCurrentTrainingplanActivity : AppCompatActivity(),
             fragmentChooseInterval.isAdded ->
                 addSelectTpFragment(true)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mWorkoutLog.currentActivity = this
+    }
+
+    override fun onPause() {
+        clearReferences()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        clearReferences()
+        super.onDestroy()
+    }
+
+    private fun clearReferences() {
+        val currActivity = mWorkoutLog.currentActivity
+        if (this == currActivity)
+            mWorkoutLog.currentActivity = null
     }
 }

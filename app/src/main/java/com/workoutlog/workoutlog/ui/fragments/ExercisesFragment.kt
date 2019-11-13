@@ -23,7 +23,16 @@ class ExercisesFragment: Fragment(),
     ExercisesAdapter.IExerciseAdapter,
     AddExerciseDialogFragment.IAddExercise,
     EditExerciseDialogFragment.IEditExercise,
-    DeleteOrEditDialogFragment.IDeleteOrEditDialog<Exercise>{
+    DeleteOrEditDialogFragment.IDeleteOrEditDialog<Exercise>,
+    ConfirmDeleteDialogFragment.IConfirmDelete<Exercise>
+{
+    override fun delete(id: Int?, item: Exercise) {
+        if(id == 1) {
+            dbInitializer.deleteExercise(database.exerciseDao(), item)
+            (recyclerView.adapter as ExercisesAdapter).setDataset(dbInitializer.getAllExercises(database.exerciseDao()))
+            recyclerView.adapter!!.notifyDataSetChanged()
+        }
+    }
 
     override fun delete(item: Exercise) {
         val normals = dbInitializer.getNormalsByEId(database.normalDao(), item.eId)
@@ -75,13 +84,13 @@ class ExercisesFragment: Fragment(),
             routines.forEach {
                 routineList.add(dbInitializer.getRoutineById(database.routineDao(), it))
             }
-            var message = "Do you really want to delete this exercise? Parts of the following Routines will be deleted:"
+            var message = getString(R.string.do_you_really_want_to_delete_this_exercise_following_wll_be_deleted)
             routineList.forEach {
                 val tp = dbInitializer.getTrainingplanById(database.trainingplanDao(), it.tpId)
                 message += "\n${it.rName} (${tp.tpName})"
             }
 
-            val dialog = ConfirmDeleteDialog<Exercise>()
+            val dialog = ConfirmDeleteDialogFragment<Exercise>()
             dialog.setItem(item)
             dialog.setTitle(item.eName)
             dialog.setMessage(message)
@@ -163,6 +172,6 @@ class ExercisesFragment: Fragment(),
     override fun onAttach(context: Context) {
         super.onAttach(context)
         database = AppDatabase.getInstance(context)
-        dbInitializer = DatabaseInitializer.getInstance()
+        dbInitializer = DatabaseInitializer.getInstance(context)
     }
 }

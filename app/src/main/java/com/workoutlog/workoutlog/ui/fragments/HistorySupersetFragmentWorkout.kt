@@ -44,7 +44,7 @@ class HistorySupersetFragmentWorkout: Fragment() {
         viewPager = view.findViewById(R.id.view_pager_history_fragment_superset)
         tabLayout = view.findViewById(R.id.tab_layout_history_fragment_superset)
 
-        dbInitializer = DatabaseInitializer.getInstance()
+        dbInitializer = DatabaseInitializer.getInstance(context)
         database = AppDatabase.getInstance(context)
         excName1 = dbInitializer.getExerciseNameById(database.exerciseDao(), arguments!!.getInt(KEY_EXC1))
         excName2 = dbInitializer.getExerciseNameById(database.exerciseDao(), arguments!!.getInt(KEY_EXC2))

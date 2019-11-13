@@ -16,7 +16,7 @@ import com.workoutlog.workoutlog.database.entities.Routine
 
 class ChooseRoutineAdapter(private val context: Context, private val mDataset: List<List<Routine>>): RecyclerView.Adapter<ChooseRoutineAdapter.ChooseRoutineViewHolder>() {
 
-    private var dbInitializer = DatabaseInitializer.getInstance()
+    private var dbInitializer = DatabaseInitializer.getInstance(context)
     private var database = AppDatabase.getInstance(context)
     private var listener: IChooseRoutineAdapter? = null
 

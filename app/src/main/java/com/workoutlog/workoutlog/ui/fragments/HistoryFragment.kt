@@ -49,7 +49,7 @@ class HistoryFragment: Fragment() {
         textViewDate = view.findViewById(R.id.text_view_date_history_fragment)
         recyclerView = view.findViewById(R.id.recycler_view_history_fragment)
 
-        dbInitializer = DatabaseInitializer.getInstance()
+        dbInitializer = DatabaseInitializer.getInstance(context)
         database = AppDatabase.getInstance(context)
 
         exerciseDones = ArrayList()

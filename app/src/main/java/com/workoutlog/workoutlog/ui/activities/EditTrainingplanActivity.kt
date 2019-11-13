@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.workoutlog.workoutlog.R
 import com.workoutlog.workoutlog.adapters.RoutinesAdapter
+import com.workoutlog.workoutlog.application.WorkoutLog
 import com.workoutlog.workoutlog.database.AppDatabase
 import com.workoutlog.workoutlog.database.DatabaseInitializer
 import com.workoutlog.workoutlog.database.entities.Routine
@@ -26,7 +27,7 @@ class EditTrainingplanActivity : AppCompatActivity(),
     AddRoutineDialogFragment.IAddRoutine,
     RoutinesAdapter.IRoutinesAdapter,
     DeleteOrEditDialogFragment.IDeleteOrEditDialog<Routine>,
-    ConfirmDeleteDialog.IConfirmDelete<Routine>,
+    ConfirmDeleteDialogFragment.IConfirmDelete<Routine>,
     EditTrainingplanDialogFragment.IEditTrainingplan {
 
     override fun routineClicked(rtn: Routine) {
@@ -55,7 +56,7 @@ class EditTrainingplanActivity : AppCompatActivity(),
                 supportFragmentManager, "cant_delete_or_add_routine"
             )
         } else {
-            val dialog = ConfirmDeleteDialog<Routine>()
+            val dialog = ConfirmDeleteDialogFragment<Routine>()
             dialog.setItem(item)
             dialog.setTitle(item.rName)
             dialog.setMessage(getString(R.string.really_delete_routine_question))
@@ -98,6 +99,7 @@ class EditTrainingplanActivity : AppCompatActivity(),
     private lateinit var database: AppDatabase
 
     private var isCurrentTp = false
+    private lateinit var mWorkoutLog: WorkoutLog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,10 +108,11 @@ class EditTrainingplanActivity : AppCompatActivity(),
             window.statusBarColor = ContextCompat.getColor(this, R.color.colorSecondaryDark)
         }
         setContentView(R.layout.activity_edit_trainingplan)
+        mWorkoutLog = this.applicationContext as WorkoutLog
 
         isCurrentTp = getDefaultSharedPreferences(this).getInt(KEY_TP_ID, -1) == intent.extras!!.getInt(TP_ID_KEY)
 
-        dbInitializer = DatabaseInitializer.getInstance()
+        dbInitializer = DatabaseInitializer.getInstance(this)
         database = AppDatabase.getInstance(this)
         trainingplan = dbInitializer.getTrainingplanById(database.trainingplanDao(), intent.extras!!.getInt(TP_ID_KEY))
 
@@ -134,6 +137,7 @@ class EditTrainingplanActivity : AppCompatActivity(),
 
     override fun onResume() {
         super.onResume()
+        mWorkoutLog.currentActivity = this
         (recyclerView.adapter as RoutinesAdapter).setDataset(
             dbInitializer.getRoutinesByTpId(database.routineDao(), trainingplan.tpId)
         )
@@ -174,5 +178,21 @@ class EditTrainingplanActivity : AppCompatActivity(),
         val intent = Intent(this, EditRoutineActivity::class.java)
         intent.putExtra(ROUTINE_ID_KEY, routine.rId)
         startActivity(intent)
+    }
+
+    override fun onPause() {
+        clearReferences()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        clearReferences()
+        super.onDestroy()
+    }
+
+    private fun clearReferences() {
+        val currActivity = mWorkoutLog.currentActivity
+        if (this == currActivity)
+            mWorkoutLog.currentActivity = null
     }
 }

@@ -20,6 +20,7 @@ import com.google.android.material.tabs.TabLayout
 import com.workoutlog.workoutlog.R
 import com.workoutlog.workoutlog.RepeatListener
 import com.workoutlog.workoutlog.Timer
+import com.workoutlog.workoutlog.application.WorkoutLog
 import com.workoutlog.workoutlog.database.AppDatabase
 import com.workoutlog.workoutlog.database.DatabaseInitializer
 import com.workoutlog.workoutlog.database.entities.*
@@ -172,6 +173,7 @@ class WorkoutActivity : AppCompatActivity(),
 
     private var deletable = false
     private lateinit var routine: Routine
+    private lateinit var mWorkoutLog: WorkoutLog
 
     companion object {
         private const val DEFAULT_BREAK_TIME = 120
@@ -188,11 +190,12 @@ class WorkoutActivity : AppCompatActivity(),
             window.statusBarColor = ContextCompat.getColor(this, R.color.colorSecondaryDark)
         }
         setContentView(R.layout.activity_workout)
+        mWorkoutLog = this.applicationContext as WorkoutLog
 
         routine = intent.extras?.getParcelable(KEY_ROUTINE_WORKOUT)!!
         deletable = intent.extras!!.getBoolean(KEY_DELETABLE, false)
 
-        dbInitializer = DatabaseInitializer.getInstance()
+        dbInitializer = DatabaseInitializer.getInstance(this)
         database = AppDatabase.getInstance(this)
 
         normals = dbInitializer.getNormalsByRoutineId(database.normalDao(), routine.rId)
@@ -294,6 +297,7 @@ class WorkoutActivity : AppCompatActivity(),
     }
 
     override fun onDestroy() {
+        clearReferences()
         if(deletable) {
             dbInitializer.deleteRoutine(database.routineDao(), routine)
         }
@@ -504,5 +508,21 @@ class WorkoutActivity : AppCompatActivity(),
                 else -> null
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mWorkoutLog.currentActivity = this
+    }
+
+    override fun onPause() {
+        clearReferences()
+        super.onPause()
+    }
+
+    private fun clearReferences() {
+        val currActivity = mWorkoutLog.currentActivity
+        if (this == currActivity)
+            mWorkoutLog.currentActivity = null
     }
 }

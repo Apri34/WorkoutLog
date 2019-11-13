@@ -22,7 +22,7 @@ import com.workoutlog.workoutlog.ui.activities.EditTrainingplanActivity
 class TrainingplansFragment: Fragment(),
     TrainingplansAdapter.ITrainingplansAdapter,
     DeleteOrEditDialogFragment.IDeleteOrEditDialog<Trainingplan>,
-    ConfirmDeleteDialog.IConfirmDelete<Trainingplan>,
+    ConfirmDeleteDialogFragment.IConfirmDelete<Trainingplan>,
     AddTrainingplanDialogFragment.IAddTrainingplan {
 
     override fun trainingPlanClicked(trp: Trainingplan) {
@@ -59,7 +59,7 @@ class TrainingplansFragment: Fragment(),
                 return
             }
         }
-        val dialog = ConfirmDeleteDialog<Trainingplan>()
+        val dialog = ConfirmDeleteDialogFragment<Trainingplan>()
         dialog.setConfirmDeleteDialogId(1)
         dialog.setItem(item)
         dialog.setListener(this)
@@ -90,7 +90,7 @@ class TrainingplansFragment: Fragment(),
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_trainingplans, container, false)
 
-        dbInitializer = DatabaseInitializer.getInstance()
+        dbInitializer = DatabaseInitializer.getInstance(context)
         database = AppDatabase.getInstance(context)
 
         recyclerView = view.findViewById(R.id.recycler_view_fragment_trainingplans)

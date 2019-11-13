@@ -69,7 +69,7 @@ class AddExerciseDialogFragment: DialogFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        exercises = DatabaseInitializer.getInstance()
+        exercises = DatabaseInitializer.getInstance(context)
             .getAllExerciseNames(AppDatabase.getInstance(context).exerciseDao())
     }
 

@@ -3,6 +3,8 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.workoutlog.workoutlog">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
             android:allowBackup="false"
             android:icon="@mipmap/ic_launcher"
@@ -10,7 +12,9 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
-            tools:replace="allowBackup">
+            tools:replace="allowBackup"
+            android:name=".application.WorkoutLog"
+    >
         <activity android:name=".ui.activities.WorkoutActivity"
                   android:configChanges="orientation"
                   android:screenOrientation="portrait">

@@ -50,7 +50,7 @@ class CreateCurrentTpChooseIntervalFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_create_current_tp_choose_interval, container, false)
 
-        dbInitializer = DatabaseInitializer.getInstance()
+        dbInitializer = DatabaseInitializer.getInstance(context)
         database = AppDatabase.getInstance(context)
 
         trainingplan = dbInitializer.getTrainingplanById(database.trainingplanDao(), arguments!!.getInt(KEY_TP_ID))

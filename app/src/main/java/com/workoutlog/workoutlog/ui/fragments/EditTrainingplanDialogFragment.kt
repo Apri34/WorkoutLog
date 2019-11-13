@@ -82,7 +82,7 @@ class EditTrainingplanDialogFragment : DialogFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        trainingplans = DatabaseInitializer.getInstance()
+        trainingplans = DatabaseInitializer.getInstance(context)
             .getAllTrainingplanNames(AppDatabase.getInstance(context).trainingplanDao())
     }
 

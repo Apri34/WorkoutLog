@@ -1,9 +1,6 @@
 package com.workoutlog.workoutlog.database.daos;
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
+import androidx.room.*;
 import com.workoutlog.workoutlog.database.entities.Normal;
 
 import java.util.List;
@@ -16,7 +13,7 @@ public interface NormalDao {
     @Query("SELECT * FROM Normal WHERE R_ID = :rId")
     List<Normal> getNormalsByRoutineId(int rId);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertNormal(Normal normal);
 
     @Delete
@@ -25,6 +22,9 @@ public interface NormalDao {
     @Query("SELECT * FROM Normal WHERE E_ID = :eId")
     List<Normal> getNormalsByEId(int eId);
 
-    @Query("SELECT * FROM Normal WHERE E_ID = :eId AND R_ID = :rId")
-    Normal getNormalByEIdAndRId(int eId, int rId);
+    @Query("SELECT count(*) FROM Normal")
+    int getCount();
+
+    @Query("SELECT * FROM Normal ORDER BY N_ID DESC LIMIT 1")
+    Normal getLastNormal();
 }

@@ -23,40 +23,42 @@ import static androidx.room.ForeignKey.CASCADE;
                 childColumns = "R_ID",
                 onDelete = CASCADE)})
 public class Superset extends ExerciseInRoutine implements Parcelable {
+    @Ignore
+    public Superset(){}
 
     @ColumnInfo(name = "S_ID")
     @PrimaryKey(autoGenerate = true)
-    private final int sId;
+    private int sId;
 
     @ColumnInfo(name = "E_ID1")
-    private final int eId1;
+    private int eId1;
 
     @ColumnInfo(name = "E_ID2")
-    private final int eId2;
+    private int eId2;
 
     @ColumnInfo(name = "Sets")
-    private final int sets;
+    private int sets;
 
     @ColumnInfo(name = "Reps1")
-    private final int reps1;
+    private int reps1;
 
     @ColumnInfo(name = "Reps2")
-    private final int reps2;
+    private int reps2;
 
     @ColumnInfo(name = "Break")
-    private final @Nullable Integer breakInSeconds;
+    private @Nullable Integer breakInSeconds;
 
     @ColumnInfo(name = "RPE1")
-    private final @Nullable Integer rpe1;
+    private @Nullable Integer rpe1;
 
     @ColumnInfo(name = "RPE2")
-    private final @Nullable Integer rpe2;
+    private @Nullable Integer rpe2;
 
     @ColumnInfo(name = "Pos_In_Routine")
     private int posInRoutine;
 
     @ColumnInfo(name = "R_ID")
-    private final int rId;
+    private int rId;
 
     protected Superset(Parcel in) {
         sId = in.readInt();
@@ -182,6 +184,46 @@ public class Superset extends ExerciseInRoutine implements Parcelable {
     public void increasePosInRoutine() { posInRoutine++; }
 
     public void setPosInRoutine(int posInRoutine) { this.posInRoutine = posInRoutine; }
+
+    public void setSId(int sId) {
+        this.sId = sId;
+    }
+
+    public void setEId1(int eId1) {
+        this.eId1 = eId1;
+    }
+
+    public void setEId2(int eId2) {
+        this.eId2 = eId2;
+    }
+
+    public void setSets(int sets) {
+        this.sets = sets;
+    }
+
+    public void setReps1(int reps1) {
+        this.reps1 = reps1;
+    }
+
+    public void setReps2(int reps2) {
+        this.reps2 = reps2;
+    }
+
+    public void setBreakInSeconds(@Nullable Integer breakInSeconds) {
+        this.breakInSeconds = breakInSeconds;
+    }
+
+    public void setRpe1(@Nullable Integer rpe1) {
+        this.rpe1 = rpe1;
+    }
+
+    public void setRpe2(@Nullable Integer rpe2) {
+        this.rpe2 = rpe2;
+    }
+
+    public void setRId(int rId) {
+        this.rId = rId;
+    }
 
     public Superset(int sId, int eId1, int eId2, int sets, int reps1, int reps2, @Nullable Integer breakInSeconds, @Nullable Integer rpe1, @Nullable Integer rpe2, int posInRoutine, int rId) {
         this.sId = sId;

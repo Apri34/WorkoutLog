@@ -18,7 +18,7 @@ import com.workoutlog.workoutlog.database.entities.Superset
 
 class FullRoutineAdapter(private val context: Context, routine: Routine): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val dbInitializer: DatabaseInitializer = DatabaseInitializer.getInstance()
+    private val dbInitializer: DatabaseInitializer = DatabaseInitializer.getInstance(context)
     private val database: AppDatabase = AppDatabase.getInstance(context)
     private val normals: List<Normal>
     private val supersets: List<Superset>

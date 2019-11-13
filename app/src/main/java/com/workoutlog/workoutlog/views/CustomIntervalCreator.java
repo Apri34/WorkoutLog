@@ -108,7 +108,7 @@ public class CustomIntervalCreator extends ConstraintLayout {
         });
 
         interval = new ArrayList<>();
-        dbInitializer = DatabaseInitializer.getInstance();
+        dbInitializer = DatabaseInitializer.getInstance(context);
         database = AppDatabase.getInstance(context);
         getViewTreeObserver().addOnGlobalLayoutListener(this::resizeWidgets);
     }

@@ -21,7 +21,7 @@ import com.workoutlog.workoutlog.views.Calender
 import org.json.JSONObject
 import java.util.*
 
-class CurrentTrainingplanFragment: Fragment(), ConfirmDeleteCurrentTpDialog.IConfirmDeleteCurrentTpDialog {
+class CurrentTrainingplanFragment: Fragment(), ConfirmDeleteCurrentTpDialogFragment.IConfirmDeleteCurrentTpDialog {
 
     override fun deleteAndCreateNew() {
         if(listener != null) listener!!.createNewCurrentTrainingplan()
@@ -70,7 +70,7 @@ class CurrentTrainingplanFragment: Fragment(), ConfirmDeleteCurrentTpDialog.ICon
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         created = PreferenceManager.getDefaultSharedPreferences(context).contains(KEY_CURRENT_TP_STATE) &&
                 PreferenceManager.getDefaultSharedPreferences(context).getInt(KEY_CURRENT_TP_STATE, NO_CURRENT_TP) == CURRENT_TP_FINISHED
-        dbInitializer = DatabaseInitializer.getInstance()
+        dbInitializer = DatabaseInitializer.getInstance(context)
         database = AppDatabase.getInstance(context)
         return if(created) {
             currentTpCreatedView(inflater, container)
@@ -206,7 +206,7 @@ class CurrentTrainingplanFragment: Fragment(), ConfirmDeleteCurrentTpDialog.ICon
         }
 
         buttonCreateNew.setOnClickListener {
-            val dialog = ConfirmDeleteCurrentTpDialog.newInstance(getString(R.string.create_new_current_trainingplan), getString(
+            val dialog = ConfirmDeleteCurrentTpDialogFragment.newInstance(getString(R.string.create_new_current_trainingplan), getString(
                 R.string.create_new_current_tp_old_one_gets_deleted))
             dialog.setListener(this)
             dialog.show(childFragmentManager, "CreateNewTrainingplan")

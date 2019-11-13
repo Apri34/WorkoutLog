@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import com.workoutlog.workoutlog.R
 import java.lang.ClassCastException
 
-class ConfirmDeleteDialog<T>: DialogFragment() {
+class ConfirmDeleteDialogFragment<T>: DialogFragment() {
 
     private var item: T? = null
     fun setItem(item: T) {

@@ -70,7 +70,7 @@ class AddRoutineDialogFragment : DialogFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        routines = DatabaseInitializer.getInstance()
+        routines = DatabaseInitializer.getInstance(context)
             .getRoutineNamesByTpId(AppDatabase.getInstance(context).routineDao(), arguments!!.getInt(TP_ID_KEY, 0))
         try {
             listener = context as IAddRoutine

@@ -77,4 +77,6 @@
     <dimen name="text_size_home_fragment_small">16sp</dimen>
     <dimen name="margin_left_view_full_exercise">20dp</dimen>
     <dimen name="margin_recycler_view_between_items_home_fragment">12dp</dimen>
+    <dimen name="button_height_dialog">40dp</dimen>
+    <dimen name="padding_side_dialog">20dp</dimen>
 </resources>

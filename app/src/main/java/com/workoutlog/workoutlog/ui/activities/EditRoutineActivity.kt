@@ -16,11 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.workoutlog.workoutlog.R
 import com.workoutlog.workoutlog.adapters.ExercisesInRoutineAdapter
+import com.workoutlog.workoutlog.application.WorkoutLog
 import com.workoutlog.workoutlog.database.AppDatabase
 import com.workoutlog.workoutlog.database.DatabaseInitializer
 import com.workoutlog.workoutlog.database.entities.*
 import com.workoutlog.workoutlog.ui.fragments.ChooseWhichExerciseDialogFragment
-import com.workoutlog.workoutlog.ui.fragments.ConfirmDeleteDialog
+import com.workoutlog.workoutlog.ui.fragments.ConfirmDeleteDialogFragment
 import com.workoutlog.workoutlog.ui.fragments.EditRoutineNameDialogFragment
 import com.workoutlog.workoutlog.ui.fragments.SaveChangesDialogFragment
 
@@ -29,7 +30,7 @@ class EditRoutineActivity : AppCompatActivity(),
     ExercisesInRoutineAdapter.IExerciseInRoutineAdapter,
     EditRoutineNameDialogFragment.IEditRoutine,
     SaveChangesDialogFragment.ISaveChangesListener,
-    ConfirmDeleteDialog.IConfirmDelete<ExerciseInRoutine> {
+    ConfirmDeleteDialogFragment.IConfirmDelete<ExerciseInRoutine> {
 
     override fun delete(id: Int?, item: ExerciseInRoutine) {
         when(id) {
@@ -46,7 +47,7 @@ class EditRoutineActivity : AppCompatActivity(),
     }
 
     override fun deleteNormal(normal: Normal) {
-        val dialog = ConfirmDeleteDialog<ExerciseInRoutine>()
+        val dialog = ConfirmDeleteDialogFragment<ExerciseInRoutine>()
         dialog.setConfirmDeleteDialogId(NORMAL_EXERCISE_ID)
         dialog.setListener(this)
         dialog.setMessage(getString(R.string.confirm_delete_exercise))
@@ -55,7 +56,7 @@ class EditRoutineActivity : AppCompatActivity(),
     }
 
     override fun deleteSuperset(superset: Superset) {
-        val dialog = ConfirmDeleteDialog<ExerciseInRoutine>()
+        val dialog = ConfirmDeleteDialogFragment<ExerciseInRoutine>()
         dialog.setConfirmDeleteDialogId(SUPERSET_ID)
         dialog.setListener(this)
         dialog.setMessage(getString(R.string.confirm_delete_exercise))
@@ -64,7 +65,7 @@ class EditRoutineActivity : AppCompatActivity(),
     }
 
     override fun deleteDropset(dropset: Dropset) {
-        val dialog = ConfirmDeleteDialog<ExerciseInRoutine>()
+        val dialog = ConfirmDeleteDialogFragment<ExerciseInRoutine>()
         dialog.setConfirmDeleteDialogId(DROPSET_ID)
         dialog.setListener(this)
         dialog.setMessage(getString(R.string.confirm_delete_exercise))
@@ -130,6 +131,7 @@ class EditRoutineActivity : AppCompatActivity(),
     private lateinit var mExercises: MutableList<Exercise>
 
     private lateinit var itemTouchHelper: ItemTouchHelper
+    private lateinit var mWorkoutLog: WorkoutLog
 
     private var isDragging = false
 
@@ -152,8 +154,9 @@ class EditRoutineActivity : AppCompatActivity(),
             window.statusBarColor = ContextCompat.getColor(this, R.color.colorSecondaryDark)
         }
         setContentView(R.layout.activity_edit_routine)
+        mWorkoutLog = this.applicationContext as WorkoutLog
 
-        dbInitializer = DatabaseInitializer.getInstance()
+        dbInitializer = DatabaseInitializer.getInstance(this)
         database = AppDatabase.getInstance(this)
         routine = dbInitializer.getRoutineById(database.routineDao(), intent.extras!!.getInt(ROUTINE_ID_KEY))
 
@@ -331,5 +334,26 @@ class EditRoutineActivity : AppCompatActivity(),
                 bottom = spaceHeight
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mWorkoutLog.currentActivity = this
+    }
+
+    override fun onPause() {
+        clearReferences()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        clearReferences()
+        super.onDestroy()
+    }
+
+    private fun clearReferences() {
+        val currActivity = mWorkoutLog.currentActivity
+        if (this == currActivity)
+            mWorkoutLog.currentActivity = null
     }
 }

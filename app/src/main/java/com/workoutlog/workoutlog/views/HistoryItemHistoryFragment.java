@@ -29,7 +29,7 @@ public class HistoryItemHistoryFragment extends ConstraintLayout {
 
     public void setValues(Context context, ExerciseDone excerciseDone, List<SetDone> sets) throws ExecutionException, InterruptedException {
         llSets.removeAllViews();
-        DatabaseInitializer dbInitializer = DatabaseInitializer.getInstance();
+        DatabaseInitializer dbInitializer = DatabaseInitializer.getInstance(context);
         AppDatabase database = AppDatabase.getInstance(context);
         String exc = dbInitializer.getExerciseNameById(database.exerciseDao(), excerciseDone.getEId());
         tvExc.setText(exc);

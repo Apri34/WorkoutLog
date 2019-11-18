@@ -1,11 +1,11 @@
 package com.workoutlog.workoutlog.ui.fragments
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.workoutlog.workoutlog.R
 import com.workoutlog.workoutlog.database.AppDatabase
@@ -76,7 +76,7 @@ class EditTrainingplanDialogFragment : DialogFragment() {
         try {
             this.listener = context as IEditTrainingplan
         } catch (e: ClassCastException) {
-            Log.i(context.toString(), " must implement IEditTrainingplan")
+            Toast.makeText(context, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
         }
     }
 

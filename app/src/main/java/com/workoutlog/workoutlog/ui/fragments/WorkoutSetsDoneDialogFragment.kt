@@ -1,13 +1,12 @@
 package com.workoutlog.workoutlog.ui.fragments
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.workoutlog.workoutlog.R
-import java.lang.ClassCastException
 
 class WorkoutSetsDoneDialogFragment: DialogFragment() {
 
@@ -28,7 +27,7 @@ class WorkoutSetsDoneDialogFragment: DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(context, R.style.CustomDialogTheme)
+        val builder = AlertDialog.Builder(context!!, R.style.CustomDialogTheme)
 
         builder.setTitle(arguments!!.getString(KEY_EXERCISE))
             .setMessage(String.format(resources.getQuantityString(R.plurals.you_have_completed_your_goal, arguments!!.getInt(KEY_SETS)), arguments!!.getInt(KEY_SETS)))
@@ -51,7 +50,7 @@ class WorkoutSetsDoneDialogFragment: DialogFragment() {
         try {
             listener = context as IWorkoutSetsDoneDialog
         } catch (e: ClassCastException) {
-            Log.i(context.toString(), " must implement IWorkoutSetsDoneDialog")
+            Toast.makeText(context, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
         }
     }
 }

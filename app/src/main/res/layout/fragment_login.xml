@@ -52,6 +52,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/textview_login_fragment_login"
                 android:layout_marginTop="@dimen/margin_between_fields_login_register_section_custom_edit_text"
                 app:hintSize="@dimen/hint_size_login_register"
+                app:hintSizeFocused="@dimen/hint_size_focused_login_register"
+                app:textSize="@dimen/hint_size_login_register"
                 app:customBackground="@drawable/background_edittext_login_register"
                 app:textColor="@color/colorSecondary"
         />
@@ -65,6 +67,8 @@
                 android:layout_marginTop="@dimen/margin_between_fields_login_register_section_custom_edit_text"
                 app:customBackground="@drawable/background_edittext_login_register"
                 app:hintSize="@dimen/hint_size_login_register"
+                app:hintSizeFocused="@dimen/hint_size_focused_login_register"
+                app:textSize="@dimen/hint_size_login_register"
                 app:isPassword="true"
                 app:textColor="@color/colorSecondary"
         />
@@ -79,10 +83,11 @@
                 android:layout_marginTop="@dimen/margin_between_fields_login_register_section_custom_edit_text"
                 android:textColor="@color/colorPrimary"
                 android:button="@drawable/checkbox_background"
-                android:paddingLeft="12dp"
-                android:paddingStart="12dp"
+                android:paddingLeft="@dimen/space_checkbox"
+                android:paddingStart="@dimen/space_checkbox"
                 tools:ignore="RtlSymmetry"
                 android:background="@android:color/transparent"
+                android:textSize="@dimen/text_size_login_no_account_yet"
         />
 
         <Button
@@ -108,7 +113,8 @@
         <TextView
                 android:id="@+id/textview_fragment_login_continue_as_guest"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/textview_height_fragment_login_bottom_section"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_login_no_account_yet"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -116,8 +122,6 @@
                 android:layout_marginTop="@dimen/margin_between_register_and_continue_as_guest"
                 android:text="@string/continue_as_guest"
                 android:textColor="@color/color_textviewbutton_login_fragment"
-                android:paddingLeft="@dimen/padding_textview_fragment_login_bottom_section"
-                android:paddingRight="@dimen/padding_textview_fragment_login_bottom_section"
         />
 
         <View
@@ -130,14 +134,15 @@
                 app:layout_constraintRight_toLeftOf="@id/textview_login_fragment_or"
                 android:layout_marginLeft="@dimen/padding_login_register_screen_left_right"
                 android:layout_marginStart="@dimen/padding_login_register_screen_left_right"
-                android:layout_marginRight="@dimen/padding_login_register_screen_left_right"
-                android:layout_marginEnd="@dimen/padding_login_register_screen_left_right"
+                android:layout_marginRight="@dimen/padding_no_account_yet_lines"
+                android:layout_marginEnd="@dimen/padding_no_account_yet_lines"
         />
 
         <TextView
                 android:id="@+id/textview_login_fragment_or"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_login_no_account_yet"
                 app:layout_constraintTop_toBottomOf="@id/textview_fragment_login_register"
                 app:layout_constraintBottom_toTopOf="@id/textview_login_fragment_or"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -154,8 +159,8 @@
                 app:layout_constraintBottom_toBottomOf="@id/textview_login_fragment_or"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/textview_login_fragment_or"
-                android:layout_marginLeft="@dimen/padding_login_register_screen_left_right"
-                android:layout_marginStart="@dimen/padding_login_register_screen_left_right"
+                android:layout_marginLeft="@dimen/padding_no_account_yet_lines"
+                android:layout_marginStart="@dimen/padding_no_account_yet_lines"
                 android:layout_marginRight="@dimen/padding_login_register_screen_left_right"
                 android:layout_marginEnd="@dimen/padding_login_register_screen_left_right"
         />
@@ -163,7 +168,8 @@
         <TextView
                 android:id="@+id/textview_fragment_login_register"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/textview_height_fragment_login_bottom_section"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_login_no_account_yet"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -171,8 +177,7 @@
                 android:layout_marginBottom="@dimen/margin_between_register_and_continue_as_guest"
                 android:text="@string/no_account_yet_register_now"
                 android:textColor="@color/color_textviewbutton_login_fragment"
-                android:paddingLeft="@dimen/padding_textview_fragment_login_bottom_section"
-                android:paddingRight="@dimen/padding_textview_fragment_login_bottom_section"
+                app:layout_constraintVertical_chainStyle="spread_inside"
         />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

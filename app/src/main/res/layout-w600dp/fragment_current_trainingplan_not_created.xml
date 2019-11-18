@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+>
+    <Button
+            android:id="@+id/button_create_current_tp_fragment_not_created"
+            android:layout_width="@dimen/max_width_fields"
+            android:layout_height="@dimen/button_height"
+            android:text="@string/create_current_trainingplan"
+            android:textColor="@color/white"
+            android:background="@drawable/background_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="@dimen/margin_create_current_tp_button"
+    />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

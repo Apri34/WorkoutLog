@@ -7,6 +7,7 @@ import androidx.room.*;
 
 import static androidx.room.ForeignKey.CASCADE;
 
+@SuppressWarnings("UnusedReturnValue")
 @Entity (indices = {@Index(value = {"E_ID"}),
                     @Index(value = {"R_ID"})},
         foreignKeys = {@ForeignKey(entity = Exercise.class,

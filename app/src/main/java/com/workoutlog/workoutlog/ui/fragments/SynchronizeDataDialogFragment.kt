@@ -1,6 +1,6 @@
 package com.workoutlog.workoutlog.ui.fragments
 
-import android.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
@@ -14,7 +14,7 @@ class SynchronizeDataDialogFragment: DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(context, R.style.CustomDialogTheme)
+        val builder = AlertDialog.Builder(context!!, R.style.CustomDialogTheme)
         builder.setTitle(R.string.data_synchronization)
             .setMessage(R.string.data_synchronization_dialog_message)
             .setPositiveButton(R.string.upload) {_,_->

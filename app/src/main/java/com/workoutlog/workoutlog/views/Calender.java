@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+@SuppressWarnings("UnusedReturnValue")
 public class Calender extends ConstraintLayout {
 
     private final TextView tvMonth;
@@ -51,6 +52,7 @@ public class Calender extends ConstraintLayout {
         makeCalender();
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public int getSelectedDay() {
         return selectedDay;
     }

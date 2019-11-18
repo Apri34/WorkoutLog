@@ -5,7 +5,6 @@ import android.net.ConnectivityManager
 import android.os.AsyncTask
 import android.os.Handler
 import android.preference.PreferenceManager
-import android.util.Log
 import android.util.SparseBooleanArray
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Timestamp
@@ -46,7 +45,6 @@ class DatabaseSynchronizer private constructor(context: Context) {
             return INSTANCE!!
         }
 
-        private const val TAG = "DatabaseSynchronizer"
         private const val KEY_TP_ID = "tpId"
         private const val KEY_CURRENT_TP_STATE = "currentTpState"
         private const val NO_CURRENT_TP = 0
@@ -371,9 +369,6 @@ class DatabaseSynchronizer private constructor(context: Context) {
                             if(notInSyncListener != null && !isCancelled && firebaseUser != null) notInSyncListener!!.notInSync(weakReferenceContext.get())
                         }
                     }
-                    .addOnFailureListener {
-                        Log.i(TAG, it.toString())
-                    }
             }
 
             trainingplanData.forEach {trainingplan ->
@@ -455,7 +450,6 @@ class DatabaseSynchronizer private constructor(context: Context) {
         dialog.show(((context.applicationContext as WorkoutLog).currentActivity as AppCompatActivity).supportFragmentManager, "uploadData")
         taskDelete.setOnDeleteListener(object : DeleteAllUserCollections.OnDeletedListener {
             override fun deleted() {
-                Log.i(TAG, "Data from user ${firebaseUser!!.uid} successfully deleted")
                 taskUpload.setOnUploadFinishedListener(object: LoadWholeDataToFirestore.OnUploadFinishedListener {
                     override fun uploadFinished() {
                         dialog.dismiss()
@@ -1123,7 +1117,6 @@ class DatabaseSynchronizer private constructor(context: Context) {
         }
 
         override fun doInBackground(vararg params: Void?): Void? {
-            Log.i(TAG, "upload started")
             val uid = firebaseUser!!.uid
             val firebaseFirestore = weakReferenceFirebaseFirestore.get()!!
 
@@ -1334,7 +1327,6 @@ class DatabaseSynchronizer private constructor(context: Context) {
                         cancel(true)
                     }
             }
-            Log.i(TAG, "upload finished")
             if(isFinished() && !isCancelled) {
                 listener!!.uploadFinished()
                 cancel(true)

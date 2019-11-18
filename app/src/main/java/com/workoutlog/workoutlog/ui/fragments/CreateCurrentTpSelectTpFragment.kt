@@ -3,7 +3,6 @@ package com.workoutlog.workoutlog.ui.fragments
 import android.content.Context
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -97,7 +96,7 @@ class CreateCurrentTpSelectTpFragment: Fragment(), TrainingplansAdapter.ITrainin
         try {
             listener = context as ISelectTpFragment
         } catch (e: ClassCastException) {
-            Log.i(context.toString(), " must impement ISelectTpFragment")
+            Toast.makeText(context, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
         }
     }
 }

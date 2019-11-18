@@ -3,20 +3,18 @@ package com.workoutlog.workoutlog
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.util.Log
 
 class Timer(private var millis: Long, private val interval: Long) {
 
     companion object {
-        private const val TAG = "Timer"
         private const val ON_TICK = 0
         private const val ON_FINISH = 1
         private const val RESET_TIMER = 2
     }
 
     init {
-        if(millis < 0) throw IllegalArgumentException()
-        if(interval < 0) throw IllegalArgumentException()
+        require(millis >= 0)
+        require(interval >= 0)
     }
 
     private var isRunning = false
@@ -71,8 +69,6 @@ class Timer(private var millis: Long, private val interval: Long) {
         if(!isRunning) {
             this.millis = millis
             currentMillis = millis
-        } else {
-            Log.i(TAG, "Time cannot be set whe timer is running")
         }
     }
 

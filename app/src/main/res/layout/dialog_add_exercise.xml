@@ -19,6 +19,8 @@
             android:layout_height="@dimen/textfield_height_login_register"
             app:hint="@string/name"
             app:hintSize="@dimen/hint_size_login_register"
+            app:hintSizeFocused="@dimen/hint_size_focused_login_register"
+            app:textSize="@dimen/hint_size_login_register"
             app:customBackground="@drawable/background_edittext_login_register"
             app:textColor="@color/colorSecondary"
     />

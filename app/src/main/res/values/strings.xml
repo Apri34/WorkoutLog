@@ -176,6 +176,13 @@
     <string name="this_operation_is_taking_very_long">This operation is taking very long. Cancel?</string>
     <string name="upload_failed">Upload failed. Check your connection.</string>
     <string name="download_failed">Download failed. Check your connection.</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="register_">Register…</string>
+    <string name="successfully_registered">Successfully registered. A verification email was sent to your email address.</string>
+    <string name="something_went_wrong_sending_verification_email">Something went wrong sending the verification email.</string>
+    <string name="email_not_verified">Email not verified</string>
+    <string name="send_verification_email_">Send verification email?</string>
+    <string name="login_">Login…</string>
 
     <string-array name="exercise_types">
         <item>Normal Exercise</item>

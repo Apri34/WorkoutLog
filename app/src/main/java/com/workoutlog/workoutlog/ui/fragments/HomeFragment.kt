@@ -4,13 +4,13 @@ import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +24,7 @@ import com.workoutlog.workoutlog.database.entities.SetDone
 import org.json.JSONObject
 import java.sql.Date
 import java.util.*
+import kotlin.math.roundToInt
 
 class HomeFragment: Fragment() {
 
@@ -187,7 +188,7 @@ class HomeFragment: Fragment() {
         val timeStart = c.timeInMillis
         if(timeStart > timeNow) return null
         val dif = timeNow - timeStart
-        val days = Math.round(dif.toFloat() / (1000 * 60 * 60 * 24).toFloat())
+        val days = (dif.toFloat() / (1000 * 60 * 60 * 24).toFloat()).roundToInt()
         val dayInInterval = days % interval.size
         return interval[dayInInterval]
     }
@@ -218,7 +219,7 @@ class HomeFragment: Fragment() {
         try {
             listener = context as IHomeFragment
         } catch (e: ClassCastException) {
-            Log.i(context.toString(), " must implement IHomeFragment")
+            Toast.makeText(context, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
         }
     }
 

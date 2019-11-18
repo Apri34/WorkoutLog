@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_login_register_screen_left_right">40dp</dimen>
+    <dimen name="max_width_fields">400dp</dimen>
+    <dimen name="margin_horizontal_choose_interval_for_bigger_screens">60dp</dimen>
+</resources>

@@ -3,15 +3,11 @@ package com.workoutlog.workoutlog.ui.fragments
 import android.content.Context
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.workoutlog.workoutlog.R
@@ -101,7 +97,7 @@ class CurrentTrainingplanFragment: Fragment(), ConfirmDeleteCurrentTpDialogFragm
         try {
             listener = context as ICurrentTrainingplanFragment
         } catch (e: ClassCastException) {
-            Log.i(context.toString(), " must implement ICurrentTrainingplanFragment")
+            Toast.makeText(context, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
         }
     }
 

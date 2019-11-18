@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+@SuppressWarnings("UnusedReturnValue")
 public class CustomIntervalCreator extends ConstraintLayout {
 
     private final LinearLayout customInterval;

@@ -64,6 +64,8 @@
                 app:layout_constraintTop_toBottomOf="@id/textview_register_fragment_register"
                 android:layout_marginTop="@dimen/margin_between_fields_login_register_section_custom_edit_text"
                 app:hintSize="@dimen/hint_size_login_register"
+                app:hintSizeFocused="@dimen/hint_size_focused_login_register"
+                app:textSize="@dimen/hint_size_login_register"
                 app:customBackground="@drawable/background_edittext_login_register"
         />
 
@@ -75,6 +77,8 @@
                 app:layout_constraintTop_toBottomOf="@id/edittext_fragment_register_email"
                 android:layout_marginTop="@dimen/margin_between_fields_login_register_section_custom_edit_text"
                 app:hintSize="@dimen/hint_size_login_register"
+                app:hintSizeFocused="@dimen/hint_size_focused_login_register"
+                app:textSize="@dimen/hint_size_login_register"
                 app:isPassword="true"
                 app:customBackground="@drawable/background_edittext_login_register"
         />
@@ -88,6 +92,9 @@
                 android:layout_marginTop="@dimen/margin_between_fields_login_register_section_custom_edit_text"
                 app:customBackground="@drawable/background_edittext_login_register"
                 app:isPassword="true"
+                app:hintSizeFocused="@dimen/hint_size_focused_login_register"
+                app:textSize="@dimen/hint_size_login_register"
+                app:hintSize="@dimen/hint_size_login_register"
         />
 
         <Button

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:id="@+id/calender">
+    <TextView
+            android:id="@+id/calender_text_view_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/calender_button_next_month"
+            app:layout_constraintBottom_toBottomOf="@id/calender_button_next_month"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_sice_calender_month"
+            tools:ignore="InconsistentLayout"/>
+    <ImageButton
+            android:id="@+id/calender_button_next_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.8"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_navigate_next_colorprimary_36dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@null"/>
+
+    <ImageButton
+            android:id="@+id/calender_button_prev_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            android:src="@drawable/ic_navigate_before_colorprimary_36dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@null"
+    />
+    <TableLayout
+            android:id="@+id/calender_table_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/calender_text_view_month"
+            android:layout_marginTop="@dimen/calender_margin_calender_month"
+            android:divider="@drawable/recyclerview_divider"
+            android:showDividers="middle"
+            android:background="@drawable/table_stroke_color_primary"
+    />
+</merge>

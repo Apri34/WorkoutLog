@@ -37,7 +37,8 @@
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/calender_button_prev_month"
-            app:layout_constraintRight_toLeftOf="@id/calender_button_next_month" tools:ignore="InconsistentLayout">
+            app:layout_constraintRight_toLeftOf="@id/calender_button_next_month"
+            tools:ignore="InconsistentLayout">
 
         <TableLayout
                 android:id="@+id/calender_table_layout"

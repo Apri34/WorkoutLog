@@ -8,8 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import com.workoutlog.workoutlog.R;
 
-//TODO Wenn chosen, dann ist unten so ein komischer schwarzer strich
-
 public class CalenderItem extends androidx.appcompat.widget.AppCompatTextView {
 
     private int day;
@@ -92,22 +90,24 @@ public class CalenderItem extends androidx.appcompat.widget.AppCompatTextView {
     }
 
     public void setDateInLandscape(int day, int month, int year) {
-        String d = (day < 10 ? "0" : "") + String.valueOf(day);
-        String m = (month < 10 ? "0" : "") + String.valueOf(month);
+        String d = (day < 10 ? "0" : "") + day;
+        String m = (month < 10 ? "0" : "") + month;
         setText(String.format("%s.%s\n", d, m));
         this.day = day;
         this.month = month;
         this.year = year;
     }
 
-    public void setRoutine(String routine) {
+    public void setRoutine(@Nullable String routine) {
+        if(routine == null) return;
         if(routine.length() > 7) {
             routine = routine.substring(0, 4) + "...";
         }
         setText(String.format("%s%s", getText(), routine));
     }
 
-    public void setRoutineInLandscape(String routine) {
+    public void setRoutineInLandscape(@Nullable String routine) {
+        if(routine == null) return;
         if(routine.length() > 12) {
             routine = routine.substring(0, 9) + "...";
         }

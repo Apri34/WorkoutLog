@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+@SuppressWarnings({"UnusedReturnValue"})
 public class DatabaseInitializer {
 
     private static DatabaseSynchronizer databaseSynchronizer;

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+@SuppressWarnings({"BooleanMethodIsAlwaysInverted", "UnusedReturnValue"})
 public class IntervalPicker extends ConstraintLayout {
 
     private IIntervalClickedListener listener;
@@ -308,7 +309,7 @@ public class IntervalPicker extends ConstraintLayout {
         void customInterval();
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
+    @SuppressWarnings({"unchecked"})
     @Override
     public Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
@@ -320,7 +321,7 @@ public class IntervalPicker extends ConstraintLayout {
         return ss;
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
+    @SuppressWarnings({"unchecked"})
     @Override
     public void onRestoreInstanceState(Parcelable state) {
         SavedState ss = (SavedState) state;
@@ -352,7 +353,7 @@ public class IntervalPicker extends ConstraintLayout {
             childrenStates = in.readSparseArray(classLoader);
         }
 
-        @SuppressWarnings({"rawtypes", "unchecked"})
+        @SuppressWarnings({"unchecked"})
         @Override
         public void writeToParcel(Parcel out, int flags) {
             super.writeToParcel(out, flags);

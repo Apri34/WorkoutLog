@@ -1,6 +1,6 @@
 package com.workoutlog.workoutlog.ui.fragments
 
-import android.app.AlertDialog.Builder
+import androidx.appcompat.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
@@ -14,7 +14,7 @@ class WorkoutDoneDialogFragment: DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = Builder(context, R.style.CustomDialogTheme)
+        val builder = AlertDialog.Builder(context!!, R.style.CustomDialogTheme)
         builder.setMessage(getString(R.string.you_have_already_workoud_out_another_workout))
             .setTitle(getString(R.string.workout))
             .setPositiveButton(android.R.string.yes) {_,_->

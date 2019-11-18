@@ -52,6 +52,7 @@ public class HistoryItem extends ConstraintLayout {
             setTextColor(ContextCompat.getColor(context, R.color.white));
             setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
             makeSet(setNum, reps, weight, rpe);
+            setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         }
 
         private void makeSet(int setNum, int reps, float weight, float rpe) {

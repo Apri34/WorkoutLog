@@ -1,10 +1,10 @@
 package com.workoutlog.workoutlog.ui.fragments
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.workoutlog.workoutlog.R
 
@@ -21,7 +21,7 @@ class ChooseWhichExerciseDialogFragment: DialogFragment() {
         try {
             listener = context as IChooseExercise
         } catch (e: ClassCastException) {
-            Log.i(context.toString(), " must implement IChooseExercise")
+            Toast.makeText(context, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
         }
     }
 

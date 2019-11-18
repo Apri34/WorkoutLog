@@ -1,14 +1,13 @@
 package com.workoutlog.workoutlog.ui.fragments
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.workoutlog.workoutlog.R
-import java.lang.ClassCastException
 
 class ConfirmDeleteDialogFragment<T>: DialogFragment() {
 
@@ -33,14 +32,14 @@ class ConfirmDeleteDialogFragment<T>: DialogFragment() {
         try {
             this.listener = listener as IConfirmDelete<T>
         } catch (e: ClassCastException) {
-            Log.i(listener.toString(), " must implement IConfirmDelete")
+            Toast.makeText(context!!, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
         }
     }
     fun setListener(context: Context) {
         try {
             listener = context as IConfirmDelete<T>
         } catch (e: ClassCastException) {
-            Log.i(listener.toString(), " must implement IConfirmDelete")
+            Toast.makeText(context, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -52,7 +51,7 @@ class ConfirmDeleteDialogFragment<T>: DialogFragment() {
             message = getString(R.string.this_cannot_be_returned)
         }
 
-        val builder = AlertDialog.Builder(context, R.style.CustomDialogTheme)
+        val builder = AlertDialog.Builder(context!!, R.style.CustomDialogTheme)
         builder.setTitle(title)
             .setMessage(message)
             .setNegativeButton(android.R.string.no) {_,_->}

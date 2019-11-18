@@ -3,6 +3,7 @@ package com.workoutlog.workoutlog.ui.activities
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.preference.PreferenceManager.getDefaultSharedPreferences
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
@@ -13,10 +14,9 @@ import com.workoutlog.workoutlog.R
 import com.workoutlog.workoutlog.application.WorkoutLog
 import com.workoutlog.workoutlog.database.AppDatabase
 import com.workoutlog.workoutlog.database.DatabaseInitializer
+import com.workoutlog.workoutlog.database.DatabaseSynchronizer
 import com.workoutlog.workoutlog.database.entities.Trainingplan
-import com.workoutlog.workoutlog.ui.fragments.LoginFragment
-import com.workoutlog.workoutlog.ui.fragments.MessageDialogFragment
-import com.workoutlog.workoutlog.ui.fragments.RegisterFragment
+import com.workoutlog.workoutlog.ui.fragments.*
 import com.workoutlog.workoutlog.views.CustomEditText
 
 class MainActivity : FragmentActivity(), LoginFragment.ILogin, RegisterFragment.IRegister {
@@ -26,16 +26,59 @@ class MainActivity : FragmentActivity(), LoginFragment.ILogin, RegisterFragment.
     }
 
     override fun register(email: String, password: String) {
+        var isRegistrationDone = false
+        var isRegistered = false
+        var isCancelled = false
+        val dialog = ProgressDialogFragment.newInstance(getString(R.string.register_))
+        dialog.setListener(object: ProgressDialogFragment.ITryAgainListener {
+            override fun tryAgain() {
+                if(isRegistered) {
+                    mAuth.currentUser?.sendEmailVerification()
+                        ?.addOnSuccessListener {
+                            dialog.dismiss()
+                            MessageDialogFragment.newInstance(getString(R.string.successfully_registered)).show(supportFragmentManager, "successfullyRegistered")
+                            supportFragmentManager.popBackStack()
+                        }
+                } else {
+                    register(email, password)
+                }
+            }
+
+            override fun cancel() {
+                isCancelled = true
+            }
+
+            override fun cancelOperation() {
+                isCancelled = true
+            }
+        })
+        dialog.show(supportFragmentManager, "register")
+        Handler().postDelayed({
+            if(!isRegistrationDone) {
+                dialog.setCancelable(getString(R.string.this_operation_is_taking_very_long))
+            }
+        }, 15000)
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener(this) {
-
-                getDefaultSharedPreferences(this).edit().putBoolean(getString(R.string.continue_guest), false).apply()
-                startActivity(Intent(this, NavigationActivity::class.java))
-                finish()
+                if(isCancelled) return@addOnSuccessListener
+                isRegistrationDone = true
+                isRegistered = true
+                mAuth.currentUser!!.sendEmailVerification()
+                    .addOnSuccessListener {
+                        dialog.dismiss()
+                        MessageDialogFragment.newInstance(getString(R.string.successfully_registered)).show(supportFragmentManager, "successfullyRegistered")
+                        supportFragmentManager.popBackStack()
+                    }
+                    .addOnFailureListener {
+                        dialog.setError(getString(R.string.error), getString(R.string.something_went_wrong_sending_verification_email))
+                    }
+                mAuth.signOut()
             }
             .addOnFailureListener {e ->
+                if(isCancelled) return@addOnFailureListener
+                isRegistrationDone = true
                 if(e !is FirebaseAuthException) {
-                    MessageDialogFragment.newInstance(getString(R.string.something_went_wrong_check_internet)).show(supportFragmentManager, "noConnection")
+                    dialog.setError(getString(R.string.error), getString(R.string.something_went_wrong_check_internet))
                 } else {
                     when (e.errorCode) {
                         "ERROR_EMAIL_ALREADY_IN_USE" -> {
@@ -48,21 +91,74 @@ class MainActivity : FragmentActivity(), LoginFragment.ILogin, RegisterFragment.
                             fragmentRegister.showErrorMessageOnPassword(CustomEditText.Error.ERROR_PASSWORD_REQUIREMENTS_NOT_MET)
                         }
                     }
+                    dialog.dismiss()
                 }
             }
     }
 
     override fun login(email: String, password: String, stayLoggedIn: Boolean) {
+        var isRegistrationDone = false
+        var isLoggedIn = false
+        var isCancelled = false
+        val dialog = ProgressDialogFragment.newInstance(getString(R.string.login_))
+        dialog.setListener(object : ProgressDialogFragment.ITryAgainListener{
+            override fun tryAgain() {
+                if(isLoggedIn) {
+                    mAuth.signOut()
+                    login(email, password, stayLoggedIn)
+                } else {
+                    login(email, password, stayLoggedIn)
+                }
+            }
+
+            override fun cancel() {
+                isCancelled = true
+            }
+
+            override fun cancelOperation() {
+                isCancelled = true
+            }
+        })
+        dialog.show(supportFragmentManager, "login")
+        Handler().postDelayed({
+            if(!isRegistrationDone)
+                dialog.setCancelable(getString(R.string.this_operation_is_taking_very_long))
+        }, 15000)
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener(this) {
-                getDefaultSharedPreferences(this).edit().putBoolean(getString(R.string.continue_guest), false).apply()
-                getDefaultSharedPreferences(this).edit().putBoolean(getString(R.string.stay_logged_in), stayLoggedIn).apply()
-                startActivity(Intent(this, NavigationActivity::class.java))
-                finish()
+                if(isCancelled) return@addOnSuccessListener
+                isRegistrationDone = true
+                isLoggedIn = true
+                if(mAuth.currentUser!!.isEmailVerified) {
+                    if(isCancelled) return@addOnSuccessListener
+                    databaseSynchronizer.loginUser(mAuth.currentUser!!, this)
+                    getDefaultSharedPreferences(this).edit()
+                        .putBoolean(getString(R.string.continue_guest), false).apply()
+                    getDefaultSharedPreferences(this).edit()
+                        .putBoolean(getString(R.string.stay_logged_in), stayLoggedIn).apply()
+                    startActivity(Intent(this, NavigationActivity::class.java))
+                    finish()
+                } else {
+                    val verifDialog = SendVerificationDialogFragment.newInstance(getString(R.string.email_not_verified), getString(R.string.send_verification_email_))
+                    verifDialog.setListener(object : SendVerificationDialogFragment.ISendVerification{
+                        override fun signOut() {
+                            mAuth.signOut()
+                        }
+
+                        override fun sendVerification() {
+                            mAuth.currentUser!!.sendEmailVerification()
+                            mAuth.signOut()
+                        }
+                    })
+                    dialog.dismiss()
+                    verifDialog.show(supportFragmentManager, "verifDialog")
+                }
             }
             .addOnFailureListener { e ->
+                if(isCancelled) return@addOnFailureListener
+                isRegistrationDone = true
                 if(e !is FirebaseAuthException) {
-                    MessageDialogFragment.newInstance(getString(R.string.something_went_wrong_check_internet)).show(supportFragmentManager, "noConnection")
+                    dialog.setError(getString(R.string.error), getString(R.string.something_went_wrong_check_internet))
                 } else {
                     when (e.errorCode) {
                         "ERROR_INVALID_EMAIL" -> {
@@ -75,6 +171,7 @@ class MainActivity : FragmentActivity(), LoginFragment.ILogin, RegisterFragment.
                             fragmentLogin.showErrorMessageOnPassword(CustomEditText.Error.ERROR_WRONG_PASSWORD)
                         }
                     }
+                    dialog.dismiss()
                 }
             }
     }
@@ -99,6 +196,7 @@ class MainActivity : FragmentActivity(), LoginFragment.ILogin, RegisterFragment.
     private lateinit var fragmentLogin: LoginFragment
     private lateinit var fragmentRegister: RegisterFragment
     private lateinit var mWorkoutLog: WorkoutLog
+    private lateinit var databaseSynchronizer: DatabaseSynchronizer
 
     companion object {
         private const val KEY_IS_DB_CREATED = "isDbCreated"
@@ -112,6 +210,7 @@ class MainActivity : FragmentActivity(), LoginFragment.ILogin, RegisterFragment.
         }
         setContentView(R.layout.activity_main)
         mWorkoutLog = this.applicationContext as WorkoutLog
+        databaseSynchronizer = DatabaseSynchronizer.getInstance(this)
 
         if(!getDefaultSharedPreferences(this).getBoolean(KEY_IS_DB_CREATED, false)) {
             val tp = Trainingplan(-1, "tpForSingleRoutines")

@@ -1,10 +1,10 @@
 package com.workoutlog.workoutlog.ui.fragments
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.workoutlog.workoutlog.R
 
@@ -30,7 +30,7 @@ class StartWorkoutDialogFragment: DialogFragment() {
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(context, R.style.CustomDialogTheme)
+        val builder = AlertDialog.Builder(context!!, R.style.CustomDialogTheme)
         val message = arguments?.getString(KEY_TP) + ":\n" + arguments?.getString(KEY_ROUTINE)
 
         builder.setTitle(getString(R.string.start_workout))
@@ -55,7 +55,7 @@ class StartWorkoutDialogFragment: DialogFragment() {
         try {
             listener = context as IStartWorkout
         } catch (e: ClassCastException) {
-            Log.i(context.toString(), " must implement IStartWorkout")
+            Toast.makeText(context, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
         }
     }
 }

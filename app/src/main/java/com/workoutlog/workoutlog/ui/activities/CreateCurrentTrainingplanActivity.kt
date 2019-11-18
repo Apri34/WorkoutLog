@@ -366,7 +366,7 @@ class CreateCurrentTrainingplanActivity : AppCompatActivity(),
     private fun addChooseIntervalFragment(remove: Boolean) {
         val tpId = getDefaultSharedPreferences(this).getInt(KEY_TP_ID, 0)
         if(tpId == 0) {
-            //???
+            Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
         }
         val args = Bundle()
         args.putInt(KEY_TP_ID, tpId)

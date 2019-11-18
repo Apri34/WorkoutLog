@@ -1,6 +1,5 @@
 package com.workoutlog.workoutlog.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,7 +52,7 @@ class ExercisesAdapter(private var mDataset: List<Exercise>) :
         try {
             this.listener = listener as IExerciseAdapter
         } catch (e: ClassCastException) {
-            Log.i(listener.toString(), " must implement IExerciseAdapter")
+
         }
     }
 

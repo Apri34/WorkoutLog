@@ -1,13 +1,13 @@
 package com.workoutlog.workoutlog.ui.fragments
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.workoutlog.workoutlog.R
@@ -30,7 +30,7 @@ class DeleteOrEditDialogFragment<T>: DialogFragment() {
         try {
             this.listener = listener as IDeleteOrEditDialog<T>
         } catch (e: ClassCastException) {
-            Log.i(listener.toString(), " must implement IDeleteOrEditDialog")
+            Toast.makeText(context!!, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
         }
     }
     fun setListener(context: Context) {
@@ -38,13 +38,13 @@ class DeleteOrEditDialogFragment<T>: DialogFragment() {
             @Suppress("unchecked")
             listener = context as IDeleteOrEditDialog<T>
         } catch (e: ClassCastException) {
-            Log.i(context.toString(), " must implement IEditOrDeleteListener")
+            Toast.makeText(context, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
         }
     }
 
     @SuppressLint("InflateParams")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(context, R.style.CustomDialogTheme)
+        val builder = AlertDialog.Builder(context!!, R.style.CustomDialogTheme)
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.dialog_delete_or_edit, null)
         val buttonDelete = view.findViewById<TextView>(R.id.button_delete_delete_or_edit_dialog)

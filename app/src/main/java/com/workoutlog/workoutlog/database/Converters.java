@@ -4,6 +4,7 @@ import androidx.room.TypeConverter;
 
 import java.sql.Date;
 
+@SuppressWarnings({"unused"})
 public class Converters {
     @TypeConverter
     public static Date fromTimestamp(Long value) {

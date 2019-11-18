@@ -1,7 +1,6 @@
 package com.workoutlog.workoutlog.adapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.workoutlog.workoutlog.R
 import com.workoutlog.workoutlog.database.entities.Routine
-import java.lang.ClassCastException
 
 class RoutinesAdapter(private var mDataset: List<Routine>) : RecyclerView.Adapter<RoutinesAdapter.RoutinesViewHolder>() {
 
@@ -54,9 +52,7 @@ class RoutinesAdapter(private var mDataset: List<Routine>) : RecyclerView.Adapte
     fun setListener(context: Context) {
         try {
             listener = context as IRoutinesAdapter
-        } catch (e: ClassCastException) {
-            Log.i(context.toString(), " must implement IRoutinesAdapter")
-        }
+        } catch (e: ClassCastException) {}
     }
 
     fun setDataset(dataset: List<Routine>) {

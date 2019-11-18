@@ -1,13 +1,12 @@
 package com.workoutlog.workoutlog.ui.fragments
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.workoutlog.workoutlog.R
-import java.lang.ClassCastException
 
 class ConfirmDeleteCurrentTpDialogFragment: DialogFragment() {
 
@@ -33,14 +32,14 @@ class ConfirmDeleteCurrentTpDialogFragment: DialogFragment() {
         try {
             this.listener = listener as IConfirmDeleteCurrentTpDialog
         } catch (e: ClassCastException) {
-            Log.i(listener.toString(), " must implement IConfirmDeleteCurrentTpDialog")
+            Toast.makeText(context!!, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
         }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         message = arguments?.getString(KEY_MESSAGE) ?: getString(R.string.are_you_sure)
         title = arguments?.getString(KEY_TITLE)
-        val builder = AlertDialog.Builder(context, R.style.CustomDialogTheme)
+        val builder = AlertDialog.Builder(context!!, R.style.CustomDialogTheme)
         if(title != null)
             builder.setTitle(title!!)
         builder.setMessage(message)

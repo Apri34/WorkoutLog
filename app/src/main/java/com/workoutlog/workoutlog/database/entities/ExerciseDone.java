@@ -6,6 +6,7 @@ import java.sql.Date;
 
 import static androidx.room.ForeignKey.CASCADE;
 
+@SuppressWarnings("UnusedReturnValue")
 @Entity (indices = {@Index(value = {"E_ID"})},
         foreignKeys = @ForeignKey(entity = Exercise.class,
                                     parentColumns = "E_ID",

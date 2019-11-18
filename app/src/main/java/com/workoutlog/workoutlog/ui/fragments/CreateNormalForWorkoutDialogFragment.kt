@@ -1,7 +1,7 @@
 package com.workoutlog.workoutlog.ui.fragments
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -44,7 +44,7 @@ class CreateNormalForWorkoutDialogFragment: DialogFragment() {
     @SuppressLint("InflateParams")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_create_normal_for_workout, null)
-        val builder = AlertDialog.Builder(context, R.style.CustomDialogTheme)
+        val builder = AlertDialog.Builder(context!!, R.style.CustomDialogTheme)
         builder.setTitle(arguments!!.getString(KEY_EXC_NAME))
         builder.setView(view)
             .setPositiveButton(android.R.string.ok) {_,_->

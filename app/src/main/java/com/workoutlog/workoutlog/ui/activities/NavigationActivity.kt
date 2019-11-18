@@ -26,6 +26,7 @@ import com.workoutlog.workoutlog.ui.fragments.*
 import org.json.JSONObject
 import java.sql.Date
 import java.util.*
+import kotlin.math.roundToInt
 
 class NavigationActivity : AppCompatActivity(),
     CurrentTrainingplanFragment.ICurrentTrainingplanFragment,
@@ -232,6 +233,9 @@ class NavigationActivity : AppCompatActivity(),
         toolbar = findViewById(R.id.toolbar_navigation_activity)
 
         if(mAuth.currentUser != null) {
+            if(!mAuth.currentUser!!.isEmailVerified) {
+                mAuth.signOut()
+            }
             navView.inflateMenu(R.menu.drawer_view_logged_in)
             textViewNavHeaderUser.text = mAuth.currentUser!!.email!!
             if(savedInstanceState == null)
@@ -499,7 +503,7 @@ class NavigationActivity : AppCompatActivity(),
         c.set(selectedYear, selectedMonth, selectedDay, 0, 0, 0)
         val timeStart = c.timeInMillis
         val dif = timeNow - timeStart
-        val days = Math.round(dif.toFloat() / (1000 * 60 * 60 * 24).toFloat())
+        val days = (dif.toFloat() / (1000 * 60 * 60 * 24).toFloat()).roundToInt()
         val dayInInterval = days % interval.size
         return interval[dayInInterval]
     }

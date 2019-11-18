@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size_app_name_login_register_screen">70sp</dimen>
+    <dimen name="text_size_login_register_login_register">35sp</dimen>
+    <dimen name="text_size_login_no_account_yet">22sp</dimen>
+    <dimen name="margin_vertical_choose_interval_for_bigger_screens">112dp</dimen>
+</resources>

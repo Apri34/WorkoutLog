@@ -1,6 +1,5 @@
 package com.workoutlog.workoutlog.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.workoutlog.workoutlog.R
 import com.workoutlog.workoutlog.database.entities.Trainingplan
-import java.lang.ClassCastException
-import java.lang.Exception
 
 class TrainingplansAdapter(private var mDataset: List<Trainingplan>) :
     RecyclerView.Adapter<TrainingplansAdapter.TrainingplansViewHolder>(){
@@ -76,9 +73,7 @@ class TrainingplansAdapter(private var mDataset: List<Trainingplan>) :
     fun setListener(listener: Fragment) {
         try {
             this.listener = listener as ITrainingplansAdapter
-        } catch (e: ClassCastException) {
-            Log.i(listener.toString(), " must implement ITrainingplansAdapter")
-        }
+        } catch (e: ClassCastException) {}
     }
 
     fun setDataset(dataset: List<Trainingplan>) {

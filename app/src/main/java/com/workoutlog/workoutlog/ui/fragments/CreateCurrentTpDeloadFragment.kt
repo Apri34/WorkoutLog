@@ -2,13 +2,13 @@ package com.workoutlog.workoutlog.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.workoutlog.workoutlog.R
 import com.workoutlog.workoutlog.TextWatcherMin1
@@ -119,7 +119,7 @@ class CreateCurrentTpDeloadFragment: Fragment() {
         try {
             listener = context as IDeloadFragment
         } catch (e: ClassCastException) {
-            Log.i(context.toString(), " must implement IDeloadFragment")
+            Toast.makeText(context, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
         }
     }
 }

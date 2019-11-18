@@ -11,6 +11,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.SparseArray;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -23,6 +24,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import com.workoutlog.workoutlog.LayoutWrapContentUpdater;
 import com.workoutlog.workoutlog.R;
 
+@SuppressWarnings("UnusedReturnValue")
 public class CustomEditText extends ConstraintLayout {
 
     private static final int HINT_MARGIN_SIDE = 5;
@@ -35,6 +37,7 @@ public class CustomEditText extends ConstraintLayout {
     private final TextView hint;
     private final ConstraintLayout layout;
     private final TextView errorMessage;
+
     private final float hintSize;
     private final float hintSizeFocused;
     private final int hintColorFocused;
@@ -127,7 +130,7 @@ public class CustomEditText extends ConstraintLayout {
         set.clear(R.id.custom_edit_text_hint, ConstraintSet.LEFT);
         set.connect(R.id.custom_edit_text_hint, ConstraintSet.RIGHT, R.id.custom_edit_text_constraint_layout, ConstraintSet.RIGHT, dpToPx(HINT_MARGIN_SIDE));
         set.applyTo(layout);
-        hint.setTextSize(hintSizeFocused);
+        hint.setTextSize(TypedValue.COMPLEX_UNIT_PX, hintSizeFocused);
     }
 
     public CustomEditText(Context context) {
@@ -169,7 +172,7 @@ public class CustomEditText extends ConstraintLayout {
             textField.setHint(hint.getText());
         }
         hintSize = a.getDimension(R.styleable.CustomEditText_hintSize, dpToPx(DEF_HINT_SIZE));
-        hint.setTextSize(hintSize);
+        hint.setTextSize(TypedValue.COMPLEX_UNIT_PX, hintSize);
         hintSizeFocused = a.getDimension(R.styleable.CustomEditText_hintSizeFocused, dpToPx(DEF_HINT_SIZE_FOCUSED));
         if(a.hasValue(R.styleable.CustomEditText_hint)) {
             hint.setText(a.getText(R.styleable.CustomEditText_hint));
@@ -191,12 +194,12 @@ public class CustomEditText extends ConstraintLayout {
             textField.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
             textField.setTransformationMethod(PasswordTransformationMethod.getInstance());
         }
-        textField.setTextSize(a.getDimension(R.styleable.CustomEditText_textSize, dpToPx(DEF_TEXT_SIZE)));
+        textField.setTextSize(TypedValue.COMPLEX_UNIT_PX, a.getDimension(R.styleable.CustomEditText_textSize, dpToPx(DEF_TEXT_SIZE)));
 
         a.recycle();
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
+    @SuppressWarnings({"unchecked"})
     @Override
     public Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
@@ -208,7 +211,7 @@ public class CustomEditText extends ConstraintLayout {
         return ss;
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
+    @SuppressWarnings({"unchecked"})
     @Override
     public void onRestoreInstanceState(Parcelable state) {
         SavedState ss = (SavedState) state;
@@ -218,7 +221,7 @@ public class CustomEditText extends ConstraintLayout {
         }
 
         if(!textField.getText().toString().isEmpty()) {
-            hint.setTextSize(hintSizeFocused);
+            hint.setTextSize(TypedValue.COMPLEX_UNIT_PX, hintSizeFocused);
             ConstraintSet set = new ConstraintSet();
             set.clone(layout);
             set.clear(R.id.custom_edit_text_hint, ConstraintSet.LEFT);
@@ -238,7 +241,7 @@ public class CustomEditText extends ConstraintLayout {
     }
 
     private void focusHint() {
-        hint.setTextSize(hintSizeFocused);
+        hint.setTextSize(TypedValue.COMPLEX_UNIT_PX, hintSizeFocused);
         LayoutWrapContentUpdater.wrapContentAgain(this);
         if(!textField.isActivated()) {
             hint.setTextColor(hintColorFocused);
@@ -258,7 +261,7 @@ public class CustomEditText extends ConstraintLayout {
         }
         if(textField.getText().toString().isEmpty()) {
             moveHintToLeft();
-            hint.setTextSize(hintSize);
+            hint.setTextSize(TypedValue.COMPLEX_UNIT_PX, hintSize);
             LayoutWrapContentUpdater.wrapContentAgain(this);
         }
     }
@@ -314,7 +317,7 @@ public class CustomEditText extends ConstraintLayout {
             childrenStates = in.readSparseArray(classLoader);
         }
 
-        @SuppressWarnings({"rawtypes", "unchecked"})
+        @SuppressWarnings({"unchecked"})
         @Override
         public void writeToParcel(Parcel out, int flags) {
             super.writeToParcel(out, flags);

@@ -1,7 +1,7 @@
 package com.workoutlog.workoutlog.ui.fragments
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -40,7 +40,7 @@ class ProgressDialogFragment: DialogFragment() {
     @SuppressLint("InflateParams")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val title = arguments?.getString(KEY_TITLE) ?: getString(R.string.loading)
-        val builder = AlertDialog.Builder(context, R.style.CustomDialogTheme)
+        val builder = AlertDialog.Builder(context!!, R.style.CustomDialogTheme)
         val view = LayoutInflater.from(context).inflate(R.layout.progress_dialog, null)
         buttonCancel = view.findViewById(R.id.button_cancel)
         buttonTryAgain = view.findViewById(R.id.button_try_again)

@@ -2,8 +2,10 @@ package com.workoutlog.workoutlog.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -13,8 +15,6 @@ import com.workoutlog.workoutlog.database.entities.Dropset
 import com.workoutlog.workoutlog.database.entities.Exercise
 import com.workoutlog.workoutlog.database.entities.Normal
 import com.workoutlog.workoutlog.database.entities.Superset
-import java.lang.ClassCastException
-import java.lang.NumberFormatException
 
 class ExercisesInRoutineAdapter(private val context: Context, private var exercises: MutableList<Exercise>, private var mNormals: MutableList<Normal>, private var mSupersets: MutableList<Superset>, private var mDropsets: MutableList<Dropset>)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -108,9 +108,7 @@ class ExercisesInRoutineAdapter(private val context: Context, private var exerci
     fun setListener(context: Context) {
         try {
             listener = context as IExerciseInRoutineAdapter
-        } catch (e: ClassCastException) {
-            Log.i(context.toString(), " must implement IExerciseInRoutineAdapter")
-        }
+        } catch (e: ClassCastException) {}
     }
     fun setEditableItem(position: Int) {
         editableItem = position
@@ -766,7 +764,8 @@ class ExercisesInRoutineAdapter(private val context: Context, private var exerci
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder.itemViewType) {
             TYPE_ERROR -> {
-
+                val errorViewHolder = holder as ErrorViewHolder
+                errorViewHolder.bind(context.getString(R.string.error))
             }
             TYPE_NORMAL -> {
                 val normalViewHolder = holder as NormalViewHolder

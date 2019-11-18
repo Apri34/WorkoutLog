@@ -8,6 +8,7 @@ import androidx.room.TypeConverters;
 import com.workoutlog.workoutlog.database.daos.*;
 import com.workoutlog.workoutlog.database.entities.*;
 
+@SuppressWarnings("UnusedReturnValue")
 @Database(entities = {Dropset.class,
         Exercise.class,
         ExerciseDone.class,

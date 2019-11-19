@@ -1,11 +1,14 @@
 package com.workoutlog.workoutlog.views;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.TableRow;
+
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
+
 import com.workoutlog.workoutlog.R;
 
 public class CalenderItem extends androidx.appcompat.widget.AppCompatTextView {
@@ -14,6 +17,7 @@ public class CalenderItem extends androidx.appcompat.widget.AppCompatTextView {
     private int month;
     private int year;
     private IItemClicked listener = null;
+    private Context context;
 
     private static final int[] STATE_CHOSEN = {R.attr.state_chosen};
     private static final int[] STATE_IN_MONTH = {R.attr.state_in_month};
@@ -47,7 +51,7 @@ public class CalenderItem extends androidx.appcompat.widget.AppCompatTextView {
 
     public CalenderItem(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
+        this.context = context;
         setBackgroundResource(R.drawable.background_calender_item);
         if(attrs != null) {
             for (int i = 0; i < attrs.getAttributeCount(); i++) {
@@ -58,7 +62,7 @@ public class CalenderItem extends androidx.appcompat.widget.AppCompatTextView {
             }
         }
         refreshDrawableState();
-        setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
+        setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 1));
         setOnClickListener(v -> {
             if(listener != null) {
                 listener.itemClicked(day, month, year);
@@ -67,7 +71,10 @@ public class CalenderItem extends androidx.appcompat.widget.AppCompatTextView {
         setClickable(true);
         setGravity(Gravity.CENTER);
         setPadding(0, 4, 0, 4);
-        setTextColor(ContextCompat.getColor(context, R.color.colorSecondary));
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorSecondary, typedValue, true);
+        setTextColor(typedValue.data);
     }
 
     @Override
@@ -119,12 +126,17 @@ public class CalenderItem extends androidx.appcompat.widget.AppCompatTextView {
     }
 
     private void refreshTextColor() {
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
         if(!mIsInMonth) {
-            setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryAlpha50));
+            theme.resolveAttribute(R.attr.colorPrimaryAlpha50, typedValue, true);
+            setTextColor(typedValue.data);
         } else if(mIsChosen) {
-            setTextColor(ContextCompat.getColor(getContext(), R.color.colorSecondary));
+            theme.resolveAttribute(R.attr.colorSecondary, typedValue, true);
+            setTextColor(typedValue.data);
         } else {
-            setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+            theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+            setTextColor(typedValue.data);
         }
     }
 }

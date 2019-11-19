@@ -183,6 +183,7 @@
     <string name="email_not_verified">Email not verified</string>
     <string name="send_verification_email_">Send verification email?</string>
     <string name="login_">Login…</string>
+    <string name="switch_to_light_theme">Switch to light theme</string>
 
     <string-array name="exercise_types">
         <item>Normal Exercise</item>

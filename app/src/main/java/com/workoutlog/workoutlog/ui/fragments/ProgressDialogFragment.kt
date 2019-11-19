@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -40,7 +41,10 @@ class ProgressDialogFragment: DialogFragment() {
     @SuppressLint("InflateParams")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val title = arguments?.getString(KEY_TITLE) ?: getString(R.string.loading)
-        val builder = AlertDialog.Builder(context!!, R.style.CustomDialogTheme)
+        val typedValue = TypedValue()
+        val theme = context!!.theme
+        theme.resolveAttribute(R.attr.customDialogTheme, typedValue, true)
+        val builder = AlertDialog.Builder(context!!, typedValue.data)
         val view = LayoutInflater.from(context).inflate(R.layout.progress_dialog, null)
         buttonCancel = view.findViewById(R.id.button_cancel)
         buttonTryAgain = view.findViewById(R.id.button_try_again)

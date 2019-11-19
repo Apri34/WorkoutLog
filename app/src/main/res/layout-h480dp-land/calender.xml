@@ -15,7 +15,7 @@
             app:layout_constraintBottom_toBottomOf="@id/calender_button_next_month"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             android:textSize="@dimen/text_sice_calender_month"
             tools:ignore="InconsistentLayout"/>
     <ImageButton
@@ -26,7 +26,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintHorizontal_bias="0.8"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_navigate_next_colorprimary_36dp"
+            android:src="?attr/ic_navigate_next_colorprimary_36dp"
             android:background="@android:color/transparent"
             android:contentDescription="@null"/>
 
@@ -38,7 +38,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="0.2"
-            android:src="@drawable/ic_navigate_before_colorprimary_36dp"
+            android:src="?attr/ic_navigate_before_colorprimary_36dp"
             android:background="@android:color/transparent"
             android:contentDescription="@null"
     />

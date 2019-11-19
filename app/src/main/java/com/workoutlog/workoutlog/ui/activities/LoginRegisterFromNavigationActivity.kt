@@ -5,9 +5,10 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager
+import android.preference.PreferenceManager.getDefaultSharedPreferences
+import android.util.TypedValue
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.workoutlog.workoutlog.R
@@ -58,9 +59,9 @@ class LoginRegisterFromNavigationActivity : AppCompatActivity(), LoginFragment.I
                 if(mAuth.currentUser!!.isEmailVerified) {
                     if(isCancelled) return@addOnSuccessListener
                     databaseSynchronizer.loginUser(mAuth.currentUser!!, this)
-                    PreferenceManager.getDefaultSharedPreferences(this).edit()
+                    getDefaultSharedPreferences(this).edit()
                         .putBoolean(getString(R.string.continue_guest), false).apply()
-                    PreferenceManager.getDefaultSharedPreferences(this).edit()
+                    getDefaultSharedPreferences(this).edit()
                         .putBoolean(getString(R.string.stay_logged_in), stayLoggedIn).apply()
                     startActivity(Intent(this, NavigationActivity::class.java))
                     finish()
@@ -111,8 +112,8 @@ class LoginRegisterFromNavigationActivity : AppCompatActivity(), LoginFragment.I
     }
 
     override fun continueAsGuest() {
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(getString(R.string.continue_guest), true).apply()
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(getString(R.string.stay_logged_in), false).apply()
+        getDefaultSharedPreferences(this).edit().putBoolean(getString(R.string.continue_guest), true).apply()
+        getDefaultSharedPreferences(this).edit().putBoolean(getString(R.string.stay_logged_in), false).apply()
         startActivity(Intent(this, NavigationActivity::class.java))
         finish()
     }
@@ -194,12 +195,26 @@ class LoginRegisterFromNavigationActivity : AppCompatActivity(), LoginFragment.I
     private lateinit var mAuth: FirebaseAuth
     private lateinit var databaseSynchronizer: DatabaseSynchronizer
     private lateinit var mWorkoutLog: WorkoutLog
+    private var isLightTheme = false
+    private var isDarkTheme = true
+
+    companion object {
+        private const val IS_LIGHT_THEME = "isLightTheme"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
+            && getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false)) {
+            setTheme(R.style.AppTheme_LIGHT)
+            isLightTheme = true
+            isDarkTheme = false
+        }
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-            window.statusBarColor = ContextCompat.getColor(this, R.color.colorSecondaryDark)
+            val typedValue = TypedValue()
+            theme.resolveAttribute(R.attr.topbarColor, typedValue, true)
+            window.statusBarColor = typedValue.data
         }
         setContentView(R.layout.activity_login_register_from_navigation)
         mWorkoutLog = this.applicationContext as WorkoutLog
@@ -219,6 +234,14 @@ class LoginRegisterFromNavigationActivity : AppCompatActivity(), LoginFragment.I
     override fun onResume() {
         super.onResume()
         mWorkoutLog.currentActivity = this
+        if(getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
+            && getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false)
+            && !isLightTheme
+            || (!getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
+                    || !getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false))
+            && !isDarkTheme) {
+            recreate()
+        }
     }
 
     override fun onPause() {

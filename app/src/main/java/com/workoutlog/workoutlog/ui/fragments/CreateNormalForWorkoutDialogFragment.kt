@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
@@ -44,7 +45,10 @@ class CreateNormalForWorkoutDialogFragment: DialogFragment() {
     @SuppressLint("InflateParams")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_create_normal_for_workout, null)
-        val builder = AlertDialog.Builder(context!!, R.style.CustomDialogTheme)
+        val typedValue = TypedValue()
+        val theme = context!!.theme
+        theme.resolveAttribute(R.attr.customDialogTheme, typedValue, true)
+        val builder = AlertDialog.Builder(context!!, typedValue.data)
         builder.setTitle(arguments!!.getString(KEY_EXC_NAME))
         builder.setView(view)
             .setPositiveButton(android.R.string.ok) {_,_->

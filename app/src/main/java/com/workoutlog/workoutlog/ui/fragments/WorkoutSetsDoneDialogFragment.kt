@@ -3,6 +3,7 @@ package com.workoutlog.workoutlog.ui.fragments
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.TypedValue
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
@@ -27,7 +28,10 @@ class WorkoutSetsDoneDialogFragment: DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(context!!, R.style.CustomDialogTheme)
+        val typedValue = TypedValue()
+        val theme = context!!.theme
+        theme.resolveAttribute(R.attr.customDialogTheme, typedValue, true)
+        val builder = AlertDialog.Builder(context!!, typedValue.data)
 
         builder.setTitle(arguments!!.getString(KEY_EXERCISE))
             .setMessage(String.format(resources.getQuantityString(R.plurals.you_have_completed_your_goal, arguments!!.getInt(KEY_SETS)), arguments!!.getInt(KEY_SETS)))

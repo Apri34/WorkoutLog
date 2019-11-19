@@ -22,7 +22,7 @@
             app:hintSizeFocused="@dimen/hint_size_focused_login_register"
             app:textSize="@dimen/hint_size_login_register"
             app:customBackground="@drawable/background_edittext_login_register"
-            app:textColor="@color/colorSecondary"
+            app:textColor="?attr/textColorEditText"
     />
 
 </LinearLayout>

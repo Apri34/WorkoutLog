@@ -34,7 +34,7 @@
             app:layout_constraintTop_toTopOf="@id/interval_picker_interval"
             app:layout_constraintBottom_toBottomOf="@id/interval_picker_interval"
             android:contentDescription="@null"
-            android:src="@drawable/ic_navigate_next_colorprimary_48dp"
+            android:src="?attr/ic_navigate_next_colorprimary_48dp"
             android:background="@android:color/transparent"
     />
 
@@ -46,7 +46,7 @@
             app:layout_constraintTop_toTopOf="@id/interval_picker_interval"
             app:layout_constraintBottom_toBottomOf="@id/interval_picker_interval"
             android:contentDescription="@null"
-            android:src="@drawable/ic_navigate_before_colorprimary_48dp"
+            android:src="?attr/ic_navigate_before_colorprimary_48dp"
             android:background="@android:color/transparent"
     />
 

@@ -3,7 +3,9 @@ package com.workoutlog.workoutlog.ui.activities
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager.getDefaultSharedPreferences
 import android.util.SparseArray
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -11,7 +13,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -174,20 +175,31 @@ class WorkoutActivity : AppCompatActivity(),
     private var deletable = false
     private lateinit var routine: Routine
     private lateinit var mWorkoutLog: WorkoutLog
+    var isLightTheme = false
+    var isDarkTheme = true
 
     companion object {
         private const val DEFAULT_BREAK_TIME = 120
         private const val KEY_ROUTINE_WORKOUT = "routineWorkout"
         private const val NUM_PAGES = 3
         private const val KEY_DELETABLE = "deletable"
+        private const val IS_LIGHT_THEME = "isLightTheme"
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
+            && getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false)) {
+            setTheme(R.style.AppTheme_LIGHT)
+            isLightTheme = true
+            isDarkTheme = false
+        }
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-            window.statusBarColor = ContextCompat.getColor(this, R.color.colorSecondaryDark)
+            val typedValue = TypedValue()
+            theme.resolveAttribute(R.attr.topbarColor, typedValue, true)
+            window.statusBarColor = typedValue.data
         }
         setContentView(R.layout.activity_workout)
         mWorkoutLog = this.applicationContext as WorkoutLog
@@ -513,6 +525,14 @@ class WorkoutActivity : AppCompatActivity(),
     override fun onResume() {
         super.onResume()
         mWorkoutLog.currentActivity = this
+        if(getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
+            && getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false)
+            && !isLightTheme
+            || (!getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
+                    || !getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false))
+            && !isDarkTheme) {
+            recreate()
+        }
     }
 
     override fun onPause() {

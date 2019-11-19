@@ -169,6 +169,7 @@ class ExercisesInRoutineAdapter(private val context: Context, private var exerci
             }
             exerciseList.add(context.getString(R.string.choose_exercise))
             val adapter = HintAdapter(context, R.layout.spinner_item_exercises_in_routine, exerciseList)
+            adapter.setDropDownViewResource(R.layout.spinner_dropdown_item_exercise_in_routine)
             spinner.adapter = adapter
             if(normal.eId != 0) {
                 val position = exerciseIdList.indexOf(normal.eId)
@@ -350,6 +351,7 @@ class ExercisesInRoutineAdapter(private val context: Context, private var exerci
             }
             exerciseList.add(context.getString(R.string.choose_exercise))
             val adapter = HintAdapter(context, R.layout.spinner_item_exercises_in_routine, exerciseList)
+            adapter.setDropDownViewResource(R.layout.spinner_dropdown_item_exercise_in_routine)
             spinner1.adapter = adapter
             spinner2.adapter = adapter
             if(superset.eId1 != 0) {
@@ -565,6 +567,7 @@ class ExercisesInRoutineAdapter(private val context: Context, private var exerci
             }
             exerciseList.add(context.getString(R.string.choose_exercise))
             val adapter = HintAdapter(context, R.layout.spinner_item_exercises_in_routine, exerciseList)
+            adapter.setDropDownViewResource(R.layout.spinner_dropdown_item_exercise_in_routine)
             spinner.adapter = adapter
             if(dropset.eId != 0) {
                 val position = exerciseIdList.indexOf(dropset.eId)

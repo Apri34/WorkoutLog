@@ -17,7 +17,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toTopOf="@id/constraint_layout_login_fragment_login_section"
             android:text="@string/app_name"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             android:textSize="@dimen/text_size_app_name_login_register_screen"
             android:textStyle="bold"
     />
@@ -40,7 +40,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:text="@string/Login"
                 android:textSize="@dimen/text_size_login_register_login_register"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:textStyle="bold"
         />
 
@@ -55,7 +55,7 @@
                 app:hintSizeFocused="@dimen/hint_size_focused_login_register"
                 app:textSize="@dimen/hint_size_login_register"
                 app:customBackground="@drawable/background_edittext_login_register"
-                app:textColor="@color/colorSecondary"
+                app:textColor="?attr/textColorEditText"
         />
 
         <com.workoutlog.workoutlog.views.CustomEditText
@@ -70,7 +70,7 @@
                 app:hintSizeFocused="@dimen/hint_size_focused_login_register"
                 app:textSize="@dimen/hint_size_login_register"
                 app:isPassword="true"
-                app:textColor="@color/colorSecondary"
+                app:textColor="?attr/textColorEditText"
         />
 
         <CheckBox
@@ -81,7 +81,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:text="@string/remember_me"
                 android:layout_marginTop="@dimen/margin_between_fields_login_register_section_custom_edit_text"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:button="@drawable/checkbox_background"
                 android:paddingLeft="@dimen/space_checkbox"
                 android:paddingStart="@dimen/space_checkbox"
@@ -127,7 +127,7 @@
         <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:background="@color/colorPrimary"
+                android:background="?attr/colorPrimary"
                 app:layout_constraintTop_toTopOf="@id/textview_login_fragment_or"
                 app:layout_constraintBottom_toBottomOf="@id/textview_login_fragment_or"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -147,14 +147,14 @@
                 app:layout_constraintBottom_toTopOf="@id/textview_login_fragment_or"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:text="@string/or"
         />
 
         <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:background="@color/colorPrimary"
+                android:background="?attr/colorPrimary"
                 app:layout_constraintTop_toTopOf="@id/textview_login_fragment_or"
                 app:layout_constraintBottom_toBottomOf="@id/textview_login_fragment_or"
                 app:layout_constraintRight_toRightOf="parent"

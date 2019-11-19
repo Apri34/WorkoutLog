@@ -1,52 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.workoutlog.workoutlog">
+        xmlns:tools="http://schemas.android.com/tools"
+        package="com.workoutlog.workoutlog">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+            android:name=".application.WorkoutLog"
             android:allowBackup="false"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme"
-            tools:replace="allowBackup"
-            android:name=".application.WorkoutLog"
-    >
-        <activity android:name=".ui.activities.WorkoutActivity"
-                  android:configChanges="orientation"
-                  android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".ui.activities.CreateRoutineActivity">
-        </activity>
-        <activity android:name=".ui.activities.ChooseRoutineActivity">
-        </activity>
-        <activity android:name=".ui.activities.CreateCurrentTrainingplanActivity">
-        </activity>
+            android:theme="@style/AppTheme.DARK"
+            tools:replace="allowBackup">
+        <activity android:name=".ui.activities.SettingsActivity"></activity>
+        <activity
+                android:name=".ui.activities.WorkoutActivity"
+                android:configChanges="orientation"
+                android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.activities.CreateRoutineActivity"></activity>
+        <activity android:name=".ui.activities.ChooseRoutineActivity"></activity>
+        <activity android:name=".ui.activities.CreateCurrentTrainingplanActivity"></activity>
         <activity
                 android:name=".ui.activities.EditRoutineActivity"
-                android:windowSoftInputMode="stateHidden">
-        </activity>
-        <activity android:name=".ui.activities.EditTrainingplanActivity">
-        </activity>
+                android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".ui.activities.EditTrainingplanActivity"></activity>
         <activity
                 android:name=".ui.activities.LoginRegisterFromNavigationActivity"
                 android:configChanges="orientation"
-                android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".ui.activities.NavigationActivity">
-        </activity>
+                android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.activities.NavigationActivity"></activity>
         <activity
                 android:name=".ui.activities.MainActivity"
                 android:configChanges="orientation"
                 android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

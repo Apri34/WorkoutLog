@@ -3,6 +3,7 @@ package com.workoutlog.workoutlog.ui.fragments
 import androidx.appcompat.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.util.TypedValue
 import androidx.fragment.app.DialogFragment
 import com.workoutlog.workoutlog.R
 
@@ -28,7 +29,10 @@ class LeaveDialogFragment :DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(context!!, R.style.CustomDialogTheme)
+        val typedValue = TypedValue()
+        val theme = context!!.theme
+        theme.resolveAttribute(R.attr.customDialogTheme, typedValue, true)
+        val builder = AlertDialog.Builder(context!!, typedValue.data)
 
         val title = arguments!!.getString(KEY_TITLE, getString(R.string.leave))
         val message = arguments!!.getString(KEY_MESSAGE, getString(R.string.sure_you_want_leave))

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/spinner_item_styleable"
+        style="?android:attr/spinnerItemStyle"
+        android:singleLine="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:textAlignment="center"
+        android:textSize="@dimen/text_size_spinner_exercises"
+        android:textColor="@color/color_spinner_item_text_exercise_in_routine"
+        android:textStyle="bold"
+        android:paddingBottom="@dimen/spinner_padding_top_bottom"
+        android:paddingTop="@dimen/spinner_padding_top_bottom"
+        android:background="?attr/colorSpinnerItemExerciseInRoutine"
+        />

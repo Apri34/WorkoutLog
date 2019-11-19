@@ -5,10 +5,12 @@ import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
+import android.preference.PreferenceManager
+import android.util.TypedValue
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager.getDefaultSharedPreferences
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.DOWN
 import androidx.recyclerview.widget.ItemTouchHelper.UP
@@ -132,6 +134,8 @@ class EditRoutineActivity : AppCompatActivity(),
 
     private lateinit var itemTouchHelper: ItemTouchHelper
     private lateinit var mWorkoutLog: WorkoutLog
+    private var isLightTheme = false
+    private var isDarkTheme = true
 
     private var isDragging = false
 
@@ -144,14 +148,23 @@ class EditRoutineActivity : AppCompatActivity(),
         private const val SUPERSETS_KEY = "supersets"
         private const val DROPSETS_KEY = "dropsets"
         private const val EDITABLE_ITEM_KEY = "editableItem"
+        private const val IS_LIGHT_THEME = "isLightTheme"
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(PreferenceManager.getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
+            && PreferenceManager.getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false)) {
+            setTheme(R.style.AppTheme_LIGHT)
+            isLightTheme = true
+            isDarkTheme = false
+        }
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-            window.statusBarColor = ContextCompat.getColor(this, R.color.colorSecondaryDark)
+            val typedValue = TypedValue()
+            theme.resolveAttribute(R.attr.topbarColor, typedValue, true)
+            window.statusBarColor = typedValue.data
         }
         setContentView(R.layout.activity_edit_routine)
         mWorkoutLog = this.applicationContext as WorkoutLog
@@ -339,6 +352,14 @@ class EditRoutineActivity : AppCompatActivity(),
     override fun onResume() {
         super.onResume()
         mWorkoutLog.currentActivity = this
+        if(getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
+            && getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false)
+            && !isLightTheme
+            || (!getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
+                    || !getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false))
+            && !isDarkTheme) {
+            recreate()
+        }
     }
 
     override fun onPause() {

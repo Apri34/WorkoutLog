@@ -2,13 +2,14 @@ package com.workoutlog.workoutlog.ui.activities
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager.getDefaultSharedPreferences
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.ImageButton
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -88,6 +89,7 @@ class EditTrainingplanActivity : AppCompatActivity(),
         private const val TP_ID_KEY = "tpId"
         private const val ROUTINE_ID_KEY = "routineId"
         private const val KEY_TP_ID = "tpId"
+        private const val IS_LIGHT_THEME = "isLightTheme"
     }
 
     private lateinit var toolbar: Toolbar
@@ -100,12 +102,22 @@ class EditTrainingplanActivity : AppCompatActivity(),
 
     private var isCurrentTp = false
     private lateinit var mWorkoutLog: WorkoutLog
+    private var isLightTheme = false
+    private var isDarkTheme = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
+            && getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false)) {
+            setTheme(R.style.AppTheme_LIGHT)
+            isLightTheme = true
+            isDarkTheme = false
+        }
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-            window.statusBarColor = ContextCompat.getColor(this, R.color.colorSecondaryDark)
+            val typedValue = TypedValue()
+            theme.resolveAttribute(R.attr.topbarColor, typedValue, true)
+            window.statusBarColor = typedValue.data
         }
         setContentView(R.layout.activity_edit_trainingplan)
         mWorkoutLog = this.applicationContext as WorkoutLog
@@ -142,6 +154,14 @@ class EditTrainingplanActivity : AppCompatActivity(),
             dbInitializer.getRoutinesByTpId(database.routineDao(), trainingplan.tpId)
         )
         recyclerView.adapter!!.notifyDataSetChanged()
+        if(getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
+            && getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false)
+            && !isLightTheme
+            || (!getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
+                    || !getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false))
+            && !isDarkTheme) {
+            recreate()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

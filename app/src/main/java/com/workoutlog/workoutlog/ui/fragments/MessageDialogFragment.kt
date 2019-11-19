@@ -3,6 +3,7 @@ package com.workoutlog.workoutlog.ui.fragments
 import androidx.appcompat.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.util.TypedValue
 import androidx.fragment.app.DialogFragment
 import com.workoutlog.workoutlog.R
 
@@ -20,7 +21,10 @@ class MessageDialogFragment: DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(context!!, R.style.CustomDialogTheme)
+        val typedValue = TypedValue()
+        val theme = context!!.theme
+        theme.resolveAttribute(R.attr.customDialogTheme, typedValue, true)
+        val builder = AlertDialog.Builder(context!!, typedValue.data)
 
         builder.setMessage(arguments!!.getString(KEY_MESSAGE))
             .setPositiveButton(android.R.string.ok) {_,_->}

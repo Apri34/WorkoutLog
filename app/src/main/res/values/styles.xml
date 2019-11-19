@@ -1,14 +1,125 @@
 <resources>
-    <style name="CustomDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:textColorPrimary">@color/colorPrimary</item>
-        <item name="android:background">@color/colorSecondary</item>
-        <item name="colorAccent">@color/colorPrimary</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textColorAlertDialogListItem">@color/colorPrimary</item>
+
+    <style name="DialogThemeDark" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColorPrimary">@color/colorPrimaryThemeDark</item>
+        <item name="android:background">@color/colorSecondaryThemeDark</item>
+        <item name="colorAccent">@color/colorPrimaryThemeDark</item>
+        <item name="textColor">@color/colorPrimaryThemeDark</item>
+        <item name="textColorAlertDialogListItem">@color/colorPrimaryThemeDark</item>
+    </style>
+
+    <style name="DialogThemeLight" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColorPrimary">@color/colorPrimaryThemeLight</item>
+        <item name="android:background">@color/colorSecondaryThemeLight</item>
+        <item name="colorAccent">@color/colorPrimaryThemeLight</item>
+        <item name="textColor">@color/colorPrimaryThemeLight</item>
+        <item name="textColorAlertDialogListItem">@color/colorPrimaryThemeLight</item>
     </style>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@color/colorSecondary</item>
-        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:windowBackground">?attr/colorSecondary</item>
+        <item name="colorAccent">?attr/colorPrimary</item>
+    </style>
+
+    <style name="AppTheme.DARK" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimaryThemeDark</item>
+        <item name="colorPrimaryAlpha50">@color/colorPrimaryAlpha50ThemeDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkThemeDark</item>
+        <item name="colorPrimaryLight">@color/colorPrimaryLightThemeDark</item>
+        <item name="colorPrimaryLight2">@color/colorPrimaryLight2ThemeDark</item>
+        <item name="colorSecondary">@color/colorSecondaryThemeDark</item>
+        <item name="colorSecondaryLight">@color/colorSecondaryLightThemeDark</item>
+        <item name="colorSecondaryDark">@color/colorSecondaryDarkThemeDark</item>
+        <item name="colorSecondaryAlpha50">@color/colorSecondaryAlpha50ThemeDark</item>
+        <item name="customDialogTheme">@style/DialogThemeDark</item>
+        <item name="toolbarColor">@color/colorSecondaryThemeDark</item>
+        <item name="topbarColor">@color/colorSecondaryDarkThemeDark</item>
+        <item name="toolbarTextColor">@color/white</item>
+        <item name="navViewTextColor">@color/colorSecondaryThemeDark</item>
+        <item name="navHeaderColorStart">@color/colorSecondaryThemeDark</item>
+        <item name="navHeaderColorEnd">@color/colorSecondaryLightThemeDark</item>
+        <item name="colorExerciseInRoutineTextEditable">@color/colorSecondaryThemeDark</item>
+        <item name="colorExerciseInRoutineTextNotEditable">@color/colorPrimaryThemeDark</item>
+        <item name="colorSpinnerDefault">@color/color_spinner_exercises_theme_dark</item>
+        <item name="colorSpinnerPressedRippleDark">@color/color_spinner_exercises_ripple_dark_theme_dark</item>
+        <item name="colorSpinnerPressedRippleLight">@color/color_spinner_exercises_ripple_light_theme_dark</item>
+        <item name="textColorEditText">@color/colorSecondaryThemeDark</item>
+        <item name="textColorSpinnerItemEditable">@color/colorSecondaryThemeDark</item>
+        <item name="textColorSpinnerItemNotEditable">@color/colorPrimaryThemeDark</item>
+        <item name="calenderHeaderTextColor">@color/colorSecondaryDarkThemeDark</item>
+        <item name="selectedTabTextColor">@color/colorPrimaryThemeDark</item>
+        <item name="historyItemColor">@color/white</item>
+        <item name="tabIndicatorColor">@color/colorPrimaryThemeDark</item>
+        <item name="colorSpinnerItemExerciseInRoutine">@color/color_spinner_exercises_theme_dark</item>
+
+        <!-- Vectors -->
+        <item name="ic_add_colorprimary_30dp">@drawable/ic_add_colorprimary_30dp_theme_dark</item>
+        <item name="ic_arrow_back_colorprimary_24dp">@drawable/ic_arrow_back_colorprimary_24dp_theme_dark</item>
+        <item name="ic_check_colorprimary_30dp">@drawable/ic_check_colorprimary_30dp_theme_dark</item>
+        <item name="ic_delete_colorprimary_24dp">@drawable/ic_delete_colorprimary_24dp_theme_dark</item>
+        <item name="ic_delete_colorprimary_30dp">@drawable/ic_delete_colorprimary_30dp_theme_dark</item>
+        <item name="ic_drag_handle_colorprimary_24dp">@drawable/ic_drag_handle_colorprimary_24dp_theme_dark</item>
+        <item name="ic_edit_colorprimary_24dp">@drawable/ic_edit_colorprimary_24dp_theme_dark</item>
+        <item name="ic_edit_colorprimary_30dp">@drawable/ic_edit_colorprimary_30dp_theme_dark</item>
+        <item name="ic_expand_more_colorsecondary_18dp">@drawable/ic_expand_more_colorsecondary_18dp_theme_dark</item>
+        <item name="ic_navigate_before_colorprimary_36dp">@drawable/ic_navigate_before_colorprimary_36dp_theme_dark</item>
+        <item name="ic_navigate_before_colorprimary_48dp">@drawable/ic_navigate_before_colorprimary_48dp_theme_dark</item>
+        <item name="ic_navigate_next_colorprimary_36dp">@drawable/ic_navigate_next_colorprimary_36dp_theme_dark</item>
+        <item name="ic_navigate_next_colorprimary_48dp">@drawable/ic_navigate_next_colorprimary_48dp_theme_dark</item>
+        <item name="ic_pause_colorprimary_30dp">@drawable/ic_pause_colorprimary_30dp_theme_dark</item>
+        <item name="ic_play_arrow_colorprimary_30dp">@drawable/ic_play_arrow_colorprimary_30dp_theme_dark</item>
+        <item name="ic_remove_colorprimary_30dp">@drawable/ic_remove_colorprimary_30dp_theme_dark</item>
+        <item name="ic_replay_colorprimary_30dp">@drawable/ic_replay_colorprimary_30dp_theme_dark</item>
+    </style>
+
+    <style name="AppTheme.LIGHT" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimaryThemeLight</item>
+        <item name="colorPrimaryAlpha50">@color/colorPrimaryAlpha50ThemeLight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkThemeLight</item>
+        <item name="colorPrimaryLight">@color/colorPrimaryLightThemeLight</item>
+        <item name="colorPrimaryLight2">@color/colorPrimaryLight2ThemeLight</item>
+        <item name="colorSecondary">@color/colorSecondaryThemeLight</item>
+        <item name="colorSecondaryLight">@color/colorSecondaryLightThemeLight</item>
+        <item name="colorSecondaryDark">@color/colorSecondaryDarkThemeLight</item>
+        <item name="colorSecondaryAlpha50">@color/colorSecondaryAlpha50ThemeLight</item>
+        <item name="customDialogTheme">@style/DialogThemeLight</item>
+        <item name="toolbarColor">@color/colorPrimaryThemeLight</item>
+        <item name="topbarColor">@color/colorPrimaryDarkThemeLight</item>
+        <item name="toolbarTextColor">@color/white</item>
+        <item name="navViewTextColor">@color/colorPrimaryThemeLight</item>
+        <item name="navHeaderColorStart">@color/colorPrimaryThemeLight</item>
+        <item name="navHeaderColorEnd">@color/colorPrimaryLightThemeLight</item>
+        <item name="colorExerciseInRoutineTextEditable">@color/colorPrimaryThemeLight</item>
+        <item name="colorExerciseInRoutineTextNotEditable">@color/colorPrimaryThemeLight</item>
+        <item name="colorSpinnerDefault">@color/color_spinner_exercises_theme_light</item>
+        <item name="colorSpinnerPressedRippleDark">@color/color_spinner_exercises_ripple_dark_theme_light</item>
+        <item name="colorSpinnerPressedRippleLight">@color/color_spinner_exercises_ripple_light_theme_light</item>
+        <item name="textColorEditText">@color/colorPrimaryThemeLight</item>
+        <item name="textColorSpinnerItemEditable">@color/white</item>
+        <item name="textColorSpinnerItemNotEditable">@color/colorPrimaryThemeLight</item>
+        <item name="calenderHeaderTextColor">@color/colorPrimaryThemeLight</item>
+        <item name="selectedTabTextColor">@color/white</item>
+        <item name="historyItemColor">@color/colorPrimaryThemeLight</item>
+        <item name="tabIndicatorColor">@color/white</item>
+        <item name="colorSpinnerItemExerciseInRoutine">@color/color_spinner_exercises_theme_light</item>
+
+        <!-- Vectors -->
+        <item name="ic_add_colorprimary_30dp">@drawable/ic_add_colorprimary_30dp_theme_light</item>
+        <item name="ic_arrow_back_colorprimary_24dp">@drawable/ic_arrow_back_colorprimary_24dp_theme_light</item>
+        <item name="ic_check_colorprimary_30dp">@drawable/ic_check_colorprimary_30dp_theme_light</item>
+        <item name="ic_delete_colorprimary_24dp">@drawable/ic_delete_colorprimary_24dp_theme_light</item>
+        <item name="ic_delete_colorprimary_30dp">@drawable/ic_delete_colorprimary_30dp_theme_light</item>
+        <item name="ic_drag_handle_colorprimary_24dp">@drawable/ic_drag_handle_colorprimary_24dp_theme_light</item>
+        <item name="ic_edit_colorprimary_24dp">@drawable/ic_edit_colorprimary_24dp_theme_light</item>
+        <item name="ic_edit_colorprimary_30dp">@drawable/ic_edit_colorprimary_30dp_theme_light</item>
+        <item name="ic_expand_more_colorsecondary_18dp">@drawable/ic_expand_more_colorsecondary_18dp_theme_light</item>
+        <item name="ic_navigate_before_colorprimary_36dp">@drawable/ic_navigate_before_colorprimary_36dp_theme_light</item>
+        <item name="ic_navigate_before_colorprimary_48dp">@drawable/ic_navigate_before_colorprimary_48dp_theme_light</item>
+        <item name="ic_navigate_next_colorprimary_36dp">@drawable/ic_navigate_next_colorprimary_36dp_theme_light</item>
+        <item name="ic_navigate_next_colorprimary_48dp">@drawable/ic_navigate_next_colorprimary_48dp_theme_light</item>
+        <item name="ic_pause_colorprimary_30dp">@drawable/ic_pause_colorprimary_30dp_theme_light</item>
+        <item name="ic_play_arrow_colorprimary_30dp">@drawable/ic_play_arrow_colorprimary_30dp_theme_light</item>
+        <item name="ic_remove_colorprimary_30dp">@drawable/ic_remove_colorprimary_30dp_theme_light</item>
+        <item name="ic_replay_colorprimary_30dp">@drawable/ic_replay_colorprimary_30dp_theme_light</item>
     </style>
 </resources>

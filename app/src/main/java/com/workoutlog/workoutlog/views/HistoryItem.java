@@ -2,7 +2,9 @@ package com.workoutlog.workoutlog.views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -49,7 +51,10 @@ public class HistoryItem extends ConstraintLayout {
 
         Set(Context context, int setNum, int reps, float weight, float rpe) {
             super(context, null, 0);
-            setTextColor(ContextCompat.getColor(context, R.color.white));
+            TypedValue typedValue = new TypedValue();
+            Resources.Theme theme = context.getTheme();
+            theme.resolveAttribute(R.attr.historyItemColor, typedValue, true);
+            setTextColor(typedValue.data);
             setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
             makeSet(setNum, reps, weight, rpe);
             setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));

@@ -33,4 +33,50 @@
     <declare-styleable name="Calender">
         <attr name="isEditable" format="boolean"/>
     </declare-styleable>
+
+    <attr name="colorPrimaryAlpha50" format="reference"/>
+    <attr name="colorPrimaryLight" format="reference"/>
+    <attr name="colorPrimaryLight2" format="reference"/>
+    <attr name="colorSecondary" format="reference"/>
+    <attr name="colorSecondaryLight" format="reference"/>
+    <attr name="colorSecondaryDark" format="reference"/>
+    <attr name="colorSecondaryAlpha50" format="reference"/>
+    <attr name="customDialogTheme" format="reference"/>
+    <attr name="toolbarColor" format="reference"/>
+    <attr name="toolbarTextColor" format="reference"/>
+    <attr name="navViewTextColor" format="reference"/>
+    <attr name="topbarColor" format="reference"/>
+    <attr name="navHeaderColorStart" format="reference"/>
+    <attr name="navHeaderColorEnd" format="reference"/>
+    <attr name="colorExerciseInRoutineTextEditable" format="reference"/>
+    <attr name="colorExerciseInRoutineTextNotEditable" format="reference"/>
+    <attr name="colorSpinnerDefault" format="reference"/>
+    <attr name="colorSpinnerPressedRippleLight" format="reference"/>
+    <attr name="colorSpinnerPressedRippleDark" format="reference"/>
+    <attr name="textColorEditText" format="reference"/>
+    <attr name="textColorSpinnerItemEditable" format="reference"/>
+    <attr name="textColorSpinnerItemNotEditable" format="reference"/>
+    <attr name="calenderHeaderTextColor" format="reference"/>
+    <attr name="selectedTabTextColor" format="reference"/>
+    <attr name="historyItemColor" format="reference"/>
+    <attr name="colorSpinnerItemExerciseInRoutine" format="reference"/>
+
+    <!-- Vectors -->
+    <attr name="ic_add_colorprimary_30dp" format="reference"/>
+    <attr name="ic_arrow_back_colorprimary_24dp" format="reference"/>
+    <attr name="ic_check_colorprimary_30dp" format="reference"/>
+    <attr name="ic_delete_colorprimary_24dp" format="reference"/>
+    <attr name="ic_delete_colorprimary_30dp" format="reference"/>
+    <attr name="ic_drag_handle_colorprimary_24dp" format="reference"/>
+    <attr name="ic_edit_colorprimary_24dp" format="reference"/>
+    <attr name="ic_edit_colorprimary_30dp" format="reference"/>
+    <attr name="ic_expand_more_colorsecondary_18dp" format="reference"/>
+    <attr name="ic_navigate_before_colorprimary_36dp" format="reference"/>
+    <attr name="ic_navigate_before_colorprimary_48dp" format="reference"/>
+    <attr name="ic_navigate_next_colorprimary_36dp" format="reference"/>
+    <attr name="ic_navigate_next_colorprimary_48dp" format="reference"/>
+    <attr name="ic_pause_colorprimary_30dp" format="reference"/>
+    <attr name="ic_play_arrow_colorprimary_30dp" format="reference"/>
+    <attr name="ic_remove_colorprimary_30dp" format="reference"/>
+    <attr name="ic_replay_colorprimary_30dp" format="reference"/>
 </resources>

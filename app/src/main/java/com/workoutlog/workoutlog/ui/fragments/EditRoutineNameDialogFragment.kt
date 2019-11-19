@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.TypedValue
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
@@ -49,7 +50,10 @@ class EditRoutineNameDialogFragment : DialogFragment() {
         }
 
         return activity?.let {
-            val builder = AlertDialog.Builder(it, R.style.CustomDialogTheme)
+            val typedValue = TypedValue()
+            val theme = context!!.theme
+            theme.resolveAttribute(R.attr.customDialogTheme, typedValue, true)
+            val builder = AlertDialog.Builder(context!!, typedValue.data)
             etName.setText(routine.rName)
 
             builder.setTitle(getString(R.string.routine))

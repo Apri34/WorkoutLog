@@ -15,7 +15,7 @@
         </ripple>
     </item>
     <item
-            android:drawable="@drawable/ic_expand_more_colorsecondary_18dp"
+            android:drawable="?attr/ic_expand_more_colorsecondary_18dp"
             android:gravity="right|center_vertical"
             android:right="8dp"
     />

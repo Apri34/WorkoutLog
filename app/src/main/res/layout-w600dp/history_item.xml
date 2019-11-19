@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/background_edit_text_deload_focused"
-            android:textColor="@color/white"
+            android:textColor="?attr/historyItemColor"
             android:textAlignment="center"
     />
 

@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/you_have_finished_your_workout_today"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             android:textSize="@dimen/text_size_home_fragment_big"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/margin_home_fragment_top"

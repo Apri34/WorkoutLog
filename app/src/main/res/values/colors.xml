@@ -1,22 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorAccent">#E3D081</color>
+    <color name="colorAccentThemeDark">#E3D081</color>
 
-    <color name="colorPrimary">#E3D081</color>
-    <color name="colorPrimaryAlpha50">#7EE3D081</color>
-    <color name="colorPrimaryDark">#DAC158</color>
-    <color name="colorPrimaryLight">#E2D5A1</color>
-    <color name="colorPrimaryLight2">#DFDCD4</color>
-    <color name="colorSecondary">#54494B</color>
-    <color name="colorSecondaryLight">#6B5F60</color>
-    <color name="colorSecondaryDark">#494042</color>
-    <color name="colorSecondaryAlpha50">#7E54494B</color>
+    <color name="colorPrimaryThemeDark">#E3D081</color>
+    <color name="colorPrimaryAlpha50ThemeDark">#7EE3D081</color>
+    <color name="colorPrimaryDarkThemeDark">#DAC158</color>
+    <color name="colorPrimaryLightThemeDark">#E2D5A1</color>
+    <color name="colorPrimaryLight2ThemeDark">#DFDCD4</color>
+    <color name="colorSecondaryThemeDark">#54494B</color>
+    <color name="colorSecondaryLightThemeDark">#6B5F60</color>
+    <color name="colorSecondaryDarkThemeDark">#494042</color>
+    <color name="colorSecondaryAlpha50ThemeDark">#7E54494B</color>
+    <color name="color_spinner_exercises_theme_dark">#f3f2dd</color>
+    <color name="color_spinner_exercises_ripple_light_theme_dark">#FAF9E3</color>
+    <color name="color_spinner_exercises_ripple_dark_theme_dark">#CBF3F2DD</color>
+
+
+
+
+    <color name="colorAccentThemeLight">#0F5257</color>
+
+    <color name="colorPrimaryThemeLight">#0F5257</color>
+    <color name="colorPrimaryAlpha50ThemeLight">#7E0F5257</color>
+    <color name="colorPrimaryDarkThemeLight">#054146</color>
+    <color name="colorPrimaryLightThemeLight">#25767C</color>
+    <color name="colorPrimaryLight2ThemeLight">#58BAC2</color>
+    <color name="colorSecondaryThemeLight">#EBE9E9</color>
+    <color name="colorSecondaryLightThemeLight">#FCFAFA</color>
+    <color name="colorSecondaryDarkThemeLight">#BBBABA</color>
+    <color name="colorSecondaryAlpha50ThemeLight">#7EEBE9E9</color>
+    <color name="color_spinner_exercises_theme_light">#25767C</color>
+    <color name="color_spinner_exercises_ripple_light_theme_light">#58BAC2</color>
+    <color name="color_spinner_exercises_ripple_dark_theme_light">#0F5257</color>
+
+
+
+
+
     <color name="def_hint_color">#9C9C9C</color>
     <color name="hint_color_error">#FF8585</color>
     <color name="white">#fff</color>
-    <color name="color_spinner_exercises">#f3f2dd</color>
-    <color name="color_spinner_exercises_ripple_light">#FAF9E3</color>
-    <color name="color_spinner_exercises_ripple_dark">#CBF3F2DD</color>
     <color name="error_ripple_dark">#FD7070</color>
     <color name="error_ripple_light">#FCB1B1</color>
 </resources>

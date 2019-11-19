@@ -5,7 +5,7 @@
             <solid android:color="@color/error_ripple_dark"/>
         </shape>
     </item>
-    <item android:drawable="@drawable/ic_expand_more_colorsecondary_18dp"
+    <item android:drawable="?attr/ic_expand_more_colorsecondary_18dp"
           android:gravity="right|center_vertical"
           android:right="8dp"/>
 </layer-list>

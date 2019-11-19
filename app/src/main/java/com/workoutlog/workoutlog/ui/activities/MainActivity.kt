@@ -5,8 +5,8 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager.getDefaultSharedPreferences
+import android.util.TypedValue
 import android.view.WindowManager
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
@@ -197,16 +197,27 @@ class MainActivity : FragmentActivity(), LoginFragment.ILogin, RegisterFragment.
     private lateinit var fragmentRegister: RegisterFragment
     private lateinit var mWorkoutLog: WorkoutLog
     private lateinit var databaseSynchronizer: DatabaseSynchronizer
+    private var isLightTheme = false
+    private var isDarkTheme = true
 
     companion object {
         private const val KEY_IS_DB_CREATED = "isDbCreated"
+        private const val IS_LIGHT_THEME = "isLightTheme"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
+            && getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false)) {
+            setTheme(R.style.AppTheme_LIGHT)
+            isLightTheme = true
+            isDarkTheme = false
+        }
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-            window.statusBarColor = ContextCompat.getColor(this, R.color.colorSecondaryDark)
+            val typedValue = TypedValue()
+            theme.resolveAttribute(R.attr.topbarColor, typedValue, true)
+            window.statusBarColor = typedValue.data
         }
         setContentView(R.layout.activity_main)
         mWorkoutLog = this.applicationContext as WorkoutLog
@@ -244,6 +255,14 @@ class MainActivity : FragmentActivity(), LoginFragment.ILogin, RegisterFragment.
     override fun onResume() {
         super.onResume()
         mWorkoutLog.currentActivity = this
+        if(getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
+            && getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false)
+            && !isLightTheme
+            || (!getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
+                    || !getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false))
+            && !isDarkTheme) {
+            recreate()
+        }
     }
 
     override fun onPause() {

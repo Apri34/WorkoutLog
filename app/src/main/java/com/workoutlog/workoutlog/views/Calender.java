@@ -2,9 +2,11 @@ package com.workoutlog.workoutlog.views;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -264,49 +266,52 @@ public class Calender extends ConstraintLayout {
         header.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
         TextView tvMon = new TextView(context);
         tvMon.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
-        tvMon.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.calenderHeaderTextColor, typedValue, true);
+        tvMon.setTextColor(typedValue.data);
         if(Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR1)
             tvMon.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
         else
             tvMon.setGravity(Gravity.CENTER_HORIZONTAL);
         TextView tvTue = new TextView(context);
         tvTue.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
-        tvTue.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        tvTue.setTextColor(typedValue.data);
         if(Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR1)
             tvTue.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
         else
             tvTue.setGravity(Gravity.CENTER_HORIZONTAL);
         TextView tvWed = new TextView(context);
         tvWed.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
-        tvWed.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        tvWed.setTextColor(typedValue.data);
         if(Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR1)
             tvWed.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
         else
             tvWed.setGravity(Gravity.CENTER_HORIZONTAL);
         TextView tvThu = new TextView(context);
         tvThu.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
-        tvThu.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        tvThu.setTextColor(typedValue.data);
         if(Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR1)
             tvThu.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
         else
             tvThu.setGravity(Gravity.CENTER_HORIZONTAL);
         TextView tvFri = new TextView(context);
         tvFri.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
-        tvFri.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        tvFri.setTextColor(typedValue.data);
         if(Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR1)
             tvFri.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
         else
             tvFri.setGravity(Gravity.CENTER_HORIZONTAL);
         TextView tvSat = new TextView(context);
         tvSat.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
-        tvSat.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        tvSat.setTextColor(typedValue.data);
         if(Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR1)
             tvSat.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
         else
             tvSat.setGravity(Gravity.CENTER_HORIZONTAL);
         TextView tvSon = new TextView(context);
         tvSon.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
-        tvSon.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        tvSon.setTextColor(typedValue.data);
         if(Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR1)
             tvSon.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
         else

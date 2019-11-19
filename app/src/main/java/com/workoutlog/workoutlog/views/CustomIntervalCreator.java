@@ -1,6 +1,7 @@
 package com.workoutlog.workoutlog.views;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -147,7 +148,10 @@ public class CustomIntervalCreator extends ConstraintLayout {
         }
         TextView tv = new TextView(context);
         tv.setText(routine);
-        tv.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        tv.setTextColor(typedValue.data);
         tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizeItems);
         tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         return tv;

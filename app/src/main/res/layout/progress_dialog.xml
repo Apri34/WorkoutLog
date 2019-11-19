@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_home_fragment_small"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             android:textAlignment="center"
             android:visibility="gone"
     />
@@ -44,7 +44,7 @@
                 android:visibility="gone"
                 android:text="@android:string/cancel"
                 android:textSize="@dimen/text_size_home_fragment_small"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 style="?android:attr/buttonBarButtonStyle"
         />
 
@@ -57,7 +57,7 @@
                 android:visibility="gone"
                 android:text="@string/try_again"
                 android:textSize="@dimen/text_size_home_fragment_small"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 style="?android:attr/buttonBarButtonStyle"
         />
 

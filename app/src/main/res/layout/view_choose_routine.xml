@@ -12,7 +12,7 @@
             android:id="@+id/text_view_choose_routine_tp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             android:gravity="center_horizontal"
             android:background="@android:color/transparent"
     />
@@ -20,7 +20,7 @@
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorPrimary"
+            android:background="?attr/colorPrimary"
             />
 
 </LinearLayout>

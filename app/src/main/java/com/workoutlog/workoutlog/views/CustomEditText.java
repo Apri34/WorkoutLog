@@ -177,7 +177,10 @@ public class CustomEditText extends ConstraintLayout {
         if(a.hasValue(R.styleable.CustomEditText_hint)) {
             hint.setText(a.getText(R.styleable.CustomEditText_hint));
         }
-        hintColorFocused = a.getColor(R.styleable.CustomEditText_hintColorFocused, getResources().getColor(R.color.colorPrimary));
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        hintColorFocused = a.getColor(R.styleable.CustomEditText_hintColorFocused, typedValue.data);
         hintColor = a.getColor(R.styleable.CustomEditText_hintColor, getResources().getColor(R.color.def_hint_color));
         if(hint.hasFocus()) {
             hint.setTextColor(hintColorFocused);

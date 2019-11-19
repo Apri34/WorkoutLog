@@ -3,6 +3,7 @@ package com.workoutlog.workoutlog.ui.fragments
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.TypedValue
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
@@ -51,7 +52,10 @@ class ConfirmDeleteDialogFragment<T>: DialogFragment() {
             message = getString(R.string.this_cannot_be_returned)
         }
 
-        val builder = AlertDialog.Builder(context!!, R.style.CustomDialogTheme)
+        val typedValue = TypedValue()
+        val theme = context!!.theme
+        theme.resolveAttribute(R.attr.customDialogTheme, typedValue, true)
+        val builder = AlertDialog.Builder(context!!, typedValue.data)
         builder.setTitle(title)
             .setMessage(message)
             .setNegativeButton(android.R.string.no) {_,_->}

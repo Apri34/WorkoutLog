@@ -1,6 +1,7 @@
 package com.workoutlog.workoutlog.adapters
 
 import android.content.Context
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -39,7 +40,10 @@ class ChooseRoutineAdapter(private val context: Context, private val mDataset: L
         private fun createRoutine(routine: Routine): TextView {
             val textView = TextView(context)
             textView.tag = routine
-            textView.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            val typedValue = TypedValue()
+            val theme = context.theme
+            theme.resolveAttribute(R.attr.colorPrimary, typedValue, true)
+            textView.setTextColor(typedValue.data)
             textView.gravity = Gravity.CENTER_HORIZONTAL
             textView.background = ContextCompat.getDrawable(context, R.drawable.background_recyclerview_item)
             textView.text = routine.rName

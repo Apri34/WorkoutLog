@@ -115,7 +115,9 @@ class CurrentTrainingplanFragment: Fragment(), ConfirmDeleteCurrentTpDialogFragm
     private fun createIntervalItem(routine: String): TextView {
         val tv = TextView(context)
         tv.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-        tv.setTextColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+        val typedValue = TypedValue()
+        context!!.theme.resolveAttribute(R.attr.colorPrimary, typedValue, true)
+        tv.setTextColor(typedValue.data)
         tv.setBackgroundColor(ContextCompat.getColor(context!!, android.R.color.transparent))
         val textSize = resources.getDimensionPixelSize(R.dimen.text_size_create_current_tp_created_items)
         tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize.toFloat())

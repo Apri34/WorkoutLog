@@ -14,7 +14,7 @@
             app:layout_constraintBottom_toBottomOf="@id/button_prev_date_history_fragment"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             android:clickable="true"
             android:focusable="true"
             android:background="@drawable/background_recyclerview_item"
@@ -30,7 +30,7 @@
             app:layout_constraintHorizontal_bias="0.2"
             android:contentDescription="@null"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_navigate_before_colorprimary_36dp"
+            android:src="?attr/ic_navigate_before_colorprimary_36dp"
     />
 
     <ImageButton
@@ -43,7 +43,7 @@
             app:layout_constraintHorizontal_bias="0.8"
             android:contentDescription="@null"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_navigate_next_colorprimary_36dp"
+            android:src="?attr/ic_navigate_next_colorprimary_36dp"
     />
 
     <androidx.recyclerview.widget.RecyclerView

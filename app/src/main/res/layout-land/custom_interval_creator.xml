@@ -79,14 +79,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/custom_interval"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/text_sice_calender_month"
         />
 
         <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorPrimary"
+                android:background="?attr/colorPrimary"
         />
     </LinearLayout>
 

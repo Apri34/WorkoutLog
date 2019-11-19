@@ -1,6 +1,7 @@
 package com.workoutlog.workoutlog.views;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -179,8 +180,6 @@ public class IntervalPicker extends ConstraintLayout {
                 }
             }
         });
-
-        refreshButtons();
     }
 
     private void createInterval1(List<Routine> routines) throws ExecutionException, InterruptedException {
@@ -225,7 +224,10 @@ public class IntervalPicker extends ConstraintLayout {
     private TextView createItem(Context context, String routine) {
         TextView tv = new TextView(context);
         tv.setText(routine);
-        tv.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        tv.setTextColor(typedValue.data);
         tv.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
         tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizeItems);
         tv.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -235,7 +237,10 @@ public class IntervalPicker extends ConstraintLayout {
     private TextView createTop(Context context, String routine) {
         TextView tv = new TextView(context);
         tv.setText(routine);
-        tv.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        tv.setTextColor(typedValue.data);
         tv.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
         tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizeTop);
         tv.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -247,6 +252,7 @@ public class IntervalPicker extends ConstraintLayout {
         createInterval1(routines);
         createInterval2(routines);
         createInterval3(routines);
+        refreshButtons();
     }
 
     private void writeInterval(ArrayList<Integer> interval) throws ExecutionException, InterruptedException {
@@ -264,7 +270,10 @@ public class IntervalPicker extends ConstraintLayout {
         layout.addView(createTop(context, top));
         View divider = new View(context);
         divider.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 1));
-        divider.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        divider.setBackgroundColor(typedValue.data);
         layout.addView(divider);
 
         for(int i = 0; i < interval.size(); i++) {

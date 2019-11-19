@@ -75,10 +75,10 @@ class HistoryFragment: Fragment() {
                 val date = Date(c.timeInMillis)
                 exerciseDones = dbInitializer.getExerciseDonesByDate(database.exerciseDoneDao(), date) as ArrayList<ExerciseDone>
                 if (exerciseDones.isEmpty()) {
-                    c.add(Calendar.DAY_OF_MONTH, -1)
                     if (dbInitializer.existsNoPrevWorkout(database.exerciseDoneDao(), Date(c.timeInMillis))) {
                         break
                     }
+                    c.add(Calendar.DAY_OF_MONTH, -1)
                 }
             }
         }

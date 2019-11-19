@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <SwitchPreferenceCompat
+        app:defaultValue="false"
+        app:key="theme"
+        app:title="@string/switch_to_light_theme"/>
+</PreferenceScreen>

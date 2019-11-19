@@ -3,6 +3,7 @@ package com.workoutlog.workoutlog.ui.fragments
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.TypedValue
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
@@ -11,7 +12,10 @@ import com.workoutlog.workoutlog.R
 class SaveChangesDialogFragment: DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(context!!, R.style.CustomDialogTheme)
+        val typedValue = TypedValue()
+        val theme = context!!.theme
+        theme.resolveAttribute(R.attr.customDialogTheme, typedValue, true)
+        val builder = AlertDialog.Builder(context!!, typedValue.data)
         builder.setTitle("You are about to leave. Do you want to save the changes?")
             .setPositiveButton(R.string.save) {_,_->
                 if(listener != null) listener!!.save()

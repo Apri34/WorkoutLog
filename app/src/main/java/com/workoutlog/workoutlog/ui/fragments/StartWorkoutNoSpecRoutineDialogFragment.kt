@@ -3,6 +3,7 @@ package com.workoutlog.workoutlog.ui.fragments
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.TypedValue
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
@@ -26,7 +27,10 @@ class StartWorkoutNoSpecRoutineDialogFragment: DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(context!!, R.style.CustomDialogTheme)
+        val typedValue = TypedValue()
+        val theme = context!!.theme
+        theme.resolveAttribute(R.attr.customDialogTheme, typedValue, true)
+        val builder = AlertDialog.Builder(context!!, typedValue.data)
 
         message = arguments?.getString(KEY_MESSAGE) ?: getString(R.string.choose_from_routines_or_create_new)
         builder.setTitle(R.string.start_workout)

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
@@ -44,7 +45,10 @@ class DeleteOrEditDialogFragment<T>: DialogFragment() {
 
     @SuppressLint("InflateParams")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(context!!, R.style.CustomDialogTheme)
+        val typedValue = TypedValue()
+        val theme = context!!.theme
+        theme.resolveAttribute(R.attr.customDialogTheme, typedValue, true)
+        val builder = AlertDialog.Builder(context!!, typedValue.data)
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.dialog_delete_or_edit, null)
         val buttonDelete = view.findViewById<TextView>(R.id.button_delete_delete_or_edit_dialog)

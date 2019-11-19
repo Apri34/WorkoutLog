@@ -4,13 +4,14 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.preference.PreferenceManager.getDefaultSharedPreferences
+import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -195,6 +196,7 @@ class NavigationActivity : AppCompatActivity(),
 
         private const val KEY_ROUTINE_WORKOUT = "routineWorkout"
         private const val KEY_DELETABLE = "deletable"
+        private const val IS_LIGHT_THEME = "isLightTheme"
     }
 
     private lateinit var mAuth: FirebaseAuth
@@ -212,12 +214,22 @@ class NavigationActivity : AppCompatActivity(),
     private lateinit var database: AppDatabase
     private lateinit var databaseSynchronizer: DatabaseSynchronizer
     private lateinit var mWorkoutLog: WorkoutLog
+    var isLightTheme = false
+    var isDarkTheme = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
+            && getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false)) {
+            setTheme(R.style.AppTheme_LIGHT)
+            isLightTheme = true
+            isDarkTheme = false
+        }
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-            window.statusBarColor = ContextCompat.getColor(this, R.color.colorSecondaryDark)
+            val typedValue = TypedValue()
+            theme.resolveAttribute(R.attr.topbarColor, typedValue, true)
+            window.statusBarColor = typedValue.data
         }
         setContentView(R.layout.activity_navigation)
         mWorkoutLog = this.applicationContext as WorkoutLog
@@ -374,7 +386,8 @@ class NavigationActivity : AppCompatActivity(),
                     supportActionBar!!.title = getString(R.string.history)
                 }
                 R.id.nav_settings -> {
-
+                    val intent = Intent(this, SettingsActivity::class.java)
+                    startActivity(intent)
                 }
                 R.id.nav_login -> {
                     login()
@@ -447,11 +460,11 @@ class NavigationActivity : AppCompatActivity(),
     }
 
     private fun openChooseWorkoutDialog() {
-        if(PreferenceManager.getDefaultSharedPreferences(this).contains(KEY_CURRENT_TP_STATE) &&
-            (PreferenceManager.getDefaultSharedPreferences(this).getInt(KEY_CURRENT_TP_STATE, NO_CURRENT_TP) == CURRENT_TP_FINISHED)) {
+        if(getDefaultSharedPreferences(this).contains(KEY_CURRENT_TP_STATE) &&
+            (getDefaultSharedPreferences(this).getInt(KEY_CURRENT_TP_STATE, NO_CURRENT_TP) == CURRENT_TP_FINISHED)) {
             val tp = dbInitializer.getTrainingplanById(
                 database.trainingplanDao(),
-                PreferenceManager.getDefaultSharedPreferences(this).getInt(KEY_TP_ID, -1))
+                getDefaultSharedPreferences(this).getInt(KEY_TP_ID, -1))
             val c = Calendar.getInstance()
             val day = c.get(Calendar.DAY_OF_MONTH)
             val month = c.get(Calendar.MONTH)
@@ -496,9 +509,9 @@ class NavigationActivity : AppCompatActivity(),
         c.set(year, month, day, 0, 0, 0)
         val timeNow = c.timeInMillis
 
-        val selectedYear = PreferenceManager.getDefaultSharedPreferences(this).getInt(KEY_START_YEAR, -1)
-        val selectedMonth = PreferenceManager.getDefaultSharedPreferences(this).getInt(KEY_START_MONTH, -1)
-        val selectedDay = PreferenceManager.getDefaultSharedPreferences(this).getInt(KEY_START_DAY, -1)
+        val selectedYear = getDefaultSharedPreferences(this).getInt(KEY_START_YEAR, -1)
+        val selectedMonth = getDefaultSharedPreferences(this).getInt(KEY_START_MONTH, -1)
+        val selectedDay = getDefaultSharedPreferences(this).getInt(KEY_START_DAY, -1)
         if(selectedDay == -1 || selectedMonth == -1 || selectedYear == -1) return null
         c.set(selectedYear, selectedMonth, selectedDay, 0, 0, 0)
         val timeStart = c.timeInMillis
@@ -522,6 +535,14 @@ class NavigationActivity : AppCompatActivity(),
     override fun onResume() {
         super.onResume()
         mWorkoutLog.currentActivity = this
+        if(getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
+            && getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false)
+            && !isLightTheme
+            || (!getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
+                    || !getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false))
+            && !isDarkTheme) {
+            recreate()
+        }
     }
 
     override fun onPause() {

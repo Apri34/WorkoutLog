@@ -19,7 +19,7 @@
             app:layout_constraintBottom_toBottomOf="@id/edit_text_deload_fragment_cycles"
             android:text="@string/deload_after"
             android:textStyle="bold"
-            android:textColor="@color/colorSecondary"
+            android:textColor="?attr/colorSecondary"
     />
     <TextView
             android:id="@+id/text_view_deload_fragment_2"
@@ -30,7 +30,7 @@
             app:layout_constraintBottom_toBottomOf="@id/edit_text_deload_fragment_volume"
             android:text="@string/volume"
             android:textStyle="bold"
-            android:textColor="@color/colorSecondary"
+            android:textColor="?attr/colorSecondary"
     />
     <TextView
             android:id="@+id/text_view_deload_fragment_3"
@@ -41,7 +41,7 @@
             app:layout_constraintBottom_toBottomOf="@id/edit_text_deload_fragment_weight"
             android:text="@string/weight"
             android:textStyle="bold"
-            android:textColor="@color/colorSecondary"
+            android:textColor="?attr/colorSecondary"
     />
     <TextView
             android:id="@+id/text_view_deload_fragment_4"
@@ -52,7 +52,7 @@
             android:layout_marginStart="@dimen/margin_widgets_side_deload_fragment"
             android:text="@string/cycles"
             android:textStyle="bold"
-            android:textColor="@color/colorSecondary"
+            android:textColor="?attr/colorSecondary"
     />
 
     <EditText
@@ -62,7 +62,7 @@
             app:layout_constraintLeft_toRightOf="@id/text_view_deload_fragment_1"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="@dimen/margin_widgets_side_deload_fragment"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             android:textCursorDrawable="@drawable/black_cursor"
             android:background="@drawable/background_edit_text_deload"
             android:inputType="number"
@@ -80,7 +80,7 @@
             android:layout_marginTop="@dimen/margin_between_widgets_top_deload_fragment"
             android:textCursorDrawable="@drawable/black_cursor"
             android:background="@drawable/background_edit_text_deload"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             android:inputType="number"
             android:text="@string/default_weight_deload"
             android:textAlignment="center"
@@ -96,7 +96,7 @@
             android:layout_marginTop="@dimen/margin_between_widgets_top_deload_fragment"
             android:textCursorDrawable="@drawable/black_cursor"
             android:background="@drawable/background_edit_text_deload"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             android:inputType="number"
             android:text="@string/default_volume_deload"
             android:textAlignment="center"

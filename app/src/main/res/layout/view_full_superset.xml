@@ -10,7 +10,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_home_fragment_small"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
     />
@@ -29,14 +29,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_home_fragment_small"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:text="@string/reps"
         />
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_home_fragment_small"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:text="@string/rpe"
         />
     </LinearLayout>
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_home_fragment_small"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             app:layout_constraintLeft_toRightOf="@id/ll_view_full_superset2"
             app:layout_constraintTop_toTopOf="@id/ll_view_full_superset1"
             android:layout_marginLeft="@dimen/margin_left_view_full_exercise"
@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_home_fragment_small"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             app:layout_constraintLeft_toRightOf="@id/ll_view_full_superset2"
             app:layout_constraintTop_toBottomOf="@+id/text_view_view_full_superset_reps1"
             android:layout_marginLeft="@dimen/margin_left_view_full_exercise"
@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_home_fragment_small"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ll_view_full_superset1"
     />
@@ -87,28 +87,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_home_fragment_small"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:text="@string/reps"
         />
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_home_fragment_small"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:text="@string/rpe"
         />
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_home_fragment_small"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:text="@string/sets"
         />
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_home_fragment_small"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:text="@string/break_seconds"
         />
     </LinearLayout>
@@ -118,7 +118,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_home_fragment_small"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             app:layout_constraintLeft_toRightOf="@id/ll_view_full_superset2"
             app:layout_constraintTop_toTopOf="@id/ll_view_full_superset2"
             android:layout_marginLeft="@dimen/margin_left_view_full_exercise"
@@ -129,7 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_home_fragment_small"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             app:layout_constraintLeft_toRightOf="@id/ll_view_full_superset2"
             app:layout_constraintTop_toBottomOf="@+id/text_view_view_full_superset_reps2"
             android:layout_marginLeft="@dimen/margin_left_view_full_exercise"
@@ -140,7 +140,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_home_fragment_small"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             app:layout_constraintLeft_toRightOf="@id/ll_view_full_superset2"
             app:layout_constraintTop_toBottomOf="@+id/text_view_view_full_superset_sets"
             android:layout_marginLeft="@dimen/margin_left_view_full_exercise"
@@ -151,7 +151,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_home_fragment_small"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             app:layout_constraintLeft_toRightOf="@id/ll_view_full_superset2"
             app:layout_constraintTop_toBottomOf="@id/text_view_view_full_superset_rpe2"
             android:layout_marginLeft="@dimen/margin_left_view_full_exercise"

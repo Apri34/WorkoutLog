@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sets"
-                android:textColor="@color/white"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/text_size_goal"
         />
 
@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/reps"
-                android:textColor="@color/white"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/text_size_goal"
         />
 
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/rpe"
-                android:textColor="@color/white"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/text_size_goal"
         />
 
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/break_seconds"
-                android:textColor="@color/white"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/text_size_goal"
         />
 
@@ -65,25 +65,25 @@
                 android:id="@+id/text_view_goal_normal_sets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/text_size_goal"/>
         <TextView
                 android:id="@+id/text_view_goal_normal_reps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/text_size_goal"/>
         <TextView
                 android:id="@+id/text_view_goal_normal_rpe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/text_size_goal"/>
         <TextView
                 android:id="@+id/text_view_goal_normal_break"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/text_size_goal"/>
 
     </LinearLayout>

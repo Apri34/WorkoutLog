@@ -8,29 +8,31 @@
     <application
             android:name=".application.WorkoutLog"
             android:allowBackup="false"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/icon"
             android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
+            android:roundIcon="@drawable/icon"
             android:supportsRtl="true"
             android:theme="@style/AppTheme.DARK"
             tools:replace="allowBackup">
-        <activity android:name=".ui.activities.SettingsActivity"></activity>
+        <activity android:name=".ui.activities.SettingsActivity"
+                android:theme="@style/PreferenceThemeDark"
+                />
         <activity
                 android:name=".ui.activities.WorkoutActivity"
                 android:configChanges="orientation"
-                android:screenOrientation="portrait"></activity>
-        <activity android:name=".ui.activities.CreateRoutineActivity"></activity>
-        <activity android:name=".ui.activities.ChooseRoutineActivity"></activity>
-        <activity android:name=".ui.activities.CreateCurrentTrainingplanActivity"></activity>
+                android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.CreateRoutineActivity"/>
+        <activity android:name=".ui.activities.ChooseRoutineActivity"/>
+        <activity android:name=".ui.activities.CreateCurrentTrainingplanActivity"/>
         <activity
                 android:name=".ui.activities.EditRoutineActivity"
-                android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".ui.activities.EditTrainingplanActivity"></activity>
+                android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".ui.activities.EditTrainingplanActivity"/>
         <activity
                 android:name=".ui.activities.LoginRegisterFromNavigationActivity"
                 android:configChanges="orientation"
-                android:screenOrientation="portrait"></activity>
-        <activity android:name=".ui.activities.NavigationActivity"></activity>
+                android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.NavigationActivity"/>
         <activity
                 android:name=".ui.activities.MainActivity"
                 android:configChanges="orientation"

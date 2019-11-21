@@ -19,7 +19,7 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         if(PreferenceManager.getDefaultSharedPreferences(this).contains(IS_LIGHT_THEME)
             && PreferenceManager.getDefaultSharedPreferences(this).getBoolean(IS_LIGHT_THEME, false)) {
-            setTheme(R.style.AppTheme_LIGHT)
+            setTheme(R.style.PreferenceThemeLight)
         }
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)

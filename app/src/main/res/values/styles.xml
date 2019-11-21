@@ -16,6 +16,14 @@
         <item name="textColorAlertDialogListItem">@color/colorPrimaryThemeLight</item>
     </style>
 
+    <style name="PreferenceThemeLight" parent="AppTheme.LIGHT">
+        <item name="android:textColor">@color/colorPrimaryThemeLight</item>
+    </style>
+
+    <style name="PreferenceThemeDark" parent="AppTheme.DARK">
+        <item name="android:textColor">@color/colorPrimaryThemeDark</item>
+    </style>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">?attr/colorSecondary</item>
         <item name="colorAccent">?attr/colorPrimary</item>
@@ -51,6 +59,7 @@
         <item name="historyItemColor">@color/white</item>
         <item name="tabIndicatorColor">@color/colorPrimaryThemeDark</item>
         <item name="colorSpinnerItemExerciseInRoutine">@color/color_spinner_exercises_theme_dark</item>
+        <item name="checkbox_background">@drawable/checkbox_background_theme_dark</item>
 
         <!-- Vectors -->
         <item name="ic_add_colorprimary_30dp">@drawable/ic_add_colorprimary_30dp_theme_dark</item>
@@ -102,6 +111,7 @@
         <item name="historyItemColor">@color/colorPrimaryThemeLight</item>
         <item name="tabIndicatorColor">@color/white</item>
         <item name="colorSpinnerItemExerciseInRoutine">@color/color_spinner_exercises_theme_light</item>
+        <item name="checkbox_background">@drawable/checkbox_background_theme_light</item>
 
         <!-- Vectors -->
         <item name="ic_add_colorprimary_30dp">@drawable/ic_add_colorprimary_30dp_theme_light</item>

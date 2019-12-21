@@ -29,7 +29,7 @@ This project uses the Gradle build system. To build this project, use the gradle
 * UI
   * [ConstraintLayout](https://developer.android.com/reference/android/support/constraint/ConstraintLayout)
   * [Material](https://material.io/develop/android/docs/getting-started/)
-*Third Party
+* Third Party
   * [MaterialDateTimePicker](https://github.com/wdullaer/MaterialDateTimePicker)
 
 ## Additional Resources

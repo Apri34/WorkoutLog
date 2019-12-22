@@ -15,7 +15,7 @@ This project uses the Gradle build system. To build this project, use the gradle
 ![](images/Screenshot5.jpg)
 ![](images/Screenshot6.jpg)
 
-## Libraries used
+## Libraries Used
 * Foundation
   * [AppCompat](https://developer.android.com/topic/libraries/support-library/packages)
   * [Android KTX](https://developer.android.com/kotlin)
@@ -31,6 +31,15 @@ This project uses the Gradle build system. To build this project, use the gradle
   * [Material](https://material.io/develop/android/docs/getting-started/)
 * Third Party
   * [MaterialDateTimePicker](https://github.com/wdullaer/MaterialDateTimePicker)
+  
+## What I Learned
+* How to correctly use RecyclerViews with SelectionTracker and OnClickListeners
+* How to switch between different Color Themes
+* How to make Custom Widgets
+* How to use Firebase Authentication
+* How to use Firebase Firestore and keep it synchronized to a local SQLite Database
+* How to create userfriendly User Interfaces
+* How to support differend screen sizes and pixel densities
 
 ## Additional Resources
 [Link](https://play.google.com/store/apps/details?id=com.workoutlog.workoutlog) to the App in the Google Play Store

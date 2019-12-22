@@ -8,12 +8,12 @@ This app was developed in order to strengthen my skills in Android development. 
 This project uses the Gradle build system. To build this project, use the gradlew build command or use "Import Project" in Android Studio.
 
 ## Screenshots
-![](images/Screenshot1.jpeg)
-![](images/Screenshot2.jpeg)
-![](images/Screenshot3.jpeg)
-![](images/Screenshot4.jpeg)
-![](images/Screenshot5.jpeg)
-![](images/Screenshot6.jpeg)
+![](images/Screenshot1.jpg)
+![](images/Screenshot2.jpg)
+![](images/Screenshot3.jpg)
+![](images/Screenshot4.jpg)
+![](images/Screenshot5.jpg)
+![](images/Screenshot6.jpg)
 
 ## Libraries used
 * Foundation
